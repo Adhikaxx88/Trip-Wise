@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ocean-deepest: #00172a;
+  --color-ocean-deep: #0a466b;
+  --color-ocean-mid: #17678a;
+  --color-ocean-card: #2573a4;
+  --color-ocean-light: #3f7194;
+  --color-gold-accent: #ffda61;
+  --color-gold-accent-deep: #ffd952;
+  --color-wordmark-outline: #147dd0;
+  --color-ink: #0d1b1e;
+  --color-surface: #f7fafb;
+
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+
+  --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--color-gold-accent);
+  -webkit-text-stroke: 1.5px var(--color-wordmark-outline);
+  paint-order: stroke fill;
+}
+
+.glass-panel {
+  background: color-mix(in srgb, var(--color-ocean-card) 82%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+::selection {
+  background: var(--color-gold-accent);
+  color: var(--color-ink);
+}
