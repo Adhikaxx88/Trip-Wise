@@ -160,15 +160,27 @@ export default function Summary() {
                   </div>
                 </div>
 
-                {row.item.details && row.item.details.length > 0 && (
-                  <ul className="mt-3 grid grid-cols-1 gap-1.5 border-t border-ink/10 pt-3 sm:grid-cols-2">
+                {row.item.details && row.item.details.length > 0 && row.label === 'Food' ? (
+                  <ul className="mt-3 max-h-56 space-y-1.5 overflow-y-auto border-t border-ink/10 pt-3 pr-1 text-xs">
                     {row.item.details.map((detail) => (
-                      <li key={detail.label} className="flex justify-between gap-2 text-xs text-ink/70">
-                        <span className="font-medium text-ink/50">{detail.label}</span>
-                        <span className="truncate text-right">{detail.value}</span>
+                      <li key={detail.label} className="flex flex-wrap gap-x-2 text-ink/70">
+                        <span className="shrink-0 font-medium text-ink/50">{detail.label}:</span>
+                        <span>{detail.value}</span>
                       </li>
                     ))}
                   </ul>
+                ) : (
+                  row.item.details &&
+                  row.item.details.length > 0 && (
+                    <ul className="mt-3 grid grid-cols-1 gap-1.5 border-t border-ink/10 pt-3 sm:grid-cols-2">
+                      {row.item.details.map((detail) => (
+                        <li key={detail.label} className="flex justify-between gap-2 text-xs text-ink/70">
+                          <span className="font-medium text-ink/50">{detail.label}</span>
+                          <span className="truncate text-right">{detail.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )
                 )}
               </div>
             ))}

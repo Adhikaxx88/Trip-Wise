@@ -57,6 +57,30 @@ function buildItinerary(dest: DestinationTemplate, durationDays: number): Itiner
   return days;
 }
 
+interface DailyMealPlan {
+  day: number;
+  breakfast: { name: string; price: number };
+  lunch: { name: string; price: number };
+  dinner: { name: string; price: number };
+}
+
+function buildDailyMeals(dest: DestinationTemplate, durationDays: number): DailyMealPlan[] {
+  const totalDays = Math.max(1, durationDays);
+  const { breakfast, lunch, dinner } = dest.restaurants;
+  const plans: DailyMealPlan[] = [];
+
+  for (let i = 0; i < totalDays; i++) {
+    plans.push({
+      day: i + 1,
+      breakfast: breakfast[i % breakfast.length],
+      lunch: lunch[i % lunch.length],
+      dinner: dinner[i % dinner.length],
+    });
+  }
+
+  return plans;
+}
+
 function buildCostBreakdown(
   dest: DestinationTemplate,
   durationDays: number,
@@ -67,6 +91,11 @@ function buildCostBreakdown(
   const destinationQuery = encodeURIComponent(dest.destination);
 
   const attractionsPerPersonCost = dest.attractionTickets.reduce((sum, t) => sum + t.price, 0);
+  const dailyMeals = buildDailyMeals(dest, durationDays);
+  const foodPerPersonTotal = dailyMeals.reduce(
+    (sum, d) => sum + d.breakfast.price + d.lunch.price + d.dinner.price,
+    0,
+  );
 
   return {
     hotel: {
@@ -81,11 +110,11 @@ function buildCostBreakdown(
     },
     food: {
       name: 'Meals & dining',
-      cost: Math.round(dest.foodPerPersonPerDay * durationDays * groupSize),
+      cost: Math.round(foodPerPersonTotal * groupSize),
       bookingUrl: `https://www.google.com/search?q=best+restaurants+in+${destinationQuery}`,
-      details: dest.restaurants.map((r) => ({
-        label: r.meal,
-        value: r.price > 0 ? `${r.name} — $${r.price}` : `${r.name} (included)`,
+      details: dailyMeals.map((d) => ({
+        label: `Day ${d.day}`,
+        value: `B: ${d.breakfast.name} ($${d.breakfast.price}) · L: ${d.lunch.name} ($${d.lunch.price}) · D: ${d.dinner.name} ($${d.dinner.price})`,
       })),
     },
     attractions: {
