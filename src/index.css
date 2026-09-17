@@ -8,7 +8,6 @@
   --color-ocean-light: #3f7194;
   --color-gold-accent: #ffda61;
   --color-gold-accent-deep: #ffd952;
-  --color-wordmark-outline: #147dd0;
   --color-ink: #0d1b1e;
   --color-surface: #f7fafb;
   --color-sky-blue: #1c8ce0;
@@ -59,14 +58,6 @@ body {
 
 .font-display {
   font-family: var(--font-display);
-}
-
-.wordmark {
-  font-family: var(--font-display);
-  font-weight: 900;
-  color: var(--color-gold-accent);
-  -webkit-text-stroke: 1.5px var(--color-wordmark-outline);
-  paint-order: stroke fill;
 }
 
 .glass-panel {

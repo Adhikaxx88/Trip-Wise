@@ -163,7 +163,7 @@ export const destinations: DestinationTemplate[] = [
     destination: 'Queenstown',
     country: 'New Zealand',
     summary:
-      "The adventure capital of the world — bungee, jet boats, and alpine trails ringed by the Southern Alps. Queenstown doesn't do idle.",
+      "The adventure capital of the world: bungee, jet boats, and alpine trails ringed by the Southern Alps. Queenstown doesn't do idle.",
     coverImageUrl:
       'https://images.unsplash.com/photo-1589871173980-5c353e64d550?auto=format&fit=crop&w=1600&q=80',
     vibe: 'adventurous',
@@ -265,7 +265,7 @@ export const destinations: DestinationTemplate[] = [
         activities: [
           { time: '8:00 AM', name: 'Boat to Grey Glacier' },
           { time: '11:00 AM', name: 'Ice trek with crampons' },
-          { time: '5:00 PM', name: 'Whisky on the rocks — literally' },
+          { time: '5:00 PM', name: 'Whisky on the rocks, literally' },
         ],
       },
       {
@@ -299,7 +299,7 @@ export const destinations: DestinationTemplate[] = [
     destination: 'Kyoto',
     country: 'Japan',
     summary:
-      'A thousand years of temples, gardens, and quiet ritual. Kyoto moves at the pace of tea steeping — deliberate, layered, unforgettable.',
+      'A thousand years of temples, gardens, and quiet ritual. Kyoto moves at the pace of tea steeping: deliberate, layered, unforgettable.',
     coverImageUrl:
       'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1600&q=80',
     vibe: 'cultural',

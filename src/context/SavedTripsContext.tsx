@@ -17,7 +17,7 @@ function persist(trips: SavedTrip[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
   } catch {
-    // ignore — trips still available for this session
+    // ignore, trips still available for this session
   }
 }
 

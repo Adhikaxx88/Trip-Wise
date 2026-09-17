@@ -4,7 +4,7 @@
 
 TripWise is a travel-planning web app. Answer a short set of preference
 questions (vibe, duration, budget, group size) and get back a personalized,
-complete trip package — a destination summary plus a day-by-day itinerary —
+complete trip package (a destination summary plus a day-by-day itinerary)
 that you can edit and save.
 
 ## Flow
@@ -12,7 +12,7 @@ that you can edit and save.
 - **Landing** → **Questionnaire** (Typeform-style, one question per screen) → **Summary/Itinerary** → **Edit** or **Save**
 - **Landing** → **Chatbot** (same underlying questions, conversational) → same **Summary/Itinerary**
 
-Booking is a redirect to an external provider — there is no payment flow.
+Booking is a redirect to an external provider. There is no payment flow.
 
 ## Tech
 

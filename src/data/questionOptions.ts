@@ -50,3 +50,66 @@ export function getVisibleSteps(prefs: TripPreferences): StepDef[] {
   }
   return steps;
 }
+
+const BUDGET_KEYWORDS: Record<string, string[]> = {
+  'Budget-friendly': ['budget', 'cheap', 'affordable', 'low cost'],
+  'Mid-range': ['mid', 'moderate', 'medium'],
+  Premium: ['premium', 'upscale'],
+  Luxury: ['luxury', 'lux', 'expensive', 'high end'],
+};
+
+const INTENSITY_KEYWORDS: Record<ActivityIntensity, string[]> = {
+  low: ['easy', 'light', 'relaxed', 'chill', 'easygoing'],
+  medium: ['medium', 'moderate', 'balanced', 'mix'],
+  high: ['high', 'intense', 'extreme', 'full throttle', 'adrenaline'],
+};
+
+export type FreeTextMatch = { patch: Partial<TripPreferences> } | null;
+
+export function matchFreeTextToStep(text: string, stepId: StepDef['id']): FreeTextMatch {
+  const lower = text.trim().toLowerCase();
+  if (!lower) return null;
+
+  switch (stepId) {
+    case 'vibe': {
+      const match = VIBE_OPTIONS.find(
+        (o) => lower.includes(o.value) || lower.includes(o.label.toLowerCase()),
+      );
+      return match ? { patch: { vibe: match.value } } : null;
+    }
+    case 'duration': {
+      const n = parseInt(lower.replace(/[^0-9]/g, ''), 10);
+      return Number.isFinite(n) && n > 0 ? { patch: { durationDays: n } } : null;
+    }
+    case 'budget': {
+      const match = BUDGET_OPTIONS.find(
+        (o) =>
+          lower.includes(o.label.toLowerCase()) ||
+          (BUDGET_KEYWORDS[o.label] ?? []).some((k) => lower.includes(k)),
+      );
+      return match ? { patch: { budget: { min: match.min, max: match.max, currency: 'USD' } } } : null;
+    }
+    case 'groupSize': {
+      if (/\b(just me|solo|myself|alone)\b/.test(lower)) return { patch: { groupSize: 1 } };
+      const n = parseInt(lower.replace(/[^0-9]/g, ''), 10);
+      return Number.isFinite(n) && n > 0 ? { patch: { groupSize: n } } : null;
+    }
+    case 'intensity': {
+      const match = INTENSITY_OPTIONS.find(
+        (o) =>
+          lower.includes(o.value) ||
+          lower.includes(o.label.toLowerCase()) ||
+          INTENSITY_KEYWORDS[o.value].some((k) => lower.includes(k)),
+      );
+      return match ? { patch: { activityIntensity: match.value } } : null;
+    }
+    case 'groupType': {
+      const match = GROUP_TYPE_OPTIONS.find(
+        (o) => lower.includes(o.value) || lower.includes(o.label.toLowerCase()),
+      );
+      return match ? { patch: { groupType: match.value } } : null;
+    }
+    default:
+      return null;
+  }
+}

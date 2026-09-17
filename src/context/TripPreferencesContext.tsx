@@ -31,7 +31,7 @@ export function TripPreferencesProvider({ children }: { children: ReactNode }) {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       } catch {
-        // localStorage unavailable — preferences still work for this session
+        // localStorage unavailable, preferences still work for this session
       }
       return next;
     });

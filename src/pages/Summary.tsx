@@ -87,7 +87,7 @@ export default function Summary() {
           </div>
           {justSaved && (
             <p className="mt-4 text-sm text-gold-accent animate-fade-in">
-              Saved — find it anytime on your Saved trips page.
+              Saved. Find it anytime on your Saved trips page.
             </p>
           )}
         </div>

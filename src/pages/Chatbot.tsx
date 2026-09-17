@@ -9,9 +9,11 @@ import {
   GROUP_SIZE_PRESETS,
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
+  matchFreeTextToStep,
   VIBE_OPTIONS,
   type StepDef,
 } from '../data/questionOptions';
+import { getFaqAnswer, SUGGESTED_QUESTIONS } from '../data/chatbotFaq';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useTripPreferences } from '../context/TripPreferencesContext';
 import { matchTrip } from '../logic/matchTrip';
@@ -22,14 +24,20 @@ const PROMPTS: Record<StepDef['id'], string> = {
   duration: 'Nice choice. How many days do you have?',
   budget: "Got it. What's your total budget for the trip?",
   groupSize: 'How many people are coming along?',
-  intensity: 'Since you want adventure — how intense should the activities be?',
-  groupType: "Last thing — who's coming with you?",
+  intensity: 'Since you want adventure, how intense should the activities be?',
+  groupType: "Last thing, who's coming with you?",
 };
 
 interface Message {
   id: string;
   from: 'bot' | 'user';
   text: string;
+}
+
+let messageCounter = 0;
+function nextMessageId(prefix: string) {
+  messageCounter += 1;
+  return `${prefix}-${messageCounter}`;
 }
 
 export default function Chatbot() {
@@ -39,7 +47,7 @@ export default function Chatbot() {
   const [draft, setDraft] = useState<TripPreferences>(preferences);
   const [messages, setMessages] = useState<Message[]>([]);
   const [stepIndex, setStepIndex] = useState(0);
-  const [textInput, setTextInput] = useState('');
+  const [freeformInput, setFreeformInput] = useState('');
   const [isMatching, setIsMatching] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const promptedSteps = useRef(new Set<string>());
@@ -52,7 +60,7 @@ export default function Chatbot() {
     promptedSteps.current.add(currentStep.id);
     setMessages((prev) => [
       ...prev,
-      { id: `bot-${currentStep.id}`, from: 'bot', text: PROMPTS[currentStep.id] },
+      { id: nextMessageId('bot'), from: 'bot', text: PROMPTS[currentStep.id] },
     ]);
   }, [currentStep]);
 
@@ -60,8 +68,11 @@ export default function Chatbot() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isMatching]);
 
-  const advance = (label: string, patch: Partial<TripPreferences>) => {
-    setMessages((prev) => [...prev, { id: `user-${Date.now()}`, from: 'user', text: label }]);
+  const pushMessage = (from: Message['from'], text: string) => {
+    setMessages((prev) => [...prev, { id: nextMessageId(from), from, text }]);
+  };
+
+  const applyAnswer = (patch: Partial<TripPreferences>) => {
     const nextDraft = { ...draft, ...patch };
     setDraft(nextDraft);
 
@@ -73,13 +84,15 @@ export default function Chatbot() {
     }
   };
 
+  const advance = (label: string, patch: Partial<TripPreferences>) => {
+    pushMessage('user', label);
+    applyAnswer(patch);
+  };
+
   const finish = (finalPrefs: TripPreferences) => {
     updatePreferences(finalPrefs);
     setIsMatching(true);
-    setMessages((prev) => [
-      ...prev,
-      { id: 'bot-matching', from: 'bot', text: 'Perfect — matching you a trip now…' },
-    ]);
+    pushMessage('bot', 'Perfect, matching you a trip now…');
     setTimeout(() => {
       const pkg = matchTrip(finalPrefs);
       setCurrentTrip(pkg, finalPrefs);
@@ -87,15 +100,30 @@ export default function Chatbot() {
     }, 1400);
   };
 
-  const handleTextSubmit = () => {
-    const n = parseInt(textInput, 10);
-    if (!Number.isFinite(n) || n <= 0) return;
-    if (currentStep.id === 'duration') {
-      advance(`${n} days`, { durationDays: n });
-    } else if (currentStep.id === 'groupSize') {
-      advance(n === 1 ? 'Just me' : `${n} people`, { groupSize: n });
+  const handleSuggestedQuestion = (question: string, answer: string) => {
+    pushMessage('user', question);
+    setTimeout(() => pushMessage('bot', answer), 500);
+  };
+
+  const handleFreeformSubmit = () => {
+    const text = freeformInput.trim();
+    if (!text || isMatching) return;
+    setFreeformInput('');
+    pushMessage('user', text);
+
+    const parsed = matchFreeTextToStep(text, currentStep.id);
+    if (parsed) {
+      applyAnswer(parsed.patch);
+      return;
     }
-    setTextInput('');
+
+    const faqAnswer = getFaqAnswer(text);
+    setTimeout(() => {
+      pushMessage(
+        'bot',
+        faqAnswer ?? 'Got it! You can also tap one of the options below to keep things moving.',
+      );
+    }, 500);
   };
 
   return (
@@ -124,7 +152,7 @@ export default function Chatbot() {
         </div>
 
         {!isMatching && (
-          <div className="sticky bottom-0 mt-4 rounded-2xl bg-surface pt-2">
+          <div className="sticky bottom-0 mt-4 space-y-3 rounded-2xl bg-surface pt-2">
             {currentStep.id === 'vibe' && (
               <div className="flex flex-wrap gap-2">
                 {VIBE_OPTIONS.map((opt) => (
@@ -140,7 +168,7 @@ export default function Chatbot() {
             )}
 
             {currentStep.id === 'duration' && (
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap gap-2">
                 {DURATION_PRESETS.map((d) => (
                   <button
                     key={d}
@@ -150,23 +178,6 @@ export default function Chatbot() {
                     {d} days
                   </button>
                 ))}
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    min={1}
-                    value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
-                    placeholder="Custom #"
-                    className="w-24 rounded-full border-2 border-ink/10 px-3 py-2 text-sm focus:border-ocean-mid focus:outline-none"
-                  />
-                  <button
-                    onClick={handleTextSubmit}
-                    className="rounded-full bg-ocean-mid px-4 py-2 text-sm font-semibold text-white cursor-pointer"
-                  >
-                    Send
-                  </button>
-                </div>
               </div>
             )}
 
@@ -187,7 +198,7 @@ export default function Chatbot() {
             )}
 
             {currentStep.id === 'groupSize' && (
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap gap-2">
                 {GROUP_SIZE_PRESETS.map((n) => (
                   <button
                     key={n}
@@ -197,23 +208,6 @@ export default function Chatbot() {
                     {n === 1 ? 'Just me' : `${n} people`}
                   </button>
                 ))}
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    min={1}
-                    value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
-                    placeholder="Custom #"
-                    className="w-24 rounded-full border-2 border-ink/10 px-3 py-2 text-sm focus:border-ocean-mid focus:outline-none"
-                  />
-                  <button
-                    onClick={handleTextSubmit}
-                    className="rounded-full bg-ocean-mid px-4 py-2 text-sm font-semibold text-white cursor-pointer"
-                  >
-                    Send
-                  </button>
-                </div>
               </div>
             )}
 
@@ -244,6 +238,35 @@ export default function Chatbot() {
                 ))}
               </div>
             )}
+
+            <div className="flex gap-2 overflow-x-auto pb-1">
+              {SUGGESTED_QUESTIONS.map((sq) => (
+                <button
+                  key={sq.question}
+                  onClick={() => handleSuggestedQuestion(sq.question, sq.answer)}
+                  className="shrink-0 rounded-full border border-ocean-light/40 bg-ocean-light/5 px-3 py-1.5 text-xs font-medium text-ocean-deep hover:bg-ocean-light/15 cursor-pointer"
+                >
+                  {sq.question}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 border-t border-ink/10 pt-3">
+              <input
+                type="text"
+                value={freeformInput}
+                onChange={(e) => setFreeformInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleFreeformSubmit()}
+                placeholder="Or just type your answer or a question..."
+                className="flex-1 rounded-full border-2 border-ink/10 px-4 py-2.5 text-sm focus:border-ocean-mid focus:outline-none"
+              />
+              <button
+                onClick={handleFreeformSubmit}
+                className="shrink-0 rounded-full bg-ocean-mid px-4 py-2.5 text-sm font-semibold text-white cursor-pointer"
+              >
+                Send
+              </button>
+            </div>
           </div>
         )}
       </div>
