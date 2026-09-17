@@ -41,7 +41,11 @@ export default function Questionnaire() {
   };
 
   const goBack = () => {
-    if (stepIndex > 0) setStepIndex((i) => i - 1);
+    if (stepIndex > 0) {
+      setStepIndex((i) => i - 1);
+    } else {
+      navigate('/');
+    }
   };
 
   const finish = () => {
@@ -73,6 +77,7 @@ export default function Questionnaire() {
           stepKey="vibe"
           eyebrow={currentStep.eyebrow}
           question="What's the vibe for this trip?"
+          onBack={goBack}
           onNext={goNext}
           nextLabel={nextLabel}
           nextDisabled={!draft.vibe}
