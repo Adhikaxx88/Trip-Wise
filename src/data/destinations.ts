@@ -16,6 +16,10 @@ export interface DestinationTemplate {
   goodFor: GroupType[];
   costPerPersonPerDay: number;
   bookingUrl: string;
+  hotelName: string;
+  hotelCostPerNight: number;
+  flightEstimatePerPerson: number;
+  foodPerPersonPerDay: number;
   arrivalDay: DayTemplate;
   coreDays: DayTemplate[];
   departureDay: DayTemplate;
@@ -35,6 +39,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['solo', 'couple', 'family', 'friends'],
     costPerPersonPerDay: 95,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Bali',
+    hotelName: 'Ubud jungle boutique villa',
+    hotelCostPerNight: 70,
+    flightEstimatePerPerson: 650,
+    foodPerPersonPerDay: 25,
     arrivalDay: {
       title: 'Arrival & Settle In',
       activities: [
@@ -107,6 +115,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['couple', 'solo', 'family'],
     costPerPersonPerDay: 260,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Maldives',
+    hotelName: 'Overwater villa resort',
+    hotelCostPerNight: 420,
+    flightEstimatePerPerson: 900,
+    foodPerPersonPerDay: 60,
     arrivalDay: {
       title: 'Arrival & Overwater Welcome',
       activities: [
@@ -171,6 +183,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['friends', 'solo', 'couple'],
     costPerPersonPerDay: 150,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Queenstown',
+    hotelName: 'Lakeside alpine lodge',
+    hotelCostPerNight: 140,
+    flightEstimatePerPerson: 850,
+    foodPerPersonPerDay: 45,
     arrivalDay: {
       title: 'Touchdown in the Alps',
       activities: [
@@ -243,6 +259,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['friends', 'solo', 'couple'],
     costPerPersonPerDay: 130,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Patagonia',
+    hotelName: 'Basecamp mountain lodge',
+    hotelCostPerNight: 110,
+    flightEstimatePerPerson: 780,
+    foodPerPersonPerDay: 35,
     arrivalDay: {
       title: 'Into the Wild',
       activities: [
@@ -307,6 +327,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['solo', 'couple', 'family', 'friends'],
     costPerPersonPerDay: 120,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Kyoto',
+    hotelName: 'Traditional ryokan',
+    hotelCostPerNight: 130,
+    flightEstimatePerPerson: 720,
+    foodPerPersonPerDay: 40,
     arrivalDay: {
       title: 'Arrival in the Old Capital',
       activities: [
@@ -371,6 +395,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['friends', 'couple', 'family'],
     costPerPersonPerDay: 85,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Marrakech',
+    hotelName: 'Riad in the medina',
+    hotelCostPerNight: 60,
+    flightEstimatePerPerson: 550,
+    foodPerPersonPerDay: 20,
     arrivalDay: {
       title: 'Into the Medina',
       activities: [
@@ -435,6 +463,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['couple', 'solo'],
     costPerPersonPerDay: 170,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Santorini',
+    hotelName: 'Caldera-view suite',
+    hotelCostPerNight: 210,
+    flightEstimatePerPerson: 600,
+    foodPerPersonPerDay: 45,
     arrivalDay: {
       title: 'Arrival on the Caldera',
       activities: [
@@ -499,6 +531,10 @@ export const destinations: DestinationTemplate[] = [
     goodFor: ['couple', 'friends', 'solo'],
     costPerPersonPerDay: 140,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Paris',
+    hotelName: 'Boutique hotel near the Seine',
+    hotelCostPerNight: 180,
+    flightEstimatePerPerson: 500,
+    foodPerPersonPerDay: 50,
     arrivalDay: {
       title: 'Bonjour, Paris',
       activities: [

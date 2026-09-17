@@ -6,7 +6,9 @@ import GradientBackdrop from '../components/GradientBackdrop';
 import ItineraryDayCard from '../components/ItineraryDayCard';
 import Logo from '../components/Logo';
 import { useSavedTrips } from '../context/SavedTripsContext';
+import { formatDateRange } from '../logic/dates';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
+import type { BookableItem } from '../types';
 
 export default function Summary() {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +27,14 @@ export default function Summary() {
     saveTrip(pkg, preferences);
     setJustSaved(true);
   };
+
+  const dateRangeLabel = formatDateRange(preferences.startDate, preferences.endDate);
+
+  const costRows: { label: string; icon: string; item: BookableItem }[] = [
+    { label: 'Hotel', icon: '🏨', item: pkg.costBreakdown.hotel },
+    { label: 'Flights', icon: '✈️', item: pkg.costBreakdown.flight },
+    { label: 'Food', icon: '🍽️', item: pkg.costBreakdown.food },
+  ];
 
   return (
     <div className="min-h-dvh bg-ocean-deepest text-white">
@@ -73,6 +83,12 @@ export default function Summary() {
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm">
+            {dateRangeLabel && (
+              <div>
+                <p className="text-white/50">Dates</p>
+                <p className="font-display text-xl">{dateRangeLabel}</p>
+              </div>
+            )}
             <div>
               <p className="text-white/50">Estimated cost</p>
               <p className="font-display text-xl text-gold-accent">
@@ -96,9 +112,6 @@ export default function Summary() {
             <Button variant="primary" onClick={handleSave} disabled={alreadySaved}>
               {alreadySaved ? 'Saved ✓' : 'Save this trip'}
             </Button>
-            <a href={pkg.bookingUrl} target="_blank" rel="noreferrer">
-              <Button variant="secondary">Book now ↗</Button>
-            </a>
           </div>
           {justSaved && (
             <p className="mt-4 text-sm text-gold-accent animate-fade-in">
@@ -110,7 +123,37 @@ export default function Summary() {
 
       <div className="bg-surface px-4 py-12 text-ink sm:px-12 sm:py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-xl text-ink sm:text-2xl">Day-by-day itinerary</h2>
+          <h2 className="font-display text-xl text-ink sm:text-2xl">Cost breakdown</h2>
+          <div className="mt-6 space-y-3">
+            {costRows.map((row) => (
+              <div
+                key={row.label}
+                className="flex items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5"
+              >
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="text-2xl" aria-hidden>
+                    {row.icon}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-ink">{row.label}</p>
+                    <p className="truncate text-xs text-ink/60">{row.item.name}</p>
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <p className="font-display text-lg text-ocean-mid">
+                    ${row.item.cost.toLocaleString()}
+                  </p>
+                  <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
+                    <Button variant="accent" className="px-4 py-2 text-sm">
+                      Book ↗
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="font-display mt-10 text-xl text-ink sm:text-2xl">Day-by-day itinerary</h2>
           <div className="mt-6 space-y-4">
             {pkg.itinerary.map((day) => (
               <ItineraryDayCard key={day.day} day={day} />

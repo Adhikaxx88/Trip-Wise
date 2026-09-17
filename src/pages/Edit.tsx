@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, type DragEvent } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
 import Logo from '../components/Logo';
+import TimePicker from '../components/TimePicker';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
-import { getDestinationTemplate, regenerateDay } from '../logic/matchTrip';
+import { getSuggestedActivities } from '../logic/matchTrip';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
 import type { ItineraryActivity, ItineraryDay } from '../types';
 
@@ -18,35 +19,14 @@ export default function Edit() {
 
   const [itinerary, setItinerary] = useState<ItineraryDay[] | null>(resolved?.package.itinerary ?? null);
   const [savedNotice, setSavedNotice] = useState(false);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   if (!resolved || !itinerary) {
     return <Navigate to="/questionnaire" replace />;
   }
 
   const { package: pkg, savedId } = resolved;
-  const template = getDestinationTemplate(pkg.id);
-
-  const moveDay = (index: number, direction: -1 | 1) => {
-    setItinerary((prev) => {
-      if (!prev) return prev;
-      const target = index + direction;
-      if (target < 0 || target >= prev.length) return prev;
-      const next = [...prev];
-      [next[index], next[target]] = [next[target], next[index]];
-      return next.map((day, i) => ({ ...day, day: i + 1 }));
-    });
-    setSavedNotice(false);
-  };
-
-  const regenerate = (index: number) => {
-    setItinerary((prev) => {
-      if (!prev) return prev;
-      const next = [...prev];
-      next[index] = regenerateDay(template, next[index].day, next.length);
-      return next;
-    });
-    setSavedNotice(false);
-  };
 
   const updateActivity = (dayIndex: number, activityIndex: number, field: keyof ItineraryActivity, value: string) => {
     setItinerary((prev) => {
@@ -79,10 +59,58 @@ export default function Edit() {
     setItinerary((prev) => {
       if (!prev) return prev;
       return prev.map((day, i) =>
-        i === dayIndex ? { ...day, activities: [...day.activities, { name: 'New activity' }] } : day,
+        i === dayIndex
+          ? { ...day, activities: [...day.activities, { time: '9:00 AM', name: 'New activity' }] }
+          : day,
       );
     });
     setSavedNotice(false);
+  };
+
+  const addSuggestedActivity = (dayIndex: number, activity: ItineraryActivity) => {
+    setItinerary((prev) => {
+      if (!prev) return prev;
+      return prev.map((day, i) =>
+        i === dayIndex ? { ...day, activities: [...day.activities, activity] } : day,
+      );
+    });
+    setSavedNotice(false);
+  };
+
+  const reorderDays = (fromIndex: number, toIndex: number) => {
+    setItinerary((prev) => {
+      if (!prev) return prev;
+      const next = [...prev];
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      return next.map((day, i) => ({ ...day, day: i + 1 }));
+    });
+    setSavedNotice(false);
+  };
+
+  const handleDragStart = (index: number) => (e: DragEvent<HTMLDivElement>) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (index: number) => (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const handleDrop = (index: number) => (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (draggedIndex !== null && draggedIndex !== index) {
+      reorderDays(draggedIndex, index);
+    }
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
   };
 
   const handleSave = () => {
@@ -114,83 +142,92 @@ export default function Edit() {
         <p className="mt-2 text-sm text-ink/60 sm:text-base">
           {pkg.destination} · {itinerary.length} days
         </p>
+        <p className="mt-1 text-xs text-ink/40">Drag a day by its handle to reorder your trip.</p>
 
         <div className="mt-8 space-y-6">
-          {itinerary.map((day, dayIndex) => (
-            <div
-              key={day.day}
-              className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-6"
-            >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-baseline gap-3">
+          {itinerary.map((day, dayIndex) => {
+            const suggestions = getSuggestedActivities(
+              pkg.id,
+              day.activities.map((a) => a.name),
+            );
+            return (
+              <div
+                key={day.day}
+                onDragOver={handleDragOver(dayIndex)}
+                onDrop={handleDrop(dayIndex)}
+                className={`rounded-2xl border bg-white p-4 shadow-sm transition-shadow sm:p-6 ${
+                  dragOverIndex === dayIndex ? 'border-ocean-mid ring-2 ring-ocean-mid/30' : 'border-ink/10'
+                } ${draggedIndex === dayIndex ? 'opacity-40' : ''}`}
+              >
+                <div className="flex items-center gap-3">
+                  <span
+                    draggable
+                    onDragStart={handleDragStart(dayIndex)}
+                    onDragEnd={handleDragEnd}
+                    className="cursor-grab select-none text-ink/30 hover:text-ink/60 active:cursor-grabbing"
+                    aria-label="Drag to reorder this day"
+                    title="Drag to reorder"
+                  >
+                    ⠿
+                  </span>
                   <span className="font-display text-2xl text-ocean-mid">
                     {String(day.day).padStart(2, '0')}
                   </span>
                   <h3 className="text-lg font-semibold">{day.title}</h3>
                 </div>
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => moveDay(dayIndex, -1)}
-                    disabled={dayIndex === 0}
-                    className="rounded-full border border-ink/15 px-2.5 py-1 text-sm disabled:opacity-30 cursor-pointer"
-                    aria-label="Move day earlier"
-                  >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => moveDay(dayIndex, 1)}
-                    disabled={dayIndex === itinerary.length - 1}
-                    className="rounded-full border border-ink/15 px-2.5 py-1 text-sm disabled:opacity-30 cursor-pointer"
-                    aria-label="Move day later"
-                  >
-                    ↓
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => regenerate(dayIndex)}
-                    className="rounded-full bg-ocean-mid/10 px-3 py-1 text-xs font-semibold text-ocean-deep hover:bg-ocean-mid/20 cursor-pointer"
-                  >
-                    Regenerate day
-                  </button>
-                </div>
-              </div>
 
-              <ul className="mt-4 space-y-2">
-                {day.activities.map((activity, activityIndex) => (
-                  <li key={activityIndex} className="flex items-center gap-1.5 sm:gap-2">
-                    <input
-                      value={activity.time ?? ''}
-                      onChange={(e) => updateActivity(dayIndex, activityIndex, 'time', e.target.value)}
-                      placeholder="Time"
-                      className="w-[4.5rem] shrink-0 rounded-lg border border-ink/10 px-1 py-1.5 text-xs focus:border-ocean-mid focus:outline-none sm:w-20 sm:px-2"
-                    />
-                    <input
-                      value={activity.name}
-                      onChange={(e) => updateActivity(dayIndex, activityIndex, 'name', e.target.value)}
-                      className="min-w-0 flex-1 rounded-lg border border-ink/10 px-2 py-1.5 text-sm focus:border-ocean-mid focus:outline-none sm:px-3"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeActivity(dayIndex, activityIndex)}
-                      className="shrink-0 rounded-full px-2 py-1 text-ink/40 hover:text-red-500 cursor-pointer"
-                      aria-label="Remove activity"
-                    >
-                      ✕
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <button
-                type="button"
-                onClick={() => addActivity(dayIndex)}
-                className="mt-3 text-sm font-semibold text-ocean-mid hover:text-ocean-deep cursor-pointer"
-              >
-                + Add activity
-              </button>
-            </div>
-          ))}
+                <ul className="mt-4 space-y-2">
+                  {day.activities.map((activity, activityIndex) => (
+                    <li key={activityIndex} className="flex items-center gap-1.5 sm:gap-2">
+                      <TimePicker
+                        value={activity.time ?? '9:00 AM'}
+                        onChange={(v) => updateActivity(dayIndex, activityIndex, 'time', v)}
+                      />
+                      <input
+                        value={activity.name}
+                        onChange={(e) => updateActivity(dayIndex, activityIndex, 'name', e.target.value)}
+                        className="min-w-0 flex-1 rounded-lg border border-ink/10 px-2 py-1.5 text-sm focus:border-ocean-mid focus:outline-none sm:px-3"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeActivity(dayIndex, activityIndex)}
+                        className="shrink-0 rounded-full px-2 py-1 text-ink/40 hover:text-red-500 cursor-pointer"
+                        aria-label="Remove activity"
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  type="button"
+                  onClick={() => addActivity(dayIndex)}
+                  className="mt-3 text-sm font-semibold text-ocean-mid hover:text-ocean-deep cursor-pointer"
+                >
+                  + Add activity
+                </button>
+
+                {suggestions.length > 0 && (
+                  <div className="mt-3 border-t border-ink/10 pt-3">
+                    <p className="text-xs font-medium text-ink/40">You could also add:</p>
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      {suggestions.map((activity) => (
+                        <button
+                          key={activity.name}
+                          type="button"
+                          onClick={() => addSuggestedActivity(dayIndex, activity)}
+                          className="rounded-full border border-ocean-light/40 bg-ocean-light/5 px-3 py-1 text-xs font-medium text-ocean-deep hover:bg-ocean-light/15 cursor-pointer"
+                        >
+                          + {activity.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-10 flex items-center gap-4">

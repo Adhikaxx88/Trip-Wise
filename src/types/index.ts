@@ -7,6 +7,8 @@ export type ActivityIntensity = 'low' | 'medium' | 'high';
 export interface TripPreferences {
   vibe: Vibe | null;
   durationDays: number | null;
+  startDate: string | null;
+  endDate: string | null;
   budget: { min: number; max: number; currency: string } | null;
   groupSize: number | null;
   activityIntensity?: ActivityIntensity;
@@ -16,6 +18,8 @@ export interface TripPreferences {
 export const createEmptyPreferences = (): TripPreferences => ({
   vibe: null,
   durationDays: null,
+  startDate: null,
+  endDate: null,
   budget: null,
   groupSize: null,
 });
@@ -32,6 +36,18 @@ export interface ItineraryDay {
   activities: ItineraryActivity[];
 }
 
+export interface BookableItem {
+  name: string;
+  cost: number;
+  bookingUrl: string;
+}
+
+export interface CostBreakdown {
+  hotel: BookableItem;
+  flight: BookableItem;
+  food: BookableItem;
+}
+
 export interface TripPackage {
   id: string;
   destination: string;
@@ -42,6 +58,7 @@ export interface TripPackage {
   tags: string[];
   itinerary: ItineraryDay[];
   bookingUrl: string;
+  costBreakdown: CostBreakdown;
 }
 
 export interface SavedTrip {

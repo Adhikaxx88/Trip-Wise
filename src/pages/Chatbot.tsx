@@ -4,7 +4,8 @@ import ChatBubble from '../components/ChatBubble';
 import Logo from '../components/Logo';
 import {
   BUDGET_OPTIONS,
-  DURATION_PRESETS,
+  DATE_RANGE_PRESETS,
+  datesFromPresetDays,
   getVisibleSteps,
   GROUP_SIZE_PRESETS,
   GROUP_TYPE_OPTIONS,
@@ -16,12 +17,13 @@ import {
 import { getFaqAnswer, SUGGESTED_QUESTIONS } from '../data/chatbotFaq';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useTripPreferences } from '../context/TripPreferencesContext';
+import { daysBetweenInclusive, formatDateRange, todayIsoDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
 import type { TripPreferences } from '../types';
 
 const PROMPTS: Record<StepDef['id'], string> = {
   vibe: "Hi! I'm the TripWise assistant. What's the vibe you're going for on this trip?",
-  duration: 'Nice choice. How many days do you have?',
+  dates: 'Nice choice. When are you thinking of going?',
   budget: "Got it. What's your total budget for the trip?",
   groupSize: 'How many people are coming along?',
   intensity: 'Since you want adventure, how intense should the activities be?',
@@ -170,17 +172,35 @@ export default function Chatbot() {
               </div>
             )}
 
-            {currentStep.id === 'duration' && (
+            {currentStep.id === 'dates' && (
               <div className="flex flex-wrap gap-2">
-                {DURATION_PRESETS.map((d) => (
-                  <button
-                    key={d}
-                    onClick={() => advance(`${d} days`, { durationDays: d })}
-                    className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
-                  >
-                    {d} days
-                  </button>
-                ))}
+                {DATE_RANGE_PRESETS.map((preset) => {
+                  const { startDate, endDate } = datesFromPresetDays(preset.days);
+                  return (
+                    <button
+                      key={preset.label}
+                      onClick={() =>
+                        advance(`${formatDateRange(startDate, endDate)} (${preset.days} days)`, {
+                          startDate,
+                          endDate,
+                          durationDays: daysBetweenInclusive(startDate, endDate),
+                        })
+                      }
+                      className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
+                    >
+                      {preset.label}
+                    </button>
+                  );
+                })}
+                <DateRangeInline
+                  onConfirm={(startDate, endDate) =>
+                    advance(`${formatDateRange(startDate, endDate)}`, {
+                      startDate,
+                      endDate,
+                      durationDays: daysBetweenInclusive(startDate, endDate),
+                    })
+                  }
+                />
               </div>
             )}
 
@@ -273,6 +293,40 @@ export default function Chatbot() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function DateRangeInline({ onConfirm }: { onConfirm: (startDate: string, endDate: string) => void }) {
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+  const valid = start && end && end >= start;
+
+  return (
+    <div className="flex w-full flex-wrap items-center gap-2 rounded-2xl border-2 border-ocean-mid/20 bg-white px-3 py-2">
+      <input
+        type="date"
+        min={todayIsoDate()}
+        value={start}
+        onChange={(e) => setStart(e.target.value)}
+        className="min-w-0 flex-1 rounded-lg border border-ink/10 px-2 py-1.5 text-sm focus:border-ocean-mid focus:outline-none"
+      />
+      <span className="text-ink/40">to</span>
+      <input
+        type="date"
+        min={start || todayIsoDate()}
+        value={end}
+        onChange={(e) => setEnd(e.target.value)}
+        className="min-w-0 flex-1 rounded-lg border border-ink/10 px-2 py-1.5 text-sm focus:border-ocean-mid focus:outline-none"
+      />
+      <button
+        type="button"
+        disabled={!valid}
+        onClick={() => valid && onConfirm(start, end)}
+        className="shrink-0 rounded-full bg-ocean-mid px-3 py-1.5 text-sm font-semibold text-white disabled:opacity-40 cursor-pointer"
+      >
+        Set dates
+      </button>
     </div>
   );
 }

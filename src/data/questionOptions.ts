@@ -1,3 +1,4 @@
+import { addDaysIso, daysBetweenInclusive, todayIsoDate } from '../logic/dates';
 import type { ActivityIntensity, GroupType, TripPreferences, Vibe } from '../types';
 
 export const VIBE_OPTIONS: { value: Vibe; label: string; description: string }[] = [
@@ -7,7 +8,18 @@ export const VIBE_OPTIONS: { value: Vibe; label: string; description: string }[]
   { value: 'romantic', label: 'Romantic', description: 'Sunsets, wine, quiet moments together' },
 ];
 
-export const DURATION_PRESETS = [3, 5, 7, 10, 14];
+export const DATE_RANGE_PRESETS: { label: string; days: number }[] = [
+  { label: 'Long weekend', days: 3 },
+  { label: '1 week', days: 7 },
+  { label: '10 days', days: 10 },
+  { label: '2 weeks', days: 14 },
+];
+
+export function datesFromPresetDays(days: number): { startDate: string; endDate: string } {
+  const startDate = addDaysIso(todayIsoDate(), 7);
+  const endDate = addDaysIso(startDate, days - 1);
+  return { startDate, endDate };
+}
 
 export const BUDGET_OPTIONS: { label: string; description: string; min: number; max: number }[] = [
   { label: 'Budget-friendly', description: '$500 – $1,500 total', min: 500, max: 1500 },
@@ -31,14 +43,14 @@ export const GROUP_TYPE_OPTIONS: { value: GroupType; label: string }[] = [
 ];
 
 export interface StepDef {
-  id: 'vibe' | 'duration' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
+  id: 'vibe' | 'dates' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
   eyebrow: string;
 }
 
 export function getVisibleSteps(prefs: TripPreferences): StepDef[] {
   const steps: StepDef[] = [
     { id: 'vibe', eyebrow: 'Step 1' },
-    { id: 'duration', eyebrow: 'Step 2' },
+    { id: 'dates', eyebrow: 'Step 2' },
     { id: 'budget', eyebrow: 'Step 3' },
     { id: 'groupSize', eyebrow: 'Step 4' },
   ];
@@ -77,9 +89,11 @@ export function matchFreeTextToStep(text: string, stepId: StepDef['id']): FreeTe
       );
       return match ? { patch: { vibe: match.value } } : null;
     }
-    case 'duration': {
+    case 'dates': {
       const n = parseInt(lower.replace(/[^0-9]/g, ''), 10);
-      return Number.isFinite(n) && n > 0 ? { patch: { durationDays: n } } : null;
+      if (!Number.isFinite(n) || n <= 0) return null;
+      const { startDate, endDate } = datesFromPresetDays(n);
+      return { patch: { startDate, endDate, durationDays: daysBetweenInclusive(startDate, endDate) } };
     }
     case 'budget': {
       const match = BUDGET_OPTIONS.find(

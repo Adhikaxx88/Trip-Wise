@@ -1,5 +1,5 @@
 import { destinations, type DestinationTemplate } from '../data/destinations';
-import type { ItineraryDay, TripPackage, TripPreferences } from '../types';
+import type { CostBreakdown, ItineraryActivity, ItineraryDay, TripPackage, TripPreferences } from '../types';
 
 function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): number {
   let score = 0;
@@ -57,22 +57,52 @@ function buildItinerary(dest: DestinationTemplate, durationDays: number): Itiner
   return days;
 }
 
-let regenSeed = 0;
+function buildCostBreakdown(
+  dest: DestinationTemplate,
+  durationDays: number,
+  groupSize: number,
+): CostBreakdown {
+  const nights = Math.max(1, durationDays - 1);
+  const rooms = Math.max(1, Math.ceil(groupSize / 2));
+  const destinationQuery = encodeURIComponent(dest.destination);
 
-export function regenerateDay(dest: DestinationTemplate | undefined, dayNumber: number, totalDays: number): ItineraryDay {
-  if (!dest) {
-    return { day: dayNumber, title: `Day ${dayNumber}`, activities: [] };
+  return {
+    hotel: {
+      name: dest.hotelName,
+      cost: Math.round(dest.hotelCostPerNight * nights * rooms),
+      bookingUrl: dest.bookingUrl,
+    },
+    flight: {
+      name: `Round-trip flights to ${dest.destination}`,
+      cost: Math.round(dest.flightEstimatePerPerson * groupSize),
+      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${destinationQuery}`,
+    },
+    food: {
+      name: 'Meals & dining',
+      cost: Math.round(dest.foodPerPersonPerDay * durationDays * groupSize),
+      bookingUrl: `https://www.tripadvisor.com/Search?q=${destinationQuery}%20restaurants`,
+    },
+  };
+}
+
+export function getSuggestedActivities(packageId: string, existingNames: string[]): ItineraryActivity[] {
+  const dest = getDestinationTemplate(packageId);
+  if (!dest) return [];
+
+  const existing = new Set(existingNames.map((n) => n.toLowerCase()));
+  const pool = [dest.arrivalDay, ...dest.coreDays, dest.departureDay].flatMap((d) => d.activities);
+  const seen = new Set<string>();
+  const suggestions: ItineraryActivity[] = [];
+
+  for (const activity of pool) {
+    const key = activity.name.toLowerCase();
+    if (existing.has(key) || seen.has(key)) continue;
+    seen.add(key);
+    suggestions.push(activity);
+    if (suggestions.length >= 4) break;
   }
-  regenSeed += 1;
-  if (dayNumber === 1) {
-    return { day: 1, title: dest.arrivalDay.title, activities: dest.arrivalDay.activities };
-  }
-  if (dayNumber === totalDays && totalDays > 1) {
-    return { day: dayNumber, title: dest.departureDay.title, activities: dest.departureDay.activities };
-  }
-  const pool = dest.coreDays;
-  const template = pool[(dayNumber + regenSeed) % pool.length];
-  return { day: dayNumber, title: template.title, activities: template.activities };
+
+  return suggestions;
 }
 
 export function matchTrip(prefs: TripPreferences): TripPackage {
@@ -85,7 +115,8 @@ export function matchTrip(prefs: TripPreferences): TripPackage {
   const groupSize = prefs.groupSize ?? 1;
 
   const itinerary = buildItinerary(best, duration);
-  const estimatedCost = Math.round(best.costPerPersonPerDay * duration * groupSize);
+  const costBreakdown = buildCostBreakdown(best, duration, groupSize);
+  const estimatedCost = costBreakdown.hotel.cost + costBreakdown.flight.cost + costBreakdown.food.cost;
 
   const destinationLabel =
     best.destination.toLowerCase() === best.country.toLowerCase()
@@ -102,6 +133,7 @@ export function matchTrip(prefs: TripPreferences): TripPackage {
     tags: best.tags,
     itinerary,
     bookingUrl: best.bookingUrl,
+    costBreakdown,
   };
 }
 
