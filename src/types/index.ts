@@ -28,6 +28,7 @@ export interface ItineraryActivity {
   time?: string;
   name: string;
   note?: string;
+  price?: number;
 }
 
 export interface ItineraryDay {
@@ -46,8 +47,6 @@ export interface BookableItem {
 export interface CostBreakdown {
   hotel: BookableItem;
   flight: BookableItem;
-  food: BookableItem;
-  attractions: BookableItem;
 }
 
 export interface TripPackage {

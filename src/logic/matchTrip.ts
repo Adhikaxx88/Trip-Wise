@@ -1,4 +1,4 @@
-import { destinations, type DestinationTemplate } from '../data/destinations';
+import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
 import type { CostBreakdown, ItineraryActivity, ItineraryDay, TripPackage, TripPreferences } from '../types';
 
 function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): number {
@@ -31,71 +31,96 @@ function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): nu
   return score;
 }
 
+const STOPWORDS = new Set([
+  'the', 'of', 'a', 'an', 'and', 'entrance', 'access', 'ticket', 'tickets', 'tour', 'tours', 'cruise', 'excursion',
+]);
+
+function significantWords(text: string): string[] {
+  return text
+    .toLowerCase()
+    .split(/[^a-z0-9']+/)
+    .filter((w) => w.length > 3 && !STOPWORDS.has(w));
+}
+
+const TRANSPORT_PATTERN = /\btransfer\b|\bseaplane\b|\bboat to\b|\bland in\b|\bfly\b|\bdrive to\b|\btransport\b/i;
+const TRANSPORT_PRICE = 20;
+
+function priceActivity(
+  dest: DestinationTemplate,
+  activity: ItineraryActivity,
+  dayNumber: number,
+): ItineraryActivity {
+  if (typeof activity.price === 'number') return activity;
+
+  const lowerName = activity.name.toLowerCase();
+  const mealIndex = Math.max(0, dayNumber - 1);
+
+  if (/breakfast|brunch/.test(lowerName)) {
+    const pool = dest.restaurants.breakfast;
+    const option = pool[mealIndex % pool.length];
+    return { ...activity, price: option.price, note: activity.note ?? option.name };
+  }
+  if (/lunch/.test(lowerName)) {
+    const pool = dest.restaurants.lunch;
+    const option = pool[mealIndex % pool.length];
+    return { ...activity, price: option.price, note: activity.note ?? option.name };
+  }
+  if (/dinner/.test(lowerName)) {
+    const pool = dest.restaurants.dinner;
+    const option = pool[mealIndex % pool.length];
+    return { ...activity, price: option.price, note: activity.note ?? option.name };
+  }
+
+  const activityWords = new Set(significantWords(activity.name));
+  const matchedTicket = dest.attractionTickets.find((ticket) =>
+    significantWords(ticket.name).some((word) => activityWords.has(word)),
+  );
+  if (matchedTicket) {
+    return { ...activity, price: matchedTicket.price, note: activity.note ?? matchedTicket.name };
+  }
+
+  if (TRANSPORT_PATTERN.test(lowerName)) {
+    return { ...activity, price: TRANSPORT_PRICE };
+  }
+
+  return activity;
+}
+
+function priceDay(dest: DestinationTemplate, day: DayTemplate, dayNumber: number): ItineraryActivity[] {
+  return day.activities.map((activity) => priceActivity(dest, activity, dayNumber));
+}
+
 function buildItinerary(dest: DestinationTemplate, durationDays: number): ItineraryDay[] {
   const days: ItineraryDay[] = [];
   const totalDays = Math.max(1, durationDays);
 
   if (totalDays === 1) {
-    days.push({ day: 1, title: dest.arrivalDay.title, activities: dest.arrivalDay.activities });
+    days.push({ day: 1, title: dest.arrivalDay.title, activities: priceDay(dest, dest.arrivalDay, 1) });
     return days;
   }
 
-  days.push({ day: 1, title: dest.arrivalDay.title, activities: dest.arrivalDay.activities });
+  days.push({ day: 1, title: dest.arrivalDay.title, activities: priceDay(dest, dest.arrivalDay, 1) });
 
   const middleDaysCount = totalDays - 2;
   for (let i = 0; i < middleDaysCount; i++) {
     const template = dest.coreDays[i % dest.coreDays.length];
-    days.push({ day: i + 2, title: template.title, activities: template.activities });
+    const dayNumber = i + 2;
+    days.push({ day: dayNumber, title: template.title, activities: priceDay(dest, template, dayNumber) });
   }
 
   days.push({
     day: totalDays,
     title: dest.departureDay.title,
-    activities: dest.departureDay.activities,
+    activities: priceDay(dest, dest.departureDay, totalDays),
   });
 
   return days;
 }
 
-interface DailyMealPlan {
-  day: number;
-  breakfast: { name: string; price: number };
-  lunch: { name: string; price: number };
-  dinner: { name: string; price: number };
-}
-
-function buildDailyMeals(dest: DestinationTemplate, durationDays: number): DailyMealPlan[] {
-  const totalDays = Math.max(1, durationDays);
-  const { breakfast, lunch, dinner } = dest.restaurants;
-  const plans: DailyMealPlan[] = [];
-
-  for (let i = 0; i < totalDays; i++) {
-    plans.push({
-      day: i + 1,
-      breakfast: breakfast[i % breakfast.length],
-      lunch: lunch[i % lunch.length],
-      dinner: dinner[i % dinner.length],
-    });
-  }
-
-  return plans;
-}
-
-function buildCostBreakdown(
-  dest: DestinationTemplate,
-  durationDays: number,
-  groupSize: number,
-): CostBreakdown {
+function buildCostBreakdown(dest: DestinationTemplate, durationDays: number, groupSize: number): CostBreakdown {
   const nights = Math.max(1, durationDays - 1);
   const rooms = Math.max(1, Math.ceil(groupSize / 2));
   const destinationQuery = encodeURIComponent(dest.destination);
-
-  const attractionsPerPersonCost = dest.attractionTickets.reduce((sum, t) => sum + t.price, 0);
-  const dailyMeals = buildDailyMeals(dest, durationDays);
-  const foodPerPersonTotal = dailyMeals.reduce(
-    (sum, d) => sum + d.breakfast.price + d.lunch.price + d.dinner.price,
-    0,
-  );
 
   return {
     hotel: {
@@ -108,25 +133,25 @@ function buildCostBreakdown(
       cost: Math.round(dest.flightEstimatePerPerson * groupSize),
       bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${destinationQuery}`,
     },
-    food: {
-      name: 'Meals & dining',
-      cost: Math.round(foodPerPersonTotal * groupSize),
-      bookingUrl: `https://www.google.com/search?q=best+restaurants+in+${destinationQuery}`,
-      details: dailyMeals.map((d) => ({
-        label: `Day ${d.day}`,
-        value: `B: ${d.breakfast.name} ($${d.breakfast.price}) · L: ${d.lunch.name} ($${d.lunch.price}) · D: ${d.dinner.name} ($${d.dinner.price})`,
-      })),
-    },
-    attractions: {
-      name: 'Entrance tickets & tours',
-      cost: Math.round(attractionsPerPersonCost * groupSize),
-      bookingUrl: `https://www.viator.com/searchResults/all?text=${destinationQuery}`,
-      details: dest.attractionTickets.map((t) => ({ label: t.name, value: `$${t.price}` })),
-    },
   };
 }
 
-export function getSuggestedActivities(packageId: string, existingNames: string[]): ItineraryActivity[] {
+export function activitiesCostPerPerson(itinerary: ItineraryDay[]): number {
+  return itinerary.reduce(
+    (sum, day) => sum + day.activities.reduce((daySum, a) => daySum + (a.price ?? 0), 0),
+    0,
+  );
+}
+
+export function dayCostPerPerson(day: ItineraryDay): number {
+  return day.activities.reduce((sum, a) => sum + (a.price ?? 0), 0);
+}
+
+export function getSuggestedActivities(
+  packageId: string,
+  existingNames: string[],
+  dayNumber: number,
+): ItineraryActivity[] {
   const dest = getDestinationTemplate(packageId);
   if (!dest) return [];
 
@@ -139,7 +164,7 @@ export function getSuggestedActivities(packageId: string, existingNames: string[
     const key = activity.name.toLowerCase();
     if (existing.has(key) || seen.has(key)) continue;
     seen.add(key);
-    suggestions.push(activity);
+    suggestions.push(priceActivity(dest, activity, dayNumber));
     if (suggestions.length >= 4) break;
   }
 
@@ -160,8 +185,7 @@ export function matchTrip(prefs: TripPreferences): TripPackage {
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
-    costBreakdown.food.cost +
-    costBreakdown.attractions.cost;
+    Math.round(activitiesCostPerPerson(itinerary) * groupSize);
 
   const destinationLabel =
     best.destination.toLowerCase() === best.country.toLowerCase()

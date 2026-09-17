@@ -32,11 +32,9 @@ export default function Summary() {
   const dateRangeLabel = formatDateRange(preferences.startDate, preferences.endDate);
   const groupSize = preferences.groupSize ?? 1;
 
-  const costRows: { label: string; icon: 'hotel' | 'flight' | 'food' | 'ticket'; item: BookableItem }[] = [
+  const costRows: { label: string; icon: 'hotel' | 'flight'; item: BookableItem }[] = [
     { label: 'Hotel', icon: 'hotel', item: pkg.costBreakdown.hotel },
     { label: 'Flights', icon: 'flight', item: pkg.costBreakdown.flight },
-    { label: 'Food', icon: 'food', item: pkg.costBreakdown.food },
-    { label: 'Attractions', icon: 'ticket', item: pkg.costBreakdown.attractions },
   ];
 
   return (
@@ -96,6 +94,9 @@ export default function Summary() {
               <p className="text-white/50">Estimated cost</p>
               <p className="font-display text-xl text-gold-accent">
                 ${pkg.estimatedCost.toLocaleString()}
+              </p>
+              <p className="text-xs text-white/50">
+                ${Math.round(pkg.estimatedCost / groupSize).toLocaleString()} / person
               </p>
             </div>
             <div>
@@ -159,37 +160,17 @@ export default function Summary() {
                     </a>
                   </div>
                 </div>
-
-                {row.item.details && row.item.details.length > 0 && row.label === 'Food' ? (
-                  <ul className="mt-3 max-h-56 space-y-1.5 overflow-y-auto border-t border-ink/10 pt-3 pr-1 text-xs">
-                    {row.item.details.map((detail) => (
-                      <li key={detail.label} className="flex flex-wrap gap-x-2 text-ink/70">
-                        <span className="shrink-0 font-medium text-ink/50">{detail.label}:</span>
-                        <span>{detail.value}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  row.item.details &&
-                  row.item.details.length > 0 && (
-                    <ul className="mt-3 grid grid-cols-1 gap-1.5 border-t border-ink/10 pt-3 sm:grid-cols-2">
-                      {row.item.details.map((detail) => (
-                        <li key={detail.label} className="flex justify-between gap-2 text-xs text-ink/70">
-                          <span className="font-medium text-ink/50">{detail.label}</span>
-                          <span className="truncate text-right">{detail.value}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                )}
               </div>
             ))}
           </div>
 
           <h2 className="font-display mt-10 text-xl text-ink sm:text-2xl">Day-by-day itinerary</h2>
+          <p className="mt-1 text-sm text-ink/50">
+            Meals, tickets, and transport are priced right where they happen.
+          </p>
           <div className="mt-6 space-y-4">
             {pkg.itinerary.map((day) => (
-              <ItineraryDayCard key={day.day} day={day} />
+              <ItineraryDayCard key={day.day} day={day} groupSize={groupSize} />
             ))}
           </div>
         </div>
