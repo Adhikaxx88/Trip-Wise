@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
+import ChatFab from '../components/ChatFab';
 import Logo from '../components/Logo';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
@@ -190,6 +191,8 @@ export default function Edit() {
           {savedNotice && <span className="text-sm font-medium text-ocean-mid">Changes saved ✓</span>}
         </div>
       </div>
+
+      <ChatFab />
     </div>
   );
 }

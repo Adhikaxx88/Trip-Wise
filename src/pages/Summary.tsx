@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
+import ChatFab from '../components/ChatFab';
+import GradientBackdrop from '../components/GradientBackdrop';
 import ItineraryDayCard from '../components/ItineraryDayCard';
 import Logo from '../components/Logo';
 import { useSavedTrips } from '../context/SavedTripsContext';
@@ -26,20 +28,28 @@ export default function Summary() {
 
   return (
     <div className="min-h-screen bg-ocean-deepest text-white">
-      <div
-        className="relative bg-cover bg-center pb-16 pt-6"
-        style={{
-          backgroundImage: `linear-gradient(180deg, rgba(0,23,42,0.35) 0%, rgba(0,23,42,0.85) 75%, #00172A 100%), url(${pkg.coverImageUrl})`,
-        }}
-      >
-        <header className="flex items-center justify-between px-6 sm:px-12">
+      <div className="relative overflow-hidden pb-16 pt-6">
+        <GradientBackdrop vibe={pkg.vibe} />
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-60"
+          style={{ backgroundImage: `url(${pkg.coverImageUrl})` }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(0,23,42,0.35) 0%, rgba(0,23,42,0.85) 75%, #00172A 100%)',
+          }}
+        />
+
+        <header className="relative flex items-center justify-between px-6 sm:px-12">
           <Logo />
           <Link to="/saved" className="text-sm font-medium text-white/80 hover:text-white">
             Saved trips
           </Link>
         </header>
 
-        <div className="mx-auto mt-24 max-w-3xl px-6 text-center animate-fade-in">
+        <div className="relative mx-auto mt-24 max-w-3xl px-6 text-center animate-fade-in">
           <p className="text-sm font-medium uppercase tracking-wide text-gold-accent">
             Your matched trip
           </p>
@@ -103,6 +113,8 @@ export default function Summary() {
           </div>
         </div>
       </div>
+
+      <ChatFab />
     </div>
   );
 }

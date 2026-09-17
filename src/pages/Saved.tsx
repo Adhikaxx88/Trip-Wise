@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
+import ChatFab from '../components/ChatFab';
+import GradientBackdrop from '../components/GradientBackdrop';
 import Logo from '../components/Logo';
 import { useSavedTrips } from '../context/SavedTripsContext';
 
@@ -33,10 +35,13 @@ export default function Saved() {
                 key={trip.savedId}
                 className="glass-panel overflow-hidden rounded-3xl"
               >
-                <div
-                  className="h-36 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${trip.package.coverImageUrl})` }}
-                />
+                <div className="relative h-36 overflow-hidden">
+                  <GradientBackdrop vibe={trip.package.vibe} />
+                  <div
+                    className="absolute inset-0 bg-cover bg-center opacity-60"
+                    style={{ backgroundImage: `url(${trip.package.coverImageUrl})` }}
+                  />
+                </div>
                 <div className="p-5">
                   <h2 className="font-display text-xl">{trip.package.destination}</h2>
                   <p className="mt-1 text-sm text-white/60">
@@ -70,6 +75,8 @@ export default function Saved() {
           </div>
         )}
       </div>
+
+      <ChatFab />
     </div>
   );
 }

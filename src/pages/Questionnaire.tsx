@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ChatFab from '../components/ChatFab';
 import OptionCard from '../components/OptionCard';
 import QuestionShell from '../components/QuestionShell';
 import StepIndicator from '../components/StepIndicator';
@@ -261,6 +262,8 @@ export default function Questionnaire() {
           ))}
         </QuestionShell>
       )}
+
+      <ChatFab />
     </div>
   );
 }
