@@ -7,7 +7,10 @@ export default function StepIndicator({ current, total }: StepIndicatorProps) {
   const percent = Math.min(100, Math.round((current / total) * 100));
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-20">
+    <div
+      className="fixed top-0 left-0 right-0 z-20"
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+    >
       <div className="h-1.5 w-full bg-ink/10">
         <div
           className="h-full bg-gold-accent transition-all duration-500 ease-out"

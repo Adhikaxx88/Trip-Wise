@@ -25,19 +25,23 @@ export default function QuestionShell({
   return (
     <div
       key={stepKey}
-      className="flex min-h-screen w-full flex-col items-center justify-center bg-surface px-6 py-24 animate-slide-up"
+      className="flex min-h-dvh w-full flex-col items-center justify-center bg-surface px-4 py-16 animate-slide-up sm:px-6 sm:py-24"
+      style={{
+        paddingTop: 'max(4rem, calc(2.5rem + env(safe-area-inset-top)))',
+        paddingBottom: 'max(4rem, calc(2.5rem + env(safe-area-inset-bottom)))',
+      }}
     >
       <div className="w-full max-w-xl">
-        <p className="text-center text-sm font-semibold uppercase tracking-wide text-ocean-mid">
+        <p className="text-center text-xs font-semibold uppercase tracking-wide text-ocean-mid sm:text-sm">
           {eyebrow}
         </p>
-        <h1 className="font-display mt-3 text-center text-3xl font-medium text-ink sm:text-4xl">
+        <h1 className="font-display mt-3 text-center text-2xl font-medium text-ink sm:text-3xl md:text-4xl">
           {question}
         </h1>
 
-        <div className="mt-10 space-y-3">{children}</div>
+        <div className="mt-8 space-y-3 sm:mt-10">{children}</div>
 
-        <div className="mt-10 flex items-center justify-between">
+        <div className="mt-8 flex items-center justify-between sm:mt-10">
           {onBack ? (
             <Button variant="ghost" onClick={onBack}>
               Back

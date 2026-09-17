@@ -97,29 +97,38 @@ export default function Edit() {
   };
 
   return (
-    <div className="min-h-screen bg-surface pb-24 text-ink">
-      <header className="flex items-center justify-between bg-ocean-deepest px-6 py-6 text-white sm:px-12">
+    <div className="min-h-dvh bg-surface pb-24 text-ink">
+      <header className="flex flex-wrap items-center justify-between gap-3 bg-ocean-deepest px-4 py-5 text-white sm:px-12 sm:py-6">
         <Logo />
-        <Button variant="secondary" onClick={() => navigate(`/trip/${pkg.id}`)}>
+        <Button
+          variant="secondary"
+          className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base"
+          onClick={() => navigate(`/trip/${pkg.id}`)}
+        >
           Back to summary
         </Button>
       </header>
 
-      <div className="mx-auto max-w-3xl px-6 py-10 sm:px-0">
-        <h1 className="font-display text-3xl text-ink">Edit your itinerary</h1>
-        <p className="mt-2 text-ink/60">{pkg.destination} · {itinerary.length} days</p>
+      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
+        <h1 className="font-display text-2xl text-ink sm:text-3xl">Edit your itinerary</h1>
+        <p className="mt-2 text-sm text-ink/60 sm:text-base">
+          {pkg.destination} · {itinerary.length} days
+        </p>
 
         <div className="mt-8 space-y-6">
           {itinerary.map((day, dayIndex) => (
-            <div key={day.day} className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between gap-3">
+            <div
+              key={day.day}
+              className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-6"
+            >
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-baseline gap-3">
                   <span className="font-display text-2xl text-ocean-mid">
                     {String(day.day).padStart(2, '0')}
                   </span>
                   <h3 className="text-lg font-semibold">{day.title}</h3>
                 </div>
-                <div className="flex shrink-0 items-center gap-1.5">
+                <div className="flex flex-wrap items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => moveDay(dayIndex, -1)}
@@ -150,17 +159,17 @@ export default function Edit() {
 
               <ul className="mt-4 space-y-2">
                 {day.activities.map((activity, activityIndex) => (
-                  <li key={activityIndex} className="flex items-center gap-2">
+                  <li key={activityIndex} className="flex items-center gap-1.5 sm:gap-2">
                     <input
                       value={activity.time ?? ''}
                       onChange={(e) => updateActivity(dayIndex, activityIndex, 'time', e.target.value)}
                       placeholder="Time"
-                      className="w-20 shrink-0 rounded-lg border border-ink/10 px-2 py-1.5 text-xs focus:border-ocean-mid focus:outline-none"
+                      className="w-[4.5rem] shrink-0 rounded-lg border border-ink/10 px-1 py-1.5 text-xs focus:border-ocean-mid focus:outline-none sm:w-20 sm:px-2"
                     />
                     <input
                       value={activity.name}
                       onChange={(e) => updateActivity(dayIndex, activityIndex, 'name', e.target.value)}
-                      className="flex-1 rounded-lg border border-ink/10 px-3 py-1.5 text-sm focus:border-ocean-mid focus:outline-none"
+                      className="min-w-0 flex-1 rounded-lg border border-ink/10 px-2 py-1.5 text-sm focus:border-ocean-mid focus:outline-none sm:px-3"
                     />
                     <button
                       type="button"

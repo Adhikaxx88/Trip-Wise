@@ -61,7 +61,7 @@ export default function Questionnaire() {
 
   if (isMatching) {
     return (
-      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-ocean-deep text-white">
+      <div className="flex min-h-dvh w-full flex-col items-center justify-center bg-ocean-deep text-white">
         <div className="h-14 w-14 animate-spin rounded-full border-4 border-white/20 border-t-gold-accent" />
         <p className="font-display mt-8 text-2xl">Matching you a trip…</p>
         <p className="mt-2 text-white/60">Weighing your vibe, budget, and dates</p>

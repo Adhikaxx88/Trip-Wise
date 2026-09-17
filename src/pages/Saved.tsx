@@ -9,27 +9,34 @@ export default function Saved() {
   const { savedTrips, removeSavedTrip } = useSavedTrips();
 
   return (
-    <div className="min-h-screen bg-ocean-deepest text-white">
-      <header className="flex items-center justify-between px-6 py-6 sm:px-12">
+    <div className="min-h-dvh bg-ocean-deepest text-white">
+      <header
+        className="flex items-center justify-between px-4 py-5 sm:px-12 sm:py-6"
+        style={{ paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))' }}
+      >
         <Logo />
         <Link to="/questionnaire">
-          <Button variant="secondary">Plan another trip</Button>
+          <Button variant="secondary" className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base">
+            Plan another trip
+          </Button>
         </Link>
       </header>
 
-      <div className="mx-auto max-w-4xl px-6 py-12 sm:px-12">
-        <h1 className="font-display text-3xl">Saved trips</h1>
-        <p className="mt-2 text-white/60">Revisit or keep editing any trip you've saved.</p>
+      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-12 sm:py-12">
+        <h1 className="font-display text-2xl sm:text-3xl">Saved trips</h1>
+        <p className="mt-2 text-sm text-white/60 sm:text-base">
+          Revisit or keep editing any trip you've saved.
+        </p>
 
         {savedTrips.length === 0 ? (
-          <div className="glass-panel mt-10 rounded-3xl p-10 text-center">
+          <div className="glass-panel mt-10 rounded-3xl p-8 text-center sm:p-10">
             <p className="text-white/80">No saved trips yet.</p>
             <Link to="/questionnaire" className="mt-4 inline-block">
               <Button variant="primary">Start planning</Button>
             </Link>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {savedTrips.map((trip) => (
               <div
                 key={trip.savedId}

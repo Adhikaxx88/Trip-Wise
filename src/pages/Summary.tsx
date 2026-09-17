@@ -27,7 +27,7 @@ export default function Summary() {
   };
 
   return (
-    <div className="min-h-screen bg-ocean-deepest text-white">
+    <div className="min-h-dvh bg-ocean-deepest text-white">
       <div className="relative overflow-hidden pb-16 pt-6">
         <GradientBackdrop vibe={pkg.vibe} />
         <div
@@ -42,19 +42,24 @@ export default function Summary() {
           }}
         />
 
-        <header className="relative flex items-center justify-between px-6 sm:px-12">
+        <header
+          className="relative flex items-center justify-between px-4 sm:px-12"
+          style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        >
           <Logo />
-          <Link to="/saved" className="text-sm font-medium text-white/80 hover:text-white">
+          <Link to="/saved" className="text-xs font-medium text-white/80 hover:text-white sm:text-sm">
             Saved trips
           </Link>
         </header>
 
-        <div className="relative mx-auto mt-24 max-w-3xl px-6 text-center animate-fade-in">
-          <p className="text-sm font-medium uppercase tracking-wide text-gold-accent">
+        <div className="relative mx-auto mt-16 max-w-3xl px-4 text-center animate-fade-in sm:mt-24 sm:px-6">
+          <p className="text-xs font-medium uppercase tracking-wide text-gold-accent sm:text-sm">
             Your matched trip
           </p>
-          <h1 className="font-display mt-3 text-4xl font-medium sm:text-5xl">{pkg.destination}</h1>
-          <p className="mt-5 text-white/85">{pkg.summary}</p>
+          <h1 className="font-display mt-3 text-3xl font-medium sm:text-4xl md:text-5xl">
+            {pkg.destination}
+          </h1>
+          <p className="mt-5 text-sm text-white/85 sm:text-base">{pkg.summary}</p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             {pkg.tags.map((tag) => (
@@ -103,9 +108,9 @@ export default function Summary() {
         </div>
       </div>
 
-      <div className="bg-surface px-6 py-16 text-ink sm:px-12">
+      <div className="bg-surface px-4 py-12 text-ink sm:px-12 sm:py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl text-ink">Day-by-day itinerary</h2>
+          <h2 className="font-display text-xl text-ink sm:text-2xl">Day-by-day itinerary</h2>
           <div className="mt-6 space-y-4">
             {pkg.itinerary.map((day) => (
               <ItineraryDayCard key={day.day} day={day} />

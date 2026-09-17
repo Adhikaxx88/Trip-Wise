@@ -127,12 +127,12 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-surface">
+    <div className="flex min-h-dvh flex-col bg-surface">
       <header className="flex items-center justify-between bg-ocean-deepest px-6 py-5 sm:px-12">
         <Logo />
       </header>
 
-      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 py-8 sm:px-0">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 py-6 sm:px-6 sm:py-8">
         <div className="flex-1 space-y-3 overflow-y-auto">
           {messages.map((m) => (
             <ChatBubble key={m.id} from={m.from}>
@@ -152,7 +152,10 @@ export default function Chatbot() {
         </div>
 
         {!isMatching && (
-          <div className="sticky bottom-0 mt-4 space-y-3 rounded-2xl bg-surface pt-2">
+          <div
+            className="sticky bottom-0 mt-4 space-y-3 rounded-2xl bg-surface pt-2"
+            style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+          >
             {currentStep.id === 'vibe' && (
               <div className="flex flex-wrap gap-2">
                 {VIBE_OPTIONS.map((opt) => (
@@ -257,8 +260,8 @@ export default function Chatbot() {
                 value={freeformInput}
                 onChange={(e) => setFreeformInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleFreeformSubmit()}
-                placeholder="Or just type your answer or a question..."
-                className="flex-1 rounded-full border-2 border-ink/10 px-4 py-2.5 text-sm focus:border-ocean-mid focus:outline-none"
+                placeholder="Type your answer or a question..."
+                className="min-w-0 flex-1 rounded-full border-2 border-ink/10 px-4 py-2.5 text-sm focus:border-ocean-mid focus:outline-none"
               />
               <button
                 onClick={handleFreeformSubmit}
