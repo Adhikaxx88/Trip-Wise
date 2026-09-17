@@ -40,12 +40,14 @@ export interface BookableItem {
   name: string;
   cost: number;
   bookingUrl: string;
+  details?: { label: string; value: string }[];
 }
 
 export interface CostBreakdown {
   hotel: BookableItem;
   flight: BookableItem;
   food: BookableItem;
+  attractions: BookableItem;
 }
 
 export interface TripPackage {

@@ -5,6 +5,17 @@ export interface DayTemplate {
   activities: ItineraryActivity[];
 }
 
+export interface RestaurantRec {
+  meal: string;
+  name: string;
+  price: number;
+}
+
+export interface AttractionTicket {
+  name: string;
+  price: number;
+}
+
 export interface DestinationTemplate {
   id: string;
   destination: string;
@@ -18,8 +29,11 @@ export interface DestinationTemplate {
   bookingUrl: string;
   hotelName: string;
   hotelCostPerNight: number;
+  airline: string;
   flightEstimatePerPerson: number;
   foodPerPersonPerDay: number;
+  restaurants: RestaurantRec[];
+  attractionTickets: AttractionTicket[];
   arrivalDay: DayTemplate;
   coreDays: DayTemplate[];
   departureDay: DayTemplate;
@@ -43,6 +57,18 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 70,
     flightEstimatePerPerson: 650,
     foodPerPersonPerDay: 25,
+    airline: 'Garuda Indonesia',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Clear Café, Ubud', price: 6 },
+      { meal: 'Lunch', name: 'Locavore', price: 20 },
+      { meal: 'Afternoon', name: 'Kismet Kitchen', price: 10 },
+      { meal: 'Dinner', name: 'Sarong Restaurant', price: 35 },
+    ],
+    attractionTickets: [
+      { name: 'Tirta Empul Temple entrance', price: 3 },
+      { name: 'Tegallalang Rice Terrace entrance', price: 2 },
+      { name: 'Uluwatu Temple entrance', price: 4 },
+    ],
     arrivalDay: {
       title: 'Arrival & Settle In',
       activities: [
@@ -119,6 +145,17 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 420,
     flightEstimatePerPerson: 900,
     foodPerPersonPerDay: 60,
+    airline: 'Emirates',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Overwater villa breakfast', price: 0 },
+      { meal: 'Lunch', name: 'Sandbank picnic lunch', price: 40 },
+      { meal: 'Afternoon', name: 'Beach bar snacks', price: 15 },
+      { meal: 'Dinner', name: 'Ithaa Undersea Restaurant', price: 200 },
+    ],
+    attractionTickets: [
+      { name: 'Guided snorkeling excursion', price: 50 },
+      { name: 'Dolphin-watching cruise', price: 60 },
+    ],
     arrivalDay: {
       title: 'Arrival & Overwater Welcome',
       activities: [
@@ -187,6 +224,18 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 140,
     flightEstimatePerPerson: 850,
     foodPerPersonPerDay: 45,
+    airline: 'Air New Zealand',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Vudu Cafe', price: 12 },
+      { meal: 'Lunch', name: 'Fergburger', price: 15 },
+      { meal: 'Afternoon', name: 'Patagonia Chocolates', price: 8 },
+      { meal: 'Dinner', name: 'Rata Restaurant', price: 60 },
+    ],
+    attractionTickets: [
+      { name: 'Skyline Gondola', price: 45 },
+      { name: 'Shotover Jet boat ride', price: 150 },
+      { name: 'Milford Sound cruise', price: 90 },
+    ],
     arrivalDay: {
       title: 'Touchdown in the Alps',
       activities: [
@@ -263,6 +312,17 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 110,
     flightEstimatePerPerson: 780,
     foodPerPersonPerDay: 35,
+    airline: 'LATAM Airlines',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Refugio breakfast', price: 10 },
+      { meal: 'Lunch', name: 'Trail packed lunch', price: 15 },
+      { meal: 'Afternoon', name: 'Mate & pastries', price: 6 },
+      { meal: 'Dinner', name: 'The Singular Restaurant', price: 50 },
+    ],
+    attractionTickets: [
+      { name: 'Torres del Paine park entrance', price: 30 },
+      { name: 'Grey Glacier boat tour', price: 80 },
+    ],
     arrivalDay: {
       title: 'Into the Wild',
       activities: [
@@ -331,6 +391,17 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 130,
     flightEstimatePerPerson: 720,
     foodPerPersonPerDay: 40,
+    airline: 'ANA (All Nippon Airways)',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Ryokan kaiseki breakfast', price: 15 },
+      { meal: 'Lunch', name: 'Nishiki Market food stalls', price: 12 },
+      { meal: 'Afternoon', name: 'Matcha café in Gion', price: 8 },
+      { meal: 'Dinner', name: 'Gion kaiseki dinner', price: 80 },
+    ],
+    attractionTickets: [
+      { name: 'Kinkaku-ji entrance', price: 5 },
+      { name: 'Nijo Castle entrance', price: 8 },
+    ],
     arrivalDay: {
       title: 'Arrival in the Old Capital',
       activities: [
@@ -399,6 +470,18 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 60,
     flightEstimatePerPerson: 550,
     foodPerPersonPerDay: 20,
+    airline: 'Royal Air Maroc',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Riad rooftop breakfast', price: 8 },
+      { meal: 'Lunch', name: 'Nomad Restaurant', price: 18 },
+      { meal: 'Afternoon', name: 'Mint tea in the souks', price: 4 },
+      { meal: 'Dinner', name: 'Le Jardin', price: 30 },
+    ],
+    attractionTickets: [
+      { name: 'Bahia Palace entrance', price: 7 },
+      { name: 'Majorelle Garden entrance', price: 10 },
+      { name: 'Agafay desert camel trek', price: 40 },
+    ],
     arrivalDay: {
       title: 'Into the Medina',
       activities: [
@@ -467,6 +550,17 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 210,
     flightEstimatePerPerson: 600,
     foodPerPersonPerDay: 45,
+    airline: 'Aegean Airlines',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Caldera-view breakfast', price: 12 },
+      { meal: 'Lunch', name: 'Ammoudi Bay taverna', price: 25 },
+      { meal: 'Afternoon', name: 'Wine tasting flight', price: 20 },
+      { meal: 'Dinner', name: 'Selene Restaurant', price: 70 },
+    ],
+    attractionTickets: [
+      { name: 'Akrotiri archaeological site', price: 12 },
+      { name: 'Private catamaran cruise', price: 95 },
+    ],
     arrivalDay: {
       title: 'Arrival on the Caldera',
       activities: [
@@ -535,6 +629,18 @@ export const destinations: DestinationTemplate[] = [
     hotelCostPerNight: 180,
     flightEstimatePerPerson: 500,
     foodPerPersonPerDay: 50,
+    airline: 'Air France',
+    restaurants: [
+      { meal: 'Breakfast', name: 'Corner boulangerie', price: 6 },
+      { meal: 'Lunch', name: 'Le Marais bistro', price: 22 },
+      { meal: 'Afternoon', name: 'Café de Flore', price: 10 },
+      { meal: 'Dinner', name: 'Seine-view dinner cruise', price: 55 },
+    ],
+    attractionTickets: [
+      { name: 'Eiffel Tower summit access', price: 28 },
+      { name: 'Louvre Museum entrance', price: 18 },
+      { name: 'Palace of Versailles entrance', price: 20 },
+    ],
     arrivalDay: {
       title: 'Bonjour, Paris',
       activities: [

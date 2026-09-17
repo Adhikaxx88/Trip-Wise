@@ -66,6 +66,8 @@ function buildCostBreakdown(
   const rooms = Math.max(1, Math.ceil(groupSize / 2));
   const destinationQuery = encodeURIComponent(dest.destination);
 
+  const attractionsPerPersonCost = dest.attractionTickets.reduce((sum, t) => sum + t.price, 0);
+
   return {
     hotel: {
       name: dest.hotelName,
@@ -73,14 +75,24 @@ function buildCostBreakdown(
       bookingUrl: dest.bookingUrl,
     },
     flight: {
-      name: `Round-trip flights to ${dest.destination}`,
+      name: `${dest.airline} round-trip to ${dest.destination}`,
       cost: Math.round(dest.flightEstimatePerPerson * groupSize),
       bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${destinationQuery}`,
     },
     food: {
       name: 'Meals & dining',
       cost: Math.round(dest.foodPerPersonPerDay * durationDays * groupSize),
-      bookingUrl: `https://www.tripadvisor.com/Search?q=${destinationQuery}%20restaurants`,
+      bookingUrl: `https://www.google.com/search?q=best+restaurants+in+${destinationQuery}`,
+      details: dest.restaurants.map((r) => ({
+        label: r.meal,
+        value: r.price > 0 ? `${r.name} — $${r.price}` : `${r.name} (included)`,
+      })),
+    },
+    attractions: {
+      name: 'Entrance tickets & tours',
+      cost: Math.round(attractionsPerPersonCost * groupSize),
+      bookingUrl: `https://www.viator.com/searchResults/all?text=${destinationQuery}`,
+      details: dest.attractionTickets.map((t) => ({ label: t.name, value: `$${t.price}` })),
     },
   };
 }
@@ -116,7 +128,11 @@ export function matchTrip(prefs: TripPreferences): TripPackage {
 
   const itinerary = buildItinerary(best, duration);
   const costBreakdown = buildCostBreakdown(best, duration, groupSize);
-  const estimatedCost = costBreakdown.hotel.cost + costBreakdown.flight.cost + costBreakdown.food.cost;
+  const estimatedCost =
+    costBreakdown.hotel.cost +
+    costBreakdown.flight.cost +
+    costBreakdown.food.cost +
+    costBreakdown.attractions.cost;
 
   const destinationLabel =
     best.destination.toLowerCase() === best.country.toLowerCase()

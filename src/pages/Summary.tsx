@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
+import CostIcon from '../components/CostIcon';
 import GradientBackdrop from '../components/GradientBackdrop';
 import ItineraryDayCard from '../components/ItineraryDayCard';
 import Logo from '../components/Logo';
@@ -29,11 +30,13 @@ export default function Summary() {
   };
 
   const dateRangeLabel = formatDateRange(preferences.startDate, preferences.endDate);
+  const groupSize = preferences.groupSize ?? 1;
 
-  const costRows: { label: string; icon: string; item: BookableItem }[] = [
-    { label: 'Hotel', icon: '🏨', item: pkg.costBreakdown.hotel },
-    { label: 'Flights', icon: '✈️', item: pkg.costBreakdown.flight },
-    { label: 'Food', icon: '🍽️', item: pkg.costBreakdown.food },
+  const costRows: { label: string; icon: 'hotel' | 'flight' | 'food' | 'ticket'; item: BookableItem }[] = [
+    { label: 'Hotel', icon: 'hotel', item: pkg.costBreakdown.hotel },
+    { label: 'Flights', icon: 'flight', item: pkg.costBreakdown.flight },
+    { label: 'Food', icon: 'food', item: pkg.costBreakdown.food },
+    { label: 'Attractions', icon: 'ticket', item: pkg.costBreakdown.attractions },
   ];
 
   return (
@@ -128,27 +131,45 @@ export default function Summary() {
             {costRows.map((row) => (
               <div
                 key={row.label}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5"
+                className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5"
               >
-                <div className="flex min-w-0 items-center gap-3">
-                  <span className="text-2xl" aria-hidden>
-                    {row.icon}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-ink">{row.label}</p>
-                    <p className="truncate text-xs text-ink/60">{row.item.name}</p>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ocean-mid/10 text-ocean-mid">
+                      <CostIcon type={row.icon} className="h-5 w-5" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-ink">{row.label}</p>
+                      <p className="truncate text-xs text-ink/60">{row.item.name}</p>
+                    </div>
+                  </div>
+                  <div className="ml-auto flex shrink-0 items-center gap-3">
+                    <div className="text-right">
+                      <p className="font-display text-lg text-ocean-mid">
+                        ${row.item.cost.toLocaleString()}
+                      </p>
+                      <p className="text-xs text-ink/50">
+                        ${Math.round(row.item.cost / groupSize).toLocaleString()} / person
+                      </p>
+                    </div>
+                    <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
+                      <Button variant="accent" className="px-4 py-2 text-sm">
+                        Book ↗
+                      </Button>
+                    </a>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-3">
-                  <p className="font-display text-lg text-ocean-mid">
-                    ${row.item.cost.toLocaleString()}
-                  </p>
-                  <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
-                    <Button variant="accent" className="px-4 py-2 text-sm">
-                      Book ↗
-                    </Button>
-                  </a>
-                </div>
+
+                {row.item.details && row.item.details.length > 0 && (
+                  <ul className="mt-3 grid grid-cols-1 gap-1.5 border-t border-ink/10 pt-3 sm:grid-cols-2">
+                    {row.item.details.map((detail) => (
+                      <li key={detail.label} className="flex justify-between gap-2 text-xs text-ink/70">
+                        <span className="font-medium text-ink/50">{detail.label}</span>
+                        <span className="truncate text-right">{detail.value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
