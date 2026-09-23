@@ -1,5 +1,19 @@
 import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
-import type { CostBreakdown, ItineraryActivity, ItineraryDay, TripPackage, TripPreferences } from '../types';
+import { HOTEL_DISCOUNT_BY_TIER } from '../data/subscriptionTiers';
+import type {
+  CostBreakdown,
+  ItineraryActivity,
+  ItineraryDay,
+  SubscriptionTierId,
+  TripPackage,
+  TripPreferences,
+} from '../types';
+
+const TIER_RANK: Record<SubscriptionTierId, number> = { free: 0, monthly: 1, yearly: 2 };
+
+function isUnlockedForTier(destTier: SubscriptionTierId, currentTier: SubscriptionTierId): boolean {
+  return TIER_RANK[currentTier] >= TIER_RANK[destTier];
+}
 
 function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): number {
   let score = 0;
@@ -117,15 +131,21 @@ function buildItinerary(dest: DestinationTemplate, durationDays: number): Itiner
   return days;
 }
 
-function buildCostBreakdown(dest: DestinationTemplate, durationDays: number, groupSize: number): CostBreakdown {
+function buildCostBreakdown(
+  dest: DestinationTemplate,
+  durationDays: number,
+  groupSize: number,
+  currentTier: SubscriptionTierId,
+): CostBreakdown {
   const nights = Math.max(1, durationDays - 1);
   const rooms = Math.max(1, Math.ceil(groupSize / 2));
   const destinationQuery = encodeURIComponent(dest.destination);
+  const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
 
   return {
     hotel: {
       name: dest.hotelName,
-      cost: Math.round(dest.hotelCostPerNight * nights * rooms),
+      cost: Math.round(dest.hotelCostPerNight * nights * rooms * (1 - hotelDiscount)),
       bookingUrl: dest.bookingUrl,
     },
     flight: {
@@ -171,17 +191,20 @@ export function getSuggestedActivities(
   return suggestions;
 }
 
-export function matchTrip(prefs: TripPreferences): TripPackage {
-  const scored = destinations
+export function matchTrip(prefs: TripPreferences, currentTier: SubscriptionTierId = 'free'): TripPackage {
+  const eligible = destinations.filter((dest) => isUnlockedForTier(dest.tier, currentTier));
+  const pool = eligible.length > 0 ? eligible : destinations;
+
+  const scored = pool
     .map((dest) => ({ dest, score: scoreDestination(dest, prefs) }))
     .sort((a, b) => b.score - a.score);
 
-  const best = scored[0]?.dest ?? destinations[0];
+  const best = scored[0]?.dest ?? pool[0];
   const duration = prefs.durationDays ?? 5;
   const groupSize = prefs.groupSize ?? 1;
 
   const itinerary = buildItinerary(best, duration);
-  const costBreakdown = buildCostBreakdown(best, duration, groupSize);
+  const costBreakdown = buildCostBreakdown(best, duration, groupSize, currentTier);
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
@@ -203,6 +226,8 @@ export function matchTrip(prefs: TripPreferences): TripPackage {
     itinerary,
     bookingUrl: best.bookingUrl,
     costBreakdown,
+    tier: best.tier,
+    hotelDiscountPercent: HOTEL_DISCOUNT_BY_TIER[currentTier],
   };
 }
 

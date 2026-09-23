@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ChatBubble from '../components/ChatBubble';
 import Logo from '../components/Logo';
 import {
@@ -16,8 +16,9 @@ import {
 } from '../data/questionOptions';
 import { getFaqAnswer, SUGGESTED_QUESTIONS } from '../data/chatbotFaq';
 import { useCurrentTrip } from '../context/CurrentTripContext';
+import { useSubscription } from '../context/SubscriptionContext';
 import { useTripPreferences } from '../context/TripPreferencesContext';
-import { daysBetweenInclusive, formatDateRange, todayIsoDate } from '../logic/dates';
+import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
 import type { TripPreferences } from '../types';
 
@@ -46,11 +47,13 @@ export default function Chatbot() {
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useTripPreferences();
   const { setCurrentTrip } = useCurrentTrip();
+  const { subscription, canRegenerate, regenerationsRemaining, recordRegeneration } = useSubscription();
   const [draft, setDraft] = useState<TripPreferences>(preferences);
   const [messages, setMessages] = useState<Message[]>([]);
   const [stepIndex, setStepIndex] = useState(0);
   const [freeformInput, setFreeformInput] = useState('');
   const [isMatching, setIsMatching] = useState(false);
+  const [limitReached, setLimitReached] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const promptedSteps = useRef(new Set<string>());
 
@@ -92,11 +95,22 @@ export default function Chatbot() {
   };
 
   const finish = (finalPrefs: TripPreferences) => {
+    if (!canRegenerate) {
+      setLimitReached(true);
+      pushMessage(
+        'bot',
+        `You've used your 3 free trip matches this month. They reset on ${formatFullDate(
+          subscription.regenerationsResetAt,
+        )} — or upgrade anytime for unlimited matches and hidden-gem destinations.`,
+      );
+      return;
+    }
     updatePreferences(finalPrefs);
     setIsMatching(true);
     pushMessage('bot', 'Perfect, matching you a trip now…');
     setTimeout(() => {
-      const pkg = matchTrip(finalPrefs);
+      const pkg = matchTrip(finalPrefs, subscription.currentTier);
+      recordRegeneration();
       setCurrentTrip(pkg, finalPrefs);
       navigate(`/trip/${pkg.id}`);
     }, 1400);
@@ -132,6 +146,11 @@ export default function Chatbot() {
     <div className="flex min-h-dvh flex-col bg-surface">
       <header className="flex items-center justify-between bg-ocean-deepest px-6 py-5 sm:px-12">
         <Logo />
+        {subscription.currentTier === 'free' && regenerationsRemaining !== null && (
+          <p className="text-xs font-medium text-white/50">
+            {regenerationsRemaining} match{regenerationsRemaining === 1 ? '' : 'es'} left this month
+          </p>
+        )}
       </header>
 
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 py-6 sm:px-6 sm:py-8">
@@ -153,7 +172,21 @@ export default function Chatbot() {
           <div ref={bottomRef} />
         </div>
 
-        {!isMatching && (
+        {!isMatching && limitReached && (
+          <div
+            className="sticky bottom-0 mt-4 space-y-3 rounded-2xl bg-surface pt-2 text-center"
+            style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+          >
+            <Link
+              to="/profile"
+              className="inline-block rounded-full bg-gold-accent px-6 py-3 font-semibold text-ink hover:opacity-90"
+            >
+              View plans
+            </Link>
+          </div>
+        )}
+
+        {!isMatching && !limitReached && (
           <div
             className="sticky bottom-0 mt-4 space-y-3 rounded-2xl bg-surface pt-2"
             style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}

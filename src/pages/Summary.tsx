@@ -6,6 +6,7 @@ import CostIcon from '../components/CostIcon';
 import GradientBackdrop from '../components/GradientBackdrop';
 import ItineraryDayCard from '../components/ItineraryDayCard';
 import Logo from '../components/Logo';
+import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { formatDateRange } from '../logic/dates';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
@@ -58,9 +59,12 @@ export default function Summary() {
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <Logo />
-          <Link to="/saved" className="text-xs font-medium text-white/80 hover:text-white sm:text-sm">
-            Saved trips
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link to="/saved" className="text-xs font-medium text-white/80 hover:text-white sm:text-sm">
+              Saved trips
+            </Link>
+            <ProfileAvatarLink />
+          </div>
         </header>
 
         <div className="relative mx-auto mt-16 max-w-3xl px-4 text-center animate-fade-in sm:mt-24 sm:px-6">
@@ -142,6 +146,11 @@ export default function Summary() {
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-ink">{row.label}</p>
                       <p className="truncate text-xs text-ink/60">{row.item.name}</p>
+                      {row.icon === 'hotel' && pkg.hotelDiscountPercent > 0 && (
+                        <span className="mt-1 inline-block rounded-full bg-gold-accent/15 px-2 py-0.5 text-[11px] font-semibold text-gold-accent-deep">
+                          Member discount applied · {pkg.hotelDiscountPercent}% off
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="ml-auto flex shrink-0 items-center gap-3">

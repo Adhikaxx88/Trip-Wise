@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
 import GradientBackdrop from '../components/GradientBackdrop';
 import Logo from '../components/Logo';
+import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import { useSavedTrips } from '../context/SavedTripsContext';
 
 export default function Saved() {
@@ -15,11 +16,14 @@ export default function Saved() {
         style={{ paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))' }}
       >
         <Logo />
-        <Link to="/questionnaire">
-          <Button variant="secondary" className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base">
-            Plan another trip
-          </Button>
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link to="/questionnaire">
+            <Button variant="secondary" className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base">
+              Plan another trip
+            </Button>
+          </Link>
+          <ProfileAvatarLink />
+        </div>
       </header>
 
       <div className="mx-auto max-w-4xl px-4 py-10 sm:px-12 sm:py-12">

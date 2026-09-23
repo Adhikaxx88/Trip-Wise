@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import Logo from '../components/Logo';
+import ProfileAvatarLink from '../components/ProfileAvatarLink';
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80';
@@ -34,6 +35,7 @@ export default function Landing() {
           style={{ paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))' }}
         >
           <Logo />
+          <ProfileAvatarLink />
         </header>
 
         <main className="flex flex-1 flex-col items-center justify-center px-4 text-center animate-fade-in sm:px-6">

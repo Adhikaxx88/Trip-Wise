@@ -1,4 +1,4 @@
-import type { GroupType, ItineraryActivity, Vibe } from '../types';
+import type { GroupType, ItineraryActivity, SubscriptionTierId, Vibe } from '../types';
 
 export interface DayTemplate {
   title: string;
@@ -30,6 +30,7 @@ export interface DestinationTemplate {
   vibe: Vibe;
   tags: string[];
   goodFor: GroupType[];
+  tier: SubscriptionTierId;
   costPerPersonPerDay: number;
   bookingUrl: string;
   hotelName: string;
@@ -55,6 +56,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'relaxing',
     tags: ['beach', 'spa', 'slow travel', 'nature'],
     goodFor: ['solo', 'couple', 'family', 'friends'],
+    tier: 'free',
     costPerPersonPerDay: 95,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Bali',
     hotelName: 'Ubud jungle boutique villa',
@@ -153,6 +155,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'relaxing',
     tags: ['beach', 'overwater villa', 'honeymoon', 'diving'],
     goodFor: ['couple', 'solo', 'family'],
+    tier: 'free',
     costPerPersonPerDay: 260,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Maldives',
     hotelName: 'Overwater villa resort',
@@ -242,6 +245,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'adventurous',
     tags: ['mountains', 'adrenaline', 'hiking', 'lakes'],
     goodFor: ['friends', 'solo', 'couple'],
+    tier: 'free',
     costPerPersonPerDay: 150,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Queenstown',
     hotelName: 'Lakeside alpine lodge',
@@ -340,6 +344,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'adventurous',
     tags: ['hiking', 'glaciers', 'wilderness', 'trekking'],
     goodFor: ['friends', 'solo', 'couple'],
+    tier: 'yearly',
     costPerPersonPerDay: 130,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Patagonia',
     hotelName: 'Basecamp mountain lodge',
@@ -429,6 +434,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'cultural',
     tags: ['temples', 'history', 'food', 'gardens'],
     goodFor: ['solo', 'couple', 'family', 'friends'],
+    tier: 'free',
     costPerPersonPerDay: 120,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Kyoto',
     hotelName: 'Traditional ryokan',
@@ -518,6 +524,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'cultural',
     tags: ['markets', 'architecture', 'desert', 'food'],
     goodFor: ['friends', 'couple', 'family'],
+    tier: 'monthly',
     costPerPersonPerDay: 85,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Marrakech',
     hotelName: 'Riad in the medina',
@@ -608,6 +615,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'romantic',
     tags: ['sunset', 'wine', 'cliffside', 'honeymoon'],
     goodFor: ['couple', 'solo'],
+    tier: 'free',
     costPerPersonPerDay: 170,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Santorini',
     hotelName: 'Caldera-view suite',
@@ -697,6 +705,7 @@ export const destinations: DestinationTemplate[] = [
     vibe: 'romantic',
     tags: ['city', 'art', 'food', 'wine'],
     goodFor: ['couple', 'friends', 'solo'],
+    tier: 'free',
     costPerPersonPerDay: 140,
     bookingUrl: 'https://www.booking.com/searchresults.html?ss=Paris',
     hotelName: 'Boutique hotel near the Seine',

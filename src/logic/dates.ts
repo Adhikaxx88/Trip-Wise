@@ -27,3 +27,12 @@ export function addDaysIso(isoDate: string, days: number): string {
   d.setDate(d.getDate() + days);
   return d.toISOString().slice(0, 10);
 }
+
+export function formatFullDate(isoDateTime: string | null): string {
+  if (!isoDateTime) return '';
+  return new Date(isoDateTime).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}

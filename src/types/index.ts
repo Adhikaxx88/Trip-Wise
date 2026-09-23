@@ -60,6 +60,8 @@ export interface TripPackage {
   itinerary: ItineraryDay[];
   bookingUrl: string;
   costBreakdown: CostBreakdown;
+  tier: SubscriptionTierId;
+  hotelDiscountPercent: number;
 }
 
 export interface SavedTrip {
@@ -67,4 +69,33 @@ export interface SavedTrip {
   package: TripPackage;
   preferences: TripPreferences;
   savedAt: string;
+}
+
+export type SubscriptionTierId = 'free' | 'monthly' | 'yearly';
+
+export type SubscriptionBenefitType = 'discount' | 'feature-unlock' | 'priority' | 'quota';
+
+export interface SubscriptionBenefit {
+  id: string;
+  label: string;
+  type: SubscriptionBenefitType;
+  value?: string;
+}
+
+export interface SubscriptionTier {
+  id: SubscriptionTierId;
+  name: string;
+  price: { amount: number; currency: string; billingPeriod: 'month' | 'year' | null };
+  benefits: SubscriptionBenefit[];
+  savingsNote?: string;
+}
+
+export interface SubscriptionState {
+  currentTier: SubscriptionTierId;
+  subscribedSince: string | null;
+  renewsOn: string | null;
+  cancelAtPeriodEnd: boolean;
+  regenerationsUsed: number;
+  regenerationsResetAt: string;
+  displayName: string;
 }

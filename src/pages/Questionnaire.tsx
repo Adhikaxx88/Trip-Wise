@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ChatFab from '../components/ChatFab';
 import OptionCard from '../components/OptionCard';
 import QuestionShell from '../components/QuestionShell';
 import StepIndicator from '../components/StepIndicator';
 import { useCurrentTrip } from '../context/CurrentTripContext';
+import { useSubscription } from '../context/SubscriptionContext';
 import { useTripPreferences } from '../context/TripPreferencesContext';
 import {
   BUDGET_OPTIONS,
@@ -16,7 +17,7 @@ import {
   INTENSITY_OPTIONS,
   VIBE_OPTIONS,
 } from '../data/questionOptions';
-import { daysBetweenInclusive, formatDateRange, todayIsoDate } from '../logic/dates';
+import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
 import type { TripPreferences } from '../types';
 
@@ -24,9 +25,11 @@ export default function Questionnaire() {
   const navigate = useNavigate();
   const { preferences, updatePreferences } = useTripPreferences();
   const { setCurrentTrip } = useCurrentTrip();
+  const { subscription, canRegenerate, regenerationsRemaining, recordRegeneration } = useSubscription();
   const [draft, setDraft] = useState<TripPreferences>(preferences);
   const [stepIndex, setStepIndex] = useState(0);
   const [isMatching, setIsMatching] = useState(false);
+  const [limitReached, setLimitReached] = useState(false);
   const [groupSizeInput, setGroupSizeInput] = useState(draft.groupSize?.toString() ?? '');
 
   const steps = useMemo(() => getVisibleSteps(draft), [draft]);
@@ -60,10 +63,15 @@ export default function Questionnaire() {
   };
 
   const finish = () => {
+    if (!canRegenerate) {
+      setLimitReached(true);
+      return;
+    }
     updatePreferences(draft);
     setIsMatching(true);
     setTimeout(() => {
-      const pkg = matchTrip(draft);
+      const pkg = matchTrip(draft, subscription.currentTier);
+      recordRegeneration();
       setCurrentTrip(pkg, draft);
       navigate(`/trip/${pkg.id}`);
     }, 1400);
@@ -79,9 +87,45 @@ export default function Questionnaire() {
     );
   }
 
+  if (limitReached) {
+    return (
+      <div className="flex min-h-dvh w-full flex-col items-center justify-center bg-ocean-deep px-6 text-center text-white">
+        <p className="font-display text-2xl">You've used your free matches for this month</p>
+        <p className="mt-3 max-w-sm text-white/60">
+          Free plan includes 3 trip matches a month. They reset on{' '}
+          {formatFullDate(subscription.regenerationsResetAt)}, or upgrade for unlimited matches plus
+          hidden-gem destinations.
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setLimitReached(false)}
+            className="rounded-full border-2 border-white/20 px-6 py-3 font-semibold text-white hover:bg-white/10 cursor-pointer"
+          >
+            Back
+          </button>
+          <Link
+            to="/profile"
+            className="rounded-full bg-gold-accent px-6 py-3 font-semibold text-ink hover:opacity-90"
+          >
+            View plans
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
       <StepIndicator current={stepIndex + 1} total={steps.length} />
+      {subscription.currentTier === 'free' && regenerationsRemaining !== null && (
+        <p
+          className="fixed right-4 z-20 text-xs font-medium text-ink/50 sm:right-8"
+          style={{ top: 'max(1.5rem, calc(0.85rem + env(safe-area-inset-top)))' }}
+        >
+          {regenerationsRemaining} match{regenerationsRemaining === 1 ? '' : 'es'} left this month
+        </p>
+      )}
 
       {currentStep.id === 'vibe' && (
         <QuestionShell
