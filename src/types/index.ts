@@ -4,12 +4,12 @@ export type GroupType = 'solo' | 'couple' | 'family' | 'friends';
 
 export type ActivityIntensity = 'low' | 'medium' | 'high';
 
-export type TransportMode = 'car' | 'ship' | 'flight' | 'any';
+export type TripType = 'local' | 'international';
 
-export type DestinationPreference =
-  | { type: 'international'; country: string }
-  | { type: 'local'; city: string }
-  | { type: 'surprise' };
+export interface SelectedCity {
+  country: string;
+  city: string;
+}
 
 export interface TripPreferences {
   /** null = untouched / "surprise me" (match any vibe). An array (possibly empty) means the
@@ -22,8 +22,9 @@ export interface TripPreferences {
   groupSize: number | null;
   activityIntensity?: ActivityIntensity;
   groupType?: GroupType;
-  destinationPreference?: DestinationPreference | null;
-  transportModes?: TransportMode[];
+  tripType?: TripType | null;
+  selectedCountries?: string[];
+  selectedCities?: SelectedCity[];
 }
 
 export const createEmptyPreferences = (): TripPreferences => ({
@@ -33,21 +34,47 @@ export const createEmptyPreferences = (): TripPreferences => ({
   endDate: null,
   budget: null,
   groupSize: null,
-  destinationPreference: null,
-  transportModes: [],
+  tripType: null,
+  selectedCountries: [],
+  selectedCities: [],
 });
+
+export interface TransportOption {
+  type: 'train' | 'bus' | 'flight' | 'ferry' | 'car' | 'other';
+  name: string;
+  duration: string;
+  costPerPerson: number;
+  costLabel?: string;
+  image: string;
+  badge?: 'Fastest' | 'Best value';
+  bookingUrl?: string;
+}
+
+export interface ActivityTransport {
+  type: string;
+  duration: string;
+  cost: number;
+  alternatives: { type: string; cost: number; duration: string }[];
+}
 
 export interface ItineraryActivity {
   time?: string;
   name: string;
   note?: string;
   price?: number;
+  transport?: ActivityTransport;
 }
 
 export interface ItineraryDay {
   day: number;
+  type?: 'city' | 'transition';
   title: string;
+  city?: string;
   activities: ItineraryActivity[];
+  fromCity?: string;
+  toCity?: string;
+  transportOptions?: TransportOption[];
+  selectedTransportIndex?: number;
 }
 
 export interface BookableItem {
@@ -75,6 +102,7 @@ export interface TripPackage {
   costBreakdown: CostBreakdown;
   tier: SubscriptionTierId;
   hotelDiscountPercent: number;
+  cities?: string[];
 }
 
 export interface SavedTrip {

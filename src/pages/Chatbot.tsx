@@ -11,7 +11,6 @@ import {
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
   matchFreeTextToStep,
-  TRANSPORT_OPTIONS,
   VIBE_IDK_OPTION,
   VIBE_OPTIONS,
   type StepDef,
@@ -24,12 +23,10 @@ import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } f
 import { matchTrip } from '../logic/matchTrip';
 import type { TripPreferences } from '../types';
 
-const PROMPTS: Record<StepDef['id'], string> = {
+const PROMPTS: Partial<Record<StepDef['id'], string>> = {
   vibe: "Hi! I'm the TripWise assistant. What's the vibe you're going for on this trip?",
   dates: 'Nice choice. When are you thinking of going?',
   budget: "Got it. What's your total budget for the trip?",
-  destination: 'Any destinations in mind, or should I surprise you?',
-  transport: 'How do you plan on getting there?',
   groupSize: 'How many people are coming along?',
   intensity: 'Since you want adventure, how intense should the activities be?',
   groupType: "Last thing, who's coming with you?",
@@ -61,16 +58,15 @@ export default function Chatbot() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const promptedSteps = useRef(new Set<string>());
 
-  const steps = useMemo(() => getVisibleSteps(draft), [draft]);
+  const steps = useMemo(() => getVisibleSteps(draft, false), [draft]);
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
 
   useEffect(() => {
     if (!currentStep || promptedSteps.current.has(currentStep.id)) return;
+    const prompt = PROMPTS[currentStep.id];
+    if (!prompt) return;
     promptedSteps.current.add(currentStep.id);
-    setMessages((prev) => [
-      ...prev,
-      { id: nextMessageId('bot'), from: 'bot', text: PROMPTS[currentStep.id] },
-    ]);
+    setMessages((prev) => [...prev, { id: nextMessageId('bot'), from: 'bot', text: prompt }]);
   }, [currentStep]);
 
   useEffect(() => {
@@ -85,7 +81,7 @@ export default function Chatbot() {
     const nextDraft = { ...draft, ...patch };
     setDraft(nextDraft);
 
-    const nextSteps = getVisibleSteps(nextDraft);
+    const nextSteps = getVisibleSteps(nextDraft, false);
     if (stepIndex < nextSteps.length - 1) {
       setStepIndex((i) => i + 1);
     } else {
@@ -212,35 +208,6 @@ export default function Chatbot() {
                 >
                   {VIBE_IDK_OPTION.label}
                 </button>
-              </div>
-            )}
-
-            {currentStep.id === 'destination' && (
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => advance('Surprise me', { destinationPreference: { type: 'surprise' } })}
-                  className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
-                >
-                  Surprise me
-                </button>
-                <p className="basis-full text-xs text-ink/50">
-                  Want a specific country or city? Type it below, or head to the full questionnaire for a
-                  dropdown picker.
-                </p>
-              </div>
-            )}
-
-            {currentStep.id === 'transport' && (
-              <div className="flex flex-wrap gap-2">
-                {TRANSPORT_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => advance(opt.label, { transportModes: [opt.value] })}
-                    className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
-                  >
-                    {opt.label}
-                  </button>
-                ))}
               </div>
             )}
 

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ChatFab from '../components/ChatFab';
+import CityCard from '../components/CityCard';
 import DateRangePicker from '../components/DateRangePicker';
 import OptionCard from '../components/OptionCard';
 import QuestionShell from '../components/QuestionShell';
@@ -10,44 +11,20 @@ import { useSubscription } from '../context/SubscriptionContext';
 import { useTripPreferences } from '../context/TripPreferencesContext';
 import {
   BUDGET_OPTIONS,
-  COUNTRY_OPTIONS,
   DATE_RANGE_PRESETS,
   datesFromPresetDays,
   getVisibleSteps,
   GROUP_SIZE_PRESETS,
   GROUP_TYPE_OPTIONS,
-  INDONESIAN_CITY_OPTIONS,
   INTENSITY_OPTIONS,
-  TRANSPORT_OPTIONS,
+  TRIP_TYPE_OPTIONS,
   VIBE_IDK_OPTION,
   VIBE_OPTIONS,
 } from '../data/questionOptions';
+import { COUNTRIES, INDONESIA_CITIES, MAX_CITIES, MAX_COUNTRIES, REGION_ORDER } from '../data/geography';
 import { daysBetweenInclusive, formatDateRange, formatFullDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
-import type { TransportMode, TripPreferences, Vibe } from '../types';
-
-const TRANSPORT_ICONS: Record<TransportMode, React.ReactNode> = {
-  car: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-      <path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM3 17V11l2-5h10l4 5v6M3 11h16" />
-    </svg>
-  ),
-  ship: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-      <path d="M3 17c1.5 1.5 3 1.5 4.5 0s3-1.5 4.5 0 3 1.5 4.5 0 3-1.5 4.5 0M5 14l1-7h4l1 4M12 7V3h3l2 3M4 14h16" />
-    </svg>
-  ),
-  flight: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-      <path d="M10.5 21 9 17l-6-2 1.5-1.5L9 14l3-3-8-4 2-2 10 3 3.5-3.5a1.7 1.7 0 0 1 2.5 2.5L18.5 10l3 10-2 2-4-8-3 3 .5 3.5Z" />
-    </svg>
-  ),
-  any: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
-      <path d="M17 3 21 7l-4 4M21 7H3M7 21l-4-4 4-4M3 17h18" />
-    </svg>
-  ),
-};
+import type { SelectedCity, TripPreferences, Vibe } from '../types';
 
 export default function Questionnaire() {
   const navigate = useNavigate();
@@ -100,6 +77,37 @@ export default function Questionnaire() {
     } else {
       navigate('/');
     }
+  };
+
+  const toggleCountry = (country: string) => {
+    setDraft((prev) => {
+      const current = prev.selectedCountries ?? [];
+      const isSelected = current.includes(country);
+      let nextCountries: string[];
+      if (isSelected) {
+        nextCountries = current.filter((c) => c !== country);
+      } else {
+        if (current.length >= MAX_COUNTRIES) return prev;
+        nextCountries = [...current, country];
+      }
+      const nextCities = (prev.selectedCities ?? []).filter((c) => nextCountries.includes(c.country));
+      return { ...prev, selectedCountries: nextCountries, selectedCities: nextCities };
+    });
+  };
+
+  const toggleCity = (country: string, cityName: string) => {
+    setDraft((prev) => {
+      const current = prev.selectedCities ?? [];
+      const exists = current.some((c) => c.country === country && c.city === cityName);
+      let next: SelectedCity[];
+      if (exists) {
+        next = current.filter((c) => !(c.country === country && c.city === cityName));
+      } else {
+        if (current.length >= MAX_CITIES) return prev;
+        next = [...current, { country, city: cityName }];
+      }
+      return { ...prev, selectedCities: next };
+    });
   };
 
   const finish = () => {
@@ -165,6 +173,156 @@ export default function Questionnaire() {
         >
           {regenerationsRemaining} match{regenerationsRemaining === 1 ? '' : 'es'} left this month
         </p>
+      )}
+
+      {currentStep.id === 'tripType' && (
+        <QuestionShell
+          stepKey="tripType"
+          eyebrow={currentStep.eyebrow}
+          question="Where are you headed?"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={!draft.tripType}
+        >
+          {TRIP_TYPE_OPTIONS.map((opt) => (
+            <OptionCard
+              key={opt.value}
+              label={opt.label}
+              description={opt.description}
+              selected={draft.tripType === opt.value}
+              onClick={() =>
+                setDraft((prev) => ({
+                  ...prev,
+                  tripType: opt.value,
+                  selectedCountries: [],
+                  selectedCities: [],
+                }))
+              }
+            />
+          ))}
+        </QuestionShell>
+      )}
+
+      {currentStep.id === 'countries' && (
+        <QuestionShell
+          stepKey="countries"
+          eyebrow={currentStep.eyebrow}
+          question="Which countries? (Pick up to 3)"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={(draft.selectedCountries?.length ?? 0) === 0}
+        >
+          <p className="mb-2 text-center text-xs text-ink/50">
+            {draft.selectedCountries?.length ?? 0} / {MAX_COUNTRIES} selected
+          </p>
+          <div className="max-h-[50vh] space-y-5 overflow-y-auto pr-1">
+            {REGION_ORDER.map((region) => {
+              const regionCountries = COUNTRIES.filter((c) => c.region === region);
+              if (regionCountries.length === 0) return null;
+              return (
+                <div key={region}>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/40">{region}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {regionCountries.map((c) => {
+                      const selected = (draft.selectedCountries ?? []).includes(c.name);
+                      const atMax = (draft.selectedCountries?.length ?? 0) >= MAX_COUNTRIES;
+                      return (
+                        <button
+                          key={c.name}
+                          type="button"
+                          disabled={!selected && atMax}
+                          onClick={() => toggleCountry(c.name)}
+                          className={`rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors ${
+                            selected
+                              ? 'border-ocean-mid bg-ocean-mid/10 text-ocean-deep'
+                              : 'border-ink/10 bg-white text-ink hover:border-ocean-light/60'
+                          } ${!selected && atMax ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                        >
+                          {c.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {(draft.selectedCountries?.length ?? 0) > 0 && (draft.selectedCountries?.length ?? 0) < MAX_COUNTRIES && (
+            <p className="mt-3 text-center text-xs font-medium text-ocean-mid">
+              + Add another country ({MAX_COUNTRIES - (draft.selectedCountries?.length ?? 0)} more allowed)
+            </p>
+          )}
+        </QuestionShell>
+      )}
+
+      {currentStep.id === 'cities' && (
+        <QuestionShell
+          stepKey="cities"
+          eyebrow={currentStep.eyebrow}
+          question="Pick your cities (up to 4)"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={(draft.selectedCities?.length ?? 0) === 0}
+        >
+          <p className="mb-2 text-center text-xs text-ink/50">
+            {draft.selectedCities?.length ?? 0} / {MAX_CITIES} selected
+          </p>
+          <div className="max-h-[55vh] space-y-5 overflow-y-auto pr-1">
+            {draft.tripType === 'local' ? (
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {INDONESIA_CITIES.map((city) => {
+                  const selected = (draft.selectedCities ?? []).some(
+                    (c) => c.country === 'Indonesia' && c.city === city.name,
+                  );
+                  const atMax = (draft.selectedCities?.length ?? 0) >= MAX_CITIES;
+                  return (
+                    <CityCard
+                      key={city.name}
+                      name={city.name}
+                      imageUrl={city.imageUrl}
+                      selected={selected}
+                      disabled={atMax}
+                      onClick={() => toggleCity('Indonesia', city.name)}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              (draft.selectedCountries ?? []).map((countryName) => {
+                const country = COUNTRIES.find((c) => c.name === countryName);
+                if (!country) return null;
+                return (
+                  <div key={countryName}>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/40">
+                      {countryName}
+                    </p>
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      {country.cities.map((city) => {
+                        const selected = (draft.selectedCities ?? []).some(
+                          (c) => c.country === countryName && c.city === city.name,
+                        );
+                        const atMax = (draft.selectedCities?.length ?? 0) >= MAX_CITIES;
+                        return (
+                          <CityCard
+                            key={city.name}
+                            name={city.name}
+                            imageUrl={city.imageUrl}
+                            selected={selected}
+                            disabled={atMax}
+                            onClick={() => toggleCity(countryName, city.name)}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </QuestionShell>
       )}
 
       {currentStep.id === 'vibe' && (
@@ -352,152 +510,6 @@ export default function Questionnaire() {
               </label>
             </div>
           )}
-        </QuestionShell>
-      )}
-
-      {currentStep.id === 'destination' && (
-        <QuestionShell
-          stepKey="destination"
-          eyebrow={currentStep.eyebrow}
-          question="Any destinations in mind?"
-          onBack={goBack}
-          onNext={goNext}
-          nextLabel={nextLabel}
-          nextDisabled={
-            !draft.destinationPreference ||
-            (draft.destinationPreference.type === 'international' && !draft.destinationPreference.country) ||
-            (draft.destinationPreference.type === 'local' && !draft.destinationPreference.city)
-          }
-        >
-          <div className="flex flex-wrap justify-center gap-2">
-            {(
-              [
-                { type: 'international', label: 'International' },
-                { type: 'local', label: 'Local (Indonesia)' },
-                { type: 'surprise', label: 'Surprise me' },
-              ] as const
-            ).map((opt) => {
-              const selected = draft.destinationPreference?.type === opt.type;
-              return (
-                <button
-                  key={opt.type}
-                  type="button"
-                  onClick={() => {
-                    if (opt.type === 'surprise') {
-                      setDraft((prev) => ({ ...prev, destinationPreference: { type: 'surprise' } }));
-                    } else if (opt.type === 'international') {
-                      setDraft((prev) => ({
-                        ...prev,
-                        destinationPreference: { type: 'international', country: '' },
-                      }));
-                    } else {
-                      setDraft((prev) => ({ ...prev, destinationPreference: { type: 'local', city: '' } }));
-                    }
-                  }}
-                  className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-colors cursor-pointer ${
-                    selected ? 'bg-ocean-mid text-white' : 'bg-ink/5 text-ink hover:bg-ink/10'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {draft.destinationPreference?.type === 'international' && (
-            <label className="block pt-3 text-left">
-              <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/50">
-                Country
-              </span>
-              <select
-                value={draft.destinationPreference.country}
-                onChange={(e) =>
-                  setDraft((prev) => ({
-                    ...prev,
-                    destinationPreference: { type: 'international', country: e.target.value },
-                  }))
-                }
-                className="w-full rounded-2xl border-2 border-ink/10 bg-white px-4 py-3 text-base focus:border-ocean-mid focus:outline-none"
-              >
-                <option value="" disabled>
-                  Choose a country…
-                </option>
-                {COUNTRY_OPTIONS.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-
-          {draft.destinationPreference?.type === 'local' && (
-            <label className="block pt-3 text-left">
-              <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/50">
-                City
-              </span>
-              <select
-                value={draft.destinationPreference.city}
-                onChange={(e) =>
-                  setDraft((prev) => ({
-                    ...prev,
-                    destinationPreference: { type: 'local', city: e.target.value },
-                  }))
-                }
-                className="w-full rounded-2xl border-2 border-ink/10 bg-white px-4 py-3 text-base focus:border-ocean-mid focus:outline-none"
-              >
-                <option value="" disabled>
-                  Choose a city…
-                </option>
-                {INDONESIAN_CITY_OPTIONS.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-        </QuestionShell>
-      )}
-
-      {currentStep.id === 'transport' && (
-        <QuestionShell
-          stepKey="transport"
-          eyebrow={currentStep.eyebrow}
-          question="How do you plan on getting there?"
-          onBack={goBack}
-          onNext={goNext}
-          nextLabel={nextLabel}
-          nextDisabled={!draft.transportModes || draft.transportModes.length === 0}
-        >
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {TRANSPORT_OPTIONS.map((opt) => {
-              const selected = !!draft.transportModes?.includes(opt.value);
-              return (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() =>
-                    setDraft((prev) => {
-                      const current = prev.transportModes ?? [];
-                      const next = selected
-                        ? current.filter((m) => m !== opt.value)
-                        : [...current, opt.value];
-                      return { ...prev, transportModes: next };
-                    })
-                  }
-                  className={`flex flex-col items-center gap-2 rounded-2xl border-2 px-4 py-4 transition-all duration-150 cursor-pointer ${
-                    selected
-                      ? 'border-gold-accent text-gold-accent bg-gold-accent/10'
-                      : 'border-ink/10 text-ink hover:border-ocean-light/60 hover:bg-ocean-light/5'
-                  }`}
-                >
-                  {TRANSPORT_ICONS[opt.value]}
-                  <span className="text-sm font-semibold">{opt.label}</span>
-                </button>
-              );
-            })}
-          </div>
         </QuestionShell>
       )}
 
