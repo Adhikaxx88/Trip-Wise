@@ -9,10 +9,12 @@ import { useSavedTrips } from '../context/SavedTripsContext';
 import { exportItineraryToPdf } from '../logic/exportItineraryPdf';
 import { dayCostPerPerson, getSuggestedActivities } from '../logic/matchTrip';
 import {
+  airportMapsLink,
   dailyTransportCostIDR,
   FLIGHT_PLACEHOLDER_IMAGE,
   formatIDR,
   getHeroImages,
+  hotelAreaMapsLink,
   hotelRating,
   HOTEL_PLACEHOLDER_IMAGE,
 } from '../logic/tripMedia';
@@ -40,6 +42,7 @@ export default function Edit() {
   const { package: pkg, preferences, savedId } = resolved;
   const groupSize = preferences.groupSize ?? 1;
   const heroImages = getHeroImages(pkg);
+  const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
 
   const updateActivity = (dayIndex: number, activityIndex: number, field: keyof ItineraryActivity, value: string) => {
     setItinerary((prev) => {
@@ -197,6 +200,10 @@ export default function Edit() {
             alt={`${pkg.destination} preview ${i + 1}`}
             className="h-32 w-48 shrink-0 rounded-xl object-cover shadow-sm sm:h-40 sm:w-64"
             loading="lazy"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+            }}
           />
         ))}
       </div>
@@ -250,10 +257,27 @@ export default function Edit() {
         {/* Hotel & flight booking sections */}
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm">
-            <img src={HOTEL_PLACEHOLDER_IMAGE} alt="Hotel" className="h-32 w-full object-cover" loading="lazy" />
+            <img
+              src={HOTEL_PLACEHOLDER_IMAGE}
+              alt="Hotel"
+              className="h-32 w-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+              }}
+            />
             <div className="p-4">
               <p className="text-sm font-semibold text-ink">{costBreakdown.hotel.name}</p>
               <p className="mt-1 text-xs text-ink/50">{hotelRating(costBreakdown.hotel.name)}★ · Hotel</p>
+              <a
+                href={hotelAreaMapsLink(costBreakdown.hotel.name, primaryCity)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-block text-xs font-medium text-ocean-mid hover:text-ocean-deep"
+              >
+                📍 View area on Maps
+              </a>
               <p className="mt-2 font-display text-lg text-ocean-mid">
                 ${costBreakdown.hotel.cost.toLocaleString()}
               </p>
@@ -266,10 +290,27 @@ export default function Edit() {
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm">
-            <img src={FLIGHT_PLACEHOLDER_IMAGE} alt="Flight" className="h-32 w-full object-cover" loading="lazy" />
+            <img
+              src={FLIGHT_PLACEHOLDER_IMAGE}
+              alt="Flight"
+              className="h-32 w-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+              }}
+            />
             <div className="p-4">
               <p className="text-sm font-semibold text-ink">✈️ {costBreakdown.flight.name}</p>
               <p className="mt-1 text-xs text-ink/50">Your city → {pkg.destination}</p>
+              <a
+                href={airportMapsLink(primaryCity)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-block text-xs font-medium text-ocean-mid hover:text-ocean-deep"
+              >
+                📍 Airport
+              </a>
               <p className="mt-2 font-display text-lg text-ocean-mid">
                 ${costBreakdown.flight.cost.toLocaleString()}
               </p>

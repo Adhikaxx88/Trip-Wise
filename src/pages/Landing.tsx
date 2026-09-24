@@ -283,6 +283,10 @@ export default function Landing() {
                       loading="lazy"
                       style={{ height: '300px' }}
                       className="w-full rounded-[12px] object-cover"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+                      }}
                     />
                   </div>
                 </Reveal>
@@ -317,6 +321,10 @@ export default function Landing() {
                     alt={d.label}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ocean-deepest via-ocean-deepest/50 to-ocean-deepest/10" />
                   <div className="relative flex h-full flex-col justify-between p-5 text-left">
@@ -361,6 +369,10 @@ export default function Landing() {
                     alt={t.name}
                     loading="lazy"
                     className="h-16 w-16 rounded-full border-2 border-[#FFD233] object-cover"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+                    }}
                   />
                   <div className="mt-3 flex gap-0.5 text-[#FFD233]" aria-label="5 out of 5 stars">
                     {Array.from({ length: 5 }).map((_, starIndex) => (

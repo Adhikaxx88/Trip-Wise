@@ -11,6 +11,7 @@ import Toast from '../components/Toast';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { formatDateRange } from '../logic/dates';
+import { airportMapsLink, hotelAreaMapsLink } from '../logic/tripMedia';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
 import type { BookableItem } from '../types';
 
@@ -71,6 +72,7 @@ export default function Summary() {
     { label: 'Hotel', icon: 'hotel', item: pkg.costBreakdown.hotel },
     { label: 'Flights', icon: 'flight', item: pkg.costBreakdown.flight },
   ];
+  const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
 
   return (
     <div className="min-h-dvh bg-ocean-deepest text-white">
@@ -175,8 +177,20 @@ export default function Summary() {
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-ink">{row.label}</p>
                       <p className="truncate text-xs text-ink/60">{row.item.name}</p>
+                      <a
+                        href={
+                          row.icon === 'hotel'
+                            ? hotelAreaMapsLink(row.item.name, primaryCity)
+                            : airportMapsLink(primaryCity)
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-0.5 inline-block text-[11px] font-medium text-ocean-mid hover:text-ocean-deep"
+                      >
+                        {row.icon === 'hotel' ? '📍 View area on Maps' : '📍 Airport'}
+                      </a>
                       {row.icon === 'hotel' && pkg.hotelDiscountPercent > 0 && (
-                        <span className="mt-1 inline-block rounded-full bg-gold-accent/15 px-2 py-0.5 text-[11px] font-semibold text-gold-accent-deep">
+                        <span className="mt-1 block rounded-full bg-gold-accent/15 px-2 py-0.5 text-[11px] font-semibold text-gold-accent-deep">
                           Member discount applied · {pkg.hotelDiscountPercent}% off
                         </span>
                       )}
