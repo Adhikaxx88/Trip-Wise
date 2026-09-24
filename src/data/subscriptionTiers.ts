@@ -22,6 +22,16 @@ const YEARLY_ONLY_BENEFITS: SubscriptionBenefit[] = [
 export const MONTHLY_PRICE = { amount: 9, currency: 'USD', billingPeriod: 'month' as const };
 export const YEARLY_PRICE = { amount: 79, currency: 'USD', billingPeriod: 'year' as const };
 
+/** One-time "pay as you go" bundle: a fixed number of trip-match generations that never expire. */
+export const PAY_AS_YOU_GO_BUNDLE_SIZE = 10;
+export const PAY_AS_YOU_GO_PRICE = { amount: 15, currency: 'USD' };
+
+export const PAY_AS_YOU_GO_BENEFITS: SubscriptionBenefit[] = [
+  { id: 'payg-matches', label: `${PAY_AS_YOU_GO_BUNDLE_SIZE} trip generations`, type: 'quota', value: `${PAY_AS_YOU_GO_BUNDLE_SIZE}` },
+  { id: 'payg-no-expiry', label: 'No expiry — use them whenever you like', type: 'feature-unlock' },
+  { id: 'payg-full-access', label: 'Full Questionnaire, Chatbot, Edit & Save access', type: 'feature-unlock' },
+];
+
 function yearlySavingsNote(): string {
   const costPaidMonthly = MONTHLY_PRICE.amount * 12;
   const savings = costPaidMonthly - YEARLY_PRICE.amount;

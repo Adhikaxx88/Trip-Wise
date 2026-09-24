@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
-import { FREE_MONTHLY_REGENERATION_LIMIT } from '../data/subscriptionTiers';
+import { FREE_MONTHLY_REGENERATION_LIMIT, PAY_AS_YOU_GO_BUNDLE_SIZE } from '../data/subscriptionTiers';
 import type { SubscriptionState } from '../types';
 
 const STORAGE_KEY = 'tripwise.subscription';
@@ -26,6 +26,7 @@ function defaultState(): SubscriptionState {
     regenerationsUsed: 0,
     regenerationsResetAt: startOfNextMonthIso(new Date()),
     displayName: 'Traveler',
+    payAsYouGoMatchesRemaining: 0,
   };
 }
 
@@ -78,6 +79,7 @@ interface SubscriptionContextValue {
   resumeSubscription: () => void;
   recordRegeneration: () => void;
   setDisplayName: (name: string) => void;
+  buyPayAsYouGoBundle: () => Promise<void>;
 }
 
 const SubscriptionContext = createContext<SubscriptionContextValue | null>(null);
@@ -116,15 +118,40 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   };
 
   const recordRegeneration = () => {
-    update({ regenerationsUsed: subscription.regenerationsUsed + 1 });
+    // Paid subscribers have unlimited matches — just keep the usage counter for stats.
+    if (subscription.currentTier !== 'free') {
+      update({ regenerationsUsed: subscription.regenerationsUsed + 1 });
+      return;
+    }
+
+    const freeRemaining = FREE_MONTHLY_REGENERATION_LIMIT - subscription.regenerationsUsed;
+    if (freeRemaining > 0) {
+      // Consume the free monthly quota first, before touching any purchased balance.
+      update({ regenerationsUsed: subscription.regenerationsUsed + 1 });
+    } else if (subscription.payAsYouGoMatchesRemaining > 0) {
+      update({ payAsYouGoMatchesRemaining: subscription.payAsYouGoMatchesRemaining - 1 });
+    } else {
+      // Gate should have blocked this, but fall back to incrementing usage rather than
+      // silently double-consuming a balance that isn't there.
+      update({ regenerationsUsed: subscription.regenerationsUsed + 1 });
+    }
   };
 
   const setDisplayName = (name: string) => {
     update({ displayName: name.trim() || 'Traveler' });
   };
 
+  const buyPayAsYouGoBundle = async () => {
+    setIsProcessing(true);
+    await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS));
+    update({ payAsYouGoMatchesRemaining: subscription.payAsYouGoMatchesRemaining + PAY_AS_YOU_GO_BUNDLE_SIZE });
+    setIsProcessing(false);
+  };
+
   const canRegenerate =
-    subscription.currentTier !== 'free' || subscription.regenerationsUsed < FREE_MONTHLY_REGENERATION_LIMIT;
+    subscription.currentTier !== 'free' ||
+    subscription.regenerationsUsed < FREE_MONTHLY_REGENERATION_LIMIT ||
+    subscription.payAsYouGoMatchesRemaining > 0;
   const regenerationsRemaining =
     subscription.currentTier !== 'free'
       ? null
@@ -141,6 +168,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       resumeSubscription,
       recordRegeneration,
       setDisplayName,
+      buyPayAsYouGoBundle,
     }),
     [subscription, isProcessing, canRegenerate, regenerationsRemaining],
   );

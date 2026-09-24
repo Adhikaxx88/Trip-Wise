@@ -111,4 +111,7 @@ export interface SubscriptionState {
   regenerationsUsed: number;
   regenerationsResetAt: string;
   displayName: string;
+  /** One-time-purchase "pay as you go" match balance, independent of the monthly free quota
+   * and of paid-subscription unlimited access. Decrements as matches are consumed. */
+  payAsYouGoMatchesRemaining: number;
 }
