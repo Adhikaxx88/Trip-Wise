@@ -1,9 +1,24 @@
 import type { TransportOption } from '../types';
 import { getTransportImage } from './getImage';
 
+/** Words that signal an Indonesian route/city, used to gate the images-master.json
+ * `train`/`bus` photos (an Indonesian KAI train and an Indonesian coach operator)
+ * so they only ever illustrate an actually-Indonesian route. */
+const INDONESIA_CONTEXT = '(?:indonesia|kereta|damri|jakarta|bandung|yogyakarta|surabaya|bali|lombok|malang)';
+const GREEK_CONTEXT = '(?:greek|greece|aegean|piraeus|cyclades|santorini|mykonos)';
+
 /**
  * Keyword → images-master.json `transport` key. Order matters: more specific
  * modes (grab, tuk-tuk, metro) are checked before generic ones (car, train).
+ *
+ * `train` and `bus` only have one photo each in images-master.json, and both
+ * are unmistakably Indonesian (an Indonesian KAI train, a Harapan Jaya coach),
+ * so they're gated behind INDONESIA_CONTEXT below rather than matched on the
+ * bare word "train"/"bus" — otherwise e.g. an Italian Frecciarossa or a Dubai
+ * intercity bus would show the wrong country's train/bus. Those non-Indonesian,
+ * non-Japan (shinkansen) cases fall through to the neutral placeholder
+ * (`getTransportImage`'s `?? images.transport.default`) rather than a
+ * wrong-country photo.
  */
 const TRANSPORT_KEYWORDS: [RegExp, string][] = [
   [/\bgaruda\b/, 'domestic-flight'],
@@ -14,9 +29,15 @@ const TRANSPORT_KEYWORDS: [RegExp, string][] = [
   [/\b(taxi|uber|lyft|cab)\b/, 'taxi'],
   [/\b(motorbike|scooter)\b/, 'motorbike'],
   [/\b(bicycle|bike)\b/, 'bicycle'],
+  [/\btransjakarta\b/, 'city-bus'],
   [/\b(metro|subway|mrt|underground)\b/, 'mrt-subway'],
-  [/\b(train|shinkansen|tgv|kereta|rail)\b/, 'train'],
-  [/\b(bus|coach)\b/, 'bus'],
+  [/\bshinkansen\b/, 'shinkansen'],
+  [/\beurostar\b/, 'eurostar'],
+  [new RegExp(`\\b${GREEK_CONTEXT}\\b.*\\b(ferry|boat)\\b|\\b(ferry|boat)\\b.*\\b${GREEK_CONTEXT}\\b`), 'greek-ferry'],
+  [/\bwhoosh\b/, 'high-speed-train'],
+  [new RegExp(`\\bindonesia\\b.*\\bhigh[\\s-]?speed\\b|\\bhigh[\\s-]?speed\\b.*\\bindonesia\\b`), 'high-speed-train'],
+  [new RegExp(`(?=.*\\b(?:train|rail|tgv|kereta)\\b)(?=.*\\b${INDONESIA_CONTEXT}\\b)`), 'train'],
+  [new RegExp(`(?=.*\\b(?:bus|coach)\\b)(?=.*\\b${INDONESIA_CONTEXT}\\b)`), 'bus'],
   [/\b(boat|ferry)\b/, 'ferry'],
   [/\b(car|driver)\b/, 'car'],
   [/\bwalk(ing)?\b/, 'walk'],

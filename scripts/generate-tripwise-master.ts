@@ -67,7 +67,7 @@ function buildCityEntry(city: CityOption, countryName: string) {
     restaurants: RESTAURANT_TEMPLATES.map((t) => ({
       name: `${city.name} ${t.suffix}`,
       cuisine: 'Local',
-      image: getActivityImage('dinner'),
+      image: getActivityImage('food'),
       mapsLink: mapsLink(`${city.name} ${t.suffix} ${countryName}`),
       priceRange: t.priceRange,
       mealType: t.mealType,
