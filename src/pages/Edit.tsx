@@ -1,25 +1,19 @@
 import { useState, type DragEvent } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
+import DayCard from '../components/DayCard';
+import FlightPicker from '../components/FlightPicker';
+import HotelPicker from '../components/HotelPicker';
 import ItineraryAssistant from '../components/ItineraryAssistant';
 import Logo from '../components/Logo';
-import PlaceCard from '../components/PlaceCard';
+import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { exportItineraryToPdf } from '../logic/exportItineraryPdf';
-import { dayCostPerPerson, getSuggestedActivities } from '../logic/matchTrip';
-import {
-  airportMapsLink,
-  dailyTransportCostIDR,
-  FLIGHT_PLACEHOLDER_IMAGE,
-  formatIDR,
-  getHeroImages,
-  hotelAreaMapsLink,
-  hotelRating,
-  HOTEL_PLACEHOLDER_IMAGE,
-} from '../logic/tripMedia';
+import { dayCostPerPerson } from '../logic/matchTrip';
+import { getHeroImages } from '../logic/tripMedia';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
-import type { ItineraryActivity, ItineraryDay, TripPackage } from '../types';
+import type { BookableItem, CostBreakdown, HotelTier, ItineraryActivity, ItineraryDay } from '../types';
 
 export default function Edit() {
   const { id } = useParams<{ id: string }>();
@@ -29,9 +23,16 @@ export default function Edit() {
   const { updateSavedTrip } = useSavedTrips();
 
   const [itinerary, setItinerary] = useState<ItineraryDay[] | null>(resolved?.package.itinerary ?? null);
-  const [costBreakdown, setCostBreakdown] = useState(resolved?.package.costBreakdown ?? null);
+  const [costBreakdown, setCostBreakdown] = useState<CostBreakdown | null>(resolved?.package.costBreakdown ?? null);
+  const [selectedHotelTier, setSelectedHotelTier] = useState<HotelTier>(
+    resolved?.package.selectedHotelTier ?? 'standard',
+  );
+  const [selectedFlightId, setSelectedFlightId] = useState<string>(
+    resolved?.package.selectedFlightId ?? resolved?.package.flightOptions?.[0]?.id ?? '',
+  );
   const [savedNotice, setSavedNotice] = useState(false);
-  const [showSummary, setShowSummary] = useState(false);
+  const [editingHotel, setEditingHotel] = useState(false);
+  const [editingFlight, setEditingFlight] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
@@ -43,18 +44,18 @@ export default function Edit() {
   const groupSize = preferences.groupSize ?? 1;
   const heroImages = getHeroImages(pkg);
   const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
+  const primaryCountry = pkg.cities?.[0] ? preferences.selectedCities?.[0]?.country : undefined;
+  const nights = Math.max(1, itinerary.length - 1);
+  const rooms = Math.max(1, Math.ceil(groupSize / 2));
 
-  const updateActivity = (dayIndex: number, activityIndex: number, field: keyof ItineraryActivity, value: string) => {
+  const updateActivityField = (dayIndex: number, activityIndex: number, field: 'name' | 'time', value: string) => {
     setItinerary((prev) => {
       if (!prev) return prev;
-      const next = prev.map((day, i) => {
+      return prev.map((day, i) => {
         if (i !== dayIndex) return day;
-        const activities = day.activities.map((a, j) =>
-          j === activityIndex ? { ...a, [field]: value } : a,
-        );
+        const activities = day.activities.map((a, j) => (j === activityIndex ? { ...a, [field]: value } : a));
         return { ...day, activities };
       });
-      return next;
     });
     setSavedNotice(false);
   };
@@ -77,32 +78,34 @@ export default function Edit() {
     setItinerary((prev) => {
       if (!prev) return prev;
       return prev.map((day, i) =>
-        i === dayIndex
-          ? { ...day, activities: day.activities.filter((_, j) => j !== activityIndex) }
-          : day,
+        i === dayIndex ? { ...day, activities: day.activities.filter((_, j) => j !== activityIndex) } : day,
       );
     });
     setSavedNotice(false);
   };
 
-  const addActivity = (dayIndex: number) => {
+  const addActivity = (dayIndex: number, activity: ItineraryActivity) => {
     setItinerary((prev) => {
       if (!prev) return prev;
-      return prev.map((day, i) =>
-        i === dayIndex
-          ? { ...day, activities: [...day.activities, { time: '9:00 AM', name: 'New activity', price: 0 }] }
-          : day,
-      );
+      return prev.map((day, i) => (i === dayIndex ? { ...day, activities: [...day.activities, activity] } : day));
     });
     setSavedNotice(false);
   };
 
-  const addSuggestedActivity = (dayIndex: number, activity: ItineraryActivity) => {
+  const changeTransport = (dayIndex: number, optionIndex: number) => {
     setItinerary((prev) => {
       if (!prev) return prev;
-      return prev.map((day, i) =>
-        i === dayIndex ? { ...day, activities: [...day.activities, activity] } : day,
-      );
+      return prev.map((day, i) => {
+        if (i !== dayIndex || day.type !== 'transition') return day;
+        const option = day.transportOptions?.[optionIndex];
+        return {
+          ...day,
+          selectedTransportIndex: optionIndex,
+          activities: option
+            ? [{ time: 'All day', name: `${option.name} to ${day.toCity}`, price: option.costPerPerson }]
+            : day.activities,
+        };
+      });
     });
     setSavedNotice(false);
   };
@@ -118,7 +121,7 @@ export default function Edit() {
     setSavedNotice(false);
   };
 
-  const handleDragStart = (index: number) => (e: DragEvent<HTMLDivElement>) => {
+  const handleDragStart = (index: number) => (e: DragEvent<HTMLSpanElement>) => {
     setDraggedIndex(index);
     e.dataTransfer.effectAllowed = 'move';
   };
@@ -143,7 +146,40 @@ export default function Edit() {
     setDragOverIndex(null);
   };
 
-  const buildUpdatedPackage = (): TripPackage => ({ ...pkg, itinerary, costBreakdown });
+  const handleSelectHotel = (tier: HotelTier) => {
+    if (!pkg.hotelOptions) return;
+    setSelectedHotelTier(tier);
+    const option = getHotelOption(pkg.hotelOptions, tier);
+    const hotelDiscount = pkg.hotelDiscountPercent / 100;
+    const hotel: BookableItem = {
+      name: option.name,
+      cost: Math.round(option.pricePerNight * nights * rooms * (1 - hotelDiscount)),
+      bookingUrl: costBreakdown.hotel.bookingUrl,
+    };
+    setCostBreakdown((prev) => (prev ? { ...prev, hotel } : prev));
+    setSavedNotice(false);
+  };
+
+  const handleSelectFlight = (flightId: string) => {
+    if (!pkg.flightOptions) return;
+    setSelectedFlightId(flightId);
+    const option = getFlightOption(pkg.flightOptions, flightId);
+    const flight: BookableItem = {
+      name: `${option.airline} round-trip to ${primaryCity}`,
+      cost: Math.round(option.pricePerPerson * groupSize),
+      bookingUrl: option.bookingUrl,
+    };
+    setCostBreakdown((prev) => (prev ? { ...prev, flight } : prev));
+    setSavedNotice(false);
+  };
+
+  const buildUpdatedPackage = () => ({
+    ...pkg,
+    itinerary,
+    costBreakdown,
+    selectedHotelTier,
+    selectedFlightId,
+  });
 
   const handleSave = () => {
     const updatedPkg = buildUpdatedPackage();
@@ -154,25 +190,20 @@ export default function Edit() {
       updateSavedTrip(savedId, updatedPkg);
     }
     setSavedNotice(true);
-    setShowSummary(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      navigate(`/trip/${pkg.id}`);
+    }, 1500);
   };
 
   const handleExportPdf = () => {
     exportItineraryToPdf(buildUpdatedPackage(), preferences);
   };
 
-  const makeHotelCheaper = () => {
-    setCostBreakdown((prev) => {
-      if (!prev) return prev;
-      return { ...prev, hotel: { ...prev.hotel, cost: Math.round(prev.hotel.cost * 0.8) } };
-    });
-    setSavedNotice(false);
-  };
+  const makeHotelCheaper = () => handleSelectHotel('budget');
 
   const addGenericActivity = () => {
     if (itinerary.length === 0) return;
-    addActivity(0);
+    addActivity(0, { time: '9:00 AM', name: 'New activity', price: 0 });
   };
 
   const activitiesTotalPerPerson = itinerary.reduce((sum, day) => sum + dayCostPerPerson(day), 0);
@@ -191,7 +222,6 @@ export default function Edit() {
         </Button>
       </header>
 
-      {/* Hero preview strip */}
       <div className="flex gap-3 overflow-x-auto px-4 py-4 sm:px-12" style={{ scrollbarWidth: 'thin' }}>
         {heroImages.map((src, i) => (
           <img
@@ -202,7 +232,7 @@ export default function Edit() {
             loading="lazy"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+              e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
             }}
           />
         ))}
@@ -215,206 +245,167 @@ export default function Edit() {
         </p>
         <p className="mt-1 text-xs text-ink/40">Drag a day by its handle to reorder your trip.</p>
 
-        {showSummary && (
-          <div className="mt-6 rounded-2xl border border-gold-accent/40 bg-gold-accent/10 p-4 sm:p-6">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-semibold text-ink">Trip summary</p>
-                <p className="text-xs text-ink/60">
-                  {pkg.destination} · {itinerary.length} days · {groupSize} traveler{groupSize > 1 ? 's' : ''}
+        <div className="mt-6 grid grid-cols-2 gap-3 rounded-2xl border border-ink/10 bg-white p-4 text-sm sm:grid-cols-4 sm:p-6">
+          <div>
+            <p className="text-ink/50">Hotel</p>
+            <p className="font-display text-ocean-mid">${costBreakdown.hotel.cost.toLocaleString()}</p>
+          </div>
+          <div>
+            <p className="text-ink/50">Flight</p>
+            <p className="font-display text-ocean-mid">${costBreakdown.flight.cost.toLocaleString()}</p>
+          </div>
+          <div>
+            <p className="text-ink/50">Activities / person</p>
+            <p className="font-display text-ocean-mid">${activitiesTotalPerPerson.toLocaleString()}</p>
+          </div>
+          <div>
+            <p className="text-ink/50">Grand total</p>
+            <p className="font-display text-ocean-mid">${grandTotal.toLocaleString()}</p>
+          </div>
+        </div>
+
+        <div className="mt-8 space-y-4">
+          <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <img
+                src={getHotelOption(pkg.hotelOptions ?? [], selectedHotelTier).image}
+                alt="Hotel"
+                className="h-16 w-16 shrink-0 rounded-xl object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
+                }}
+              />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-ink">{costBreakdown.hotel.name}</p>
+                <p className="text-xs text-ink/50">
+                  ★{getHotelOption(pkg.hotelOptions ?? [], selectedHotelTier).rating.toFixed(1)} ·{' '}
+                  {selectedHotelTier}
+                </p>
+                <p className="font-display text-sm text-ocean-mid">
+                  ${Math.round(costBreakdown.hotel.cost / groupSize).toLocaleString()}/person
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowSummary(false)}
-                className="cursor-pointer rounded-full px-2 py-1 text-ink/40 hover:text-ink"
-                aria-label="Dismiss summary"
-              >
-                ✕
-              </button>
+              {pkg.hotelOptions && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingHotel((v) => !v);
+                    setEditingFlight(false);
+                  }}
+                  className="shrink-0 cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                >
+                  Edit hotel ✏
+                </button>
+              )}
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-              <div>
-                <p className="text-ink/50">Hotel</p>
-                <p className="font-display text-ocean-mid">${costBreakdown.hotel.cost.toLocaleString()}</p>
-              </div>
-              <div>
-                <p className="text-ink/50">Flight</p>
-                <p className="font-display text-ocean-mid">${costBreakdown.flight.cost.toLocaleString()}</p>
-              </div>
-              <div>
-                <p className="text-ink/50">Activities / person</p>
-                <p className="font-display text-ocean-mid">${activitiesTotalPerPerson.toLocaleString()}</p>
-              </div>
-              <div>
-                <p className="text-ink/50">Grand total</p>
-                <p className="font-display text-ocean-mid">${grandTotal.toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Hotel & flight booking sections */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm">
-            <img
-              src={HOTEL_PLACEHOLDER_IMAGE}
-              alt="Hotel"
-              className="h-32 w-full object-cover"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
-              }}
-            />
-            <div className="p-4">
-              <p className="text-sm font-semibold text-ink">{costBreakdown.hotel.name}</p>
-              <p className="mt-1 text-xs text-ink/50">{hotelRating(costBreakdown.hotel.name)}★ · Hotel</p>
-              <a
-                href={hotelAreaMapsLink(costBreakdown.hotel.name, primaryCity)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-1 inline-block text-xs font-medium text-ocean-mid hover:text-ocean-deep"
-              >
-                📍 View area on Maps
-              </a>
-              <p className="mt-2 font-display text-lg text-ocean-mid">
-                ${costBreakdown.hotel.cost.toLocaleString()}
-              </p>
-              <a href={costBreakdown.hotel.bookingUrl} target="_blank" rel="noopener noreferrer">
-                <Button variant="accent" className="mt-3 w-full px-4 py-2 text-sm">
-                  Book on Traveloka
-                </Button>
-              </a>
+            <div
+              className="overflow-hidden transition-all duration-300 ease-in-out"
+              style={{ maxHeight: editingHotel ? 400 : 0, opacity: editingHotel ? 1 : 0 }}
+            >
+              {pkg.hotelOptions && (
+                <div className="mt-4 border-t border-ink/10 pt-4">
+                  <HotelPicker
+                    options={pkg.hotelOptions}
+                    selectedTier={selectedHotelTier}
+                    onSelect={handleSelectHotel}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setEditingHotel(false)}
+                    className="mt-3 cursor-pointer rounded-full bg-gold-accent px-4 py-2 text-xs font-semibold text-ink hover:opacity-90"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm">
-            <img
-              src={FLIGHT_PLACEHOLDER_IMAGE}
-              alt="Flight"
-              className="h-32 w-full object-cover"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
-              }}
-            />
-            <div className="p-4">
-              <p className="text-sm font-semibold text-ink">✈️ {costBreakdown.flight.name}</p>
-              <p className="mt-1 text-xs text-ink/50">Your city → {pkg.destination}</p>
-              <a
-                href={airportMapsLink(primaryCity)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-1 inline-block text-xs font-medium text-ocean-mid hover:text-ocean-deep"
-              >
-                📍 Airport
-              </a>
-              <p className="mt-2 font-display text-lg text-ocean-mid">
-                ${costBreakdown.flight.cost.toLocaleString()}
-              </p>
-              <a href={costBreakdown.flight.bookingUrl} target="_blank" rel="noopener noreferrer">
-                <Button variant="accent" className="mt-3 w-full px-4 py-2 text-sm">
-                  Book on Traveloka
-                </Button>
-              </a>
+          <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <img
+                src={getFlightOption(pkg.flightOptions ?? [], selectedFlightId).logo}
+                alt="Airline"
+                className="h-16 w-16 shrink-0 rounded-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://picsum.photos/seed/travel-default/80/80';
+                }}
+              />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-ink">{costBreakdown.flight.name}</p>
+                <p className="text-xs text-ink/50">
+                  ${Math.round(costBreakdown.flight.cost / groupSize).toLocaleString()}/person ·{' '}
+                  {getFlightOption(pkg.flightOptions ?? [], selectedFlightId).duration}
+                </p>
+              </div>
+              {pkg.flightOptions && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingFlight((v) => !v);
+                    setEditingHotel(false);
+                  }}
+                  className="shrink-0 cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                >
+                  Edit flight ✏
+                </button>
+              )}
+            </div>
+            <div
+              className="overflow-hidden transition-all duration-300 ease-in-out"
+              style={{ maxHeight: editingFlight ? 400 : 0, opacity: editingFlight ? 1 : 0 }}
+            >
+              {pkg.flightOptions && (
+                <div className="mt-4 border-t border-ink/10 pt-4">
+                  <FlightPicker
+                    options={pkg.flightOptions}
+                    selectedId={selectedFlightId}
+                    onSelect={handleSelectFlight}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setEditingFlight(false)}
+                    className="mt-3 cursor-pointer rounded-full bg-gold-accent px-4 py-2 text-xs font-semibold text-ink hover:opacity-90"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         <div className="mt-8 space-y-6">
-          {itinerary.map((day, dayIndex) => {
-            const suggestions = getSuggestedActivities(
-              pkg.id,
-              day.activities.map((a) => a.name),
-              day.day,
-            );
-            const dayTotalPerPerson = dayCostPerPerson(day);
-            const dayTotal = dayTotalPerPerson * groupSize;
-            const transportCost = dailyTransportCostIDR(pkg.id, day.day);
-            return (
-              <div
-                key={day.day}
-                onDragOver={handleDragOver(dayIndex)}
-                onDrop={handleDrop(dayIndex)}
-                className={`rounded-2xl border bg-white p-4 shadow-sm transition-shadow sm:p-6 ${
-                  dragOverIndex === dayIndex ? 'border-ocean-mid ring-2 ring-ocean-mid/30' : 'border-ink/10'
-                } ${draggedIndex === dayIndex ? 'opacity-40' : ''}`}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span
-                      draggable
-                      onDragStart={handleDragStart(dayIndex)}
-                      onDragEnd={handleDragEnd}
-                      className="cursor-grab select-none text-ink/30 hover:text-ink/60 active:cursor-grabbing"
-                      aria-label="Drag to reorder this day"
-                      title="Drag to reorder"
-                    >
-                      ⠿
-                    </span>
-                    <span className="font-display text-2xl text-ocean-mid">
-                      {String(day.day).padStart(2, '0')}
-                    </span>
-                    <h3 className="text-lg font-semibold">{day.title}</h3>
-                  </div>
-                  {dayTotal > 0 && (
-                    <div className="text-right text-xs text-ink/50">
-                      <p className="font-display text-base text-ocean-mid">${dayTotal.toLocaleString()}</p>
-                      <p>${dayTotalPerPerson.toLocaleString()} / person</p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-3 flex items-center gap-2 rounded-lg bg-ocean-mid/5 px-3 py-2 text-xs text-ocean-deep">
-                  <span>🚌</span>
-                  <span>Estimated local transport (car/bus/MRT): {formatIDR(transportCost)}</span>
-                </div>
-
-                <ul className="mt-4 space-y-2">
-                  {day.activities.map((activity, activityIndex) => (
-                    <PlaceCard
-                      key={activityIndex}
-                      activity={activity}
-                      destination={pkg.destination}
-                      onChangeName={(v) => updateActivity(dayIndex, activityIndex, 'name', v)}
-                      onChangeTime={(v) => updateActivity(dayIndex, activityIndex, 'time', v)}
-                      onChangePrice={(v) => updateActivityPrice(dayIndex, activityIndex, v)}
-                      onRemove={() => removeActivity(dayIndex, activityIndex)}
-                    />
-                  ))}
-                </ul>
-
-                <button
-                  type="button"
-                  onClick={() => addActivity(dayIndex)}
-                  className="mt-3 text-sm font-semibold text-ocean-mid hover:text-ocean-deep cursor-pointer"
-                >
-                  + Add activity
-                </button>
-
-                {suggestions.length > 0 && (
-                  <div className="mt-3 border-t border-ink/10 pt-3">
-                    <p className="text-xs font-medium text-ink/40">You could also add:</p>
-                    <div className="mt-1.5 flex flex-wrap gap-1.5">
-                      {suggestions.map((activity) => (
-                        <button
-                          key={activity.name}
-                          type="button"
-                          onClick={() => addSuggestedActivity(dayIndex, activity)}
-                          className="rounded-full border border-ocean-light/40 bg-ocean-light/5 px-3 py-1 text-xs font-medium text-ocean-deep hover:bg-ocean-light/15 cursor-pointer"
-                        >
-                          + {activity.name}
-                          {typeof activity.price === 'number' && activity.price > 0 && ` ($${activity.price})`}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {itinerary.map((day, dayIndex) => (
+            <DayCard
+              key={day.day}
+              day={day}
+              packageId={pkg.id}
+              destination={primaryCity}
+              country={primaryCountry}
+              groupSize={groupSize}
+              isEditing
+              onChangeTransport={(optionIndex) => changeTransport(dayIndex, optionIndex)}
+              onChangeActivity={(activityIndex, field, value) =>
+                updateActivityField(dayIndex, activityIndex, field, value)
+              }
+              onChangeActivityPrice={(activityIndex, value) => updateActivityPrice(dayIndex, activityIndex, value)}
+              onRemoveActivity={(activityIndex) => removeActivity(dayIndex, activityIndex)}
+              onAddActivity={(activity) => addActivity(dayIndex, activity)}
+              dragHandleProps={{
+                onDragStart: handleDragStart(dayIndex),
+                onDragOver: handleDragOver(dayIndex),
+                onDrop: handleDrop(dayIndex),
+                onDragEnd: handleDragEnd,
+                isDragging: draggedIndex === dayIndex,
+                isDragOver: dragOverIndex === dayIndex,
+              }}
+            />
+          ))}
         </div>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">

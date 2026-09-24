@@ -1,7 +1,12 @@
 import type { TransportOption } from '../types';
 
 function unsplash(keywords: string): string {
-  return `https://source.unsplash.com/400x300/?${encodeURIComponent(keywords).replace(/%20/g, '+')}`;
+  const seed = keywords
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/400/300`;
 }
 
 export function transportMapsLink(place: string): string {

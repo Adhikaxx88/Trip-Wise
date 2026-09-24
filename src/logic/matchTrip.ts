@@ -1,9 +1,12 @@
 import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
 import { COUNTRIES, findCity } from '../data/geography';
+import { buildFlightOptions, buildHotelOptions, getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { HOTEL_DISCOUNT_BY_TIER } from '../data/subscriptionTiers';
 import { getIntercityRoute as getIntercityOptions, getIntracityOptions } from '../data/tripwiseMaster';
 import type {
   CostBreakdown,
+  FlightOption,
+  HotelOption,
   ItineraryActivity,
   ItineraryDay,
   SelectedCity,
@@ -11,6 +14,49 @@ import type {
   TripPackage,
   TripPreferences,
 } from '../types';
+
+interface HotelFlightSelection {
+  hotelOptions: HotelOption[];
+  flightOptions: FlightOption[];
+  selectedHotelTier: 'budget' | 'standard' | 'luxury';
+  selectedFlightId: string;
+  hotel: CostBreakdown['hotel'];
+  flight: CostBreakdown['flight'];
+}
+
+function buildHotelFlightSelection(
+  city: string,
+  isDomesticIndonesia: boolean,
+  region: string | undefined,
+  nights: number,
+  rooms: number,
+  groupSize: number,
+  hotelDiscount: number,
+): HotelFlightSelection {
+  const hotelOptions = buildHotelOptions(city);
+  const flightOptions = buildFlightOptions(isDomesticIndonesia, region);
+  const selectedHotelTier = 'standard' as const;
+  const selectedFlightId = flightOptions[0].id;
+  const hotelOption = getHotelOption(hotelOptions, selectedHotelTier);
+  const flightOption = getFlightOption(flightOptions, selectedFlightId);
+
+  return {
+    hotelOptions,
+    flightOptions,
+    selectedHotelTier,
+    selectedFlightId,
+    hotel: {
+      name: hotelOption.name,
+      cost: Math.round(hotelOption.pricePerNight * nights * rooms * (1 - hotelDiscount)),
+      bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city)}`,
+    },
+    flight: {
+      name: `${flightOption.airline} round-trip to ${city}`,
+      cost: Math.round(flightOption.pricePerPerson * groupSize),
+      bookingUrl: flightOption.bookingUrl,
+    },
+  };
+}
 
 const TIER_RANK: Record<SubscriptionTierId, number> = { free: 0, monthly: 1, yearly: 2 };
 
@@ -139,24 +185,21 @@ function buildCostBreakdown(
   durationDays: number,
   groupSize: number,
   currentTier: SubscriptionTierId,
-): CostBreakdown {
+): HotelFlightSelection {
   const nights = Math.max(1, durationDays - 1);
   const rooms = Math.max(1, Math.ceil(groupSize / 2));
-  const destinationQuery = encodeURIComponent(dest.destination);
   const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
+  const isDomesticIndonesia = dest.country === 'Indonesia';
 
-  return {
-    hotel: {
-      name: dest.hotelName,
-      cost: Math.round(dest.hotelCostPerNight * nights * rooms * (1 - hotelDiscount)),
-      bookingUrl: dest.bookingUrl,
-    },
-    flight: {
-      name: `${dest.airline} round-trip to ${dest.destination}`,
-      cost: Math.round(dest.flightEstimatePerPerson * groupSize),
-      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${destinationQuery}`,
-    },
-  };
+  return buildHotelFlightSelection(
+    dest.destination,
+    isDomesticIndonesia,
+    regionForCountry(dest.country),
+    nights,
+    rooms,
+    groupSize,
+    hotelDiscount,
+  );
 }
 
 export function activitiesCostPerPerson(itinerary: ItineraryDay[]): number {
@@ -379,34 +422,8 @@ async function buildMultiCityItinerary(
   return itinerary.map((day, i) => ({ ...day, day: i + 1 }));
 }
 
-function buildMultiCityCostBreakdown(
-  cities: SelectedCity[],
-  totalDays: number,
-  groupSize: number,
-  currentTier: SubscriptionTierId,
-): CostBreakdown {
-  const nights = Math.max(1, totalDays - 1);
-  const rooms = Math.max(1, Math.ceil(groupSize / 2));
-  const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
-  const avgHotelPerNight =
-    cities.reduce((sum, c) => sum + dailyCostForCountry(c.country) * 0.8, 0) / cities.length;
-
-  const isInternational = cities.some((c) => c.country !== cities[0].country);
-  const anchorCity = cities[0];
-  const flightBase = isInternational ? 650 : 120;
-
-  return {
-    hotel: {
-      name: `Hotels across ${cities.map((c) => c.city).join(', ')}`,
-      cost: Math.round(avgHotelPerNight * nights * rooms * (1 - hotelDiscount)),
-      bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(anchorCity.city)}`,
-    },
-    flight: {
-      name: `Round-trip flights to ${anchorCity.city}`,
-      cost: Math.round(flightBase * groupSize),
-      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${encodeURIComponent(anchorCity.city)}`,
-    },
-  };
+function isDomesticIndonesiaTrip(cities: SelectedCity[]): boolean {
+  return cities.every((c) => c.country === 'Indonesia');
 }
 
 async function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTierId): Promise<TripPackage> {
@@ -416,7 +433,21 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
   const primaryVibe = prefs.vibe && prefs.vibe.length > 0 ? prefs.vibe[0] : null;
 
   const itinerary = await buildMultiCityItinerary(cities, duration, primaryVibe);
-  const costBreakdown = buildMultiCityCostBreakdown(cities, itinerary.length, groupSize, currentTier);
+
+  const nights = Math.max(1, itinerary.length - 1);
+  const rooms = Math.max(1, Math.ceil(groupSize / 2));
+  const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
+  const anchorCity = cities[0];
+  const selection = buildHotelFlightSelection(
+    anchorCity.city,
+    isDomesticIndonesiaTrip(cities),
+    regionForCountry(anchorCity.country),
+    nights,
+    rooms,
+    groupSize,
+    hotelDiscount,
+  );
+  const costBreakdown: CostBreakdown = { hotel: selection.hotel, flight: selection.flight };
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
@@ -429,7 +460,7 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
       : cityNames.join(' + ');
 
   const firstCity = findCity(cities[0].country, cities[0].city);
-  const coverImageUrl = firstCity?.imageUrl ?? 'https://source.unsplash.com/1600x900/?travel';
+  const coverImageUrl = firstCity?.imageUrl ?? 'https://picsum.photos/seed/travel-default/1600/900';
 
   const tags = Array.from(new Set(cities.map((c) => c.country)));
   const packageId = `multicity-${cityNames.map((c) => c.toLowerCase().replace(/\s+/g, '-')).join('_')}-${Date.now()}`;
@@ -448,6 +479,10 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
     tier: 'free',
     hotelDiscountPercent: HOTEL_DISCOUNT_BY_TIER[currentTier],
     cities: cityNames,
+    hotelOptions: selection.hotelOptions,
+    flightOptions: selection.flightOptions,
+    selectedHotelTier: selection.selectedHotelTier,
+    selectedFlightId: selection.selectedFlightId,
   };
 }
 
@@ -471,7 +506,8 @@ export async function matchTrip(
   const groupSize = prefs.groupSize ?? 1;
 
   const itinerary = buildItinerary(best, duration);
-  const costBreakdown = buildCostBreakdown(best, duration, groupSize, currentTier);
+  const selection = buildCostBreakdown(best, duration, groupSize, currentTier);
+  const costBreakdown: CostBreakdown = { hotel: selection.hotel, flight: selection.flight };
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
@@ -495,6 +531,11 @@ export async function matchTrip(
     costBreakdown,
     tier: best.tier,
     hotelDiscountPercent: HOTEL_DISCOUNT_BY_TIER[currentTier],
+    cities: [best.destination],
+    hotelOptions: selection.hotelOptions,
+    flightOptions: selection.flightOptions,
+    selectedHotelTier: selection.selectedHotelTier,
+    selectedFlightId: selection.selectedFlightId,
   };
 }
 

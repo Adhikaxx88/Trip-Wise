@@ -13,7 +13,12 @@ import { COUNTRIES, INDONESIA_CITIES, type CityOption, type CountryOption } from
 import { intercityTransport, getIntracityOptions } from '../src/data/transport';
 
 function unsplash(keywords: string, w = 800, h = 500): string {
-  return `https://source.unsplash.com/${w}x${h}/?${encodeURIComponent(keywords).replace(/%20/g, '+')}`;
+  const seed = keywords
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`;
 }
 
 function mapsLink(place: string): string {
@@ -88,9 +93,9 @@ for (const [key, options] of Object.entries(intercityTransport)) {
 }
 
 const fallbacks = {
-  unknownCityImage: 'https://source.unsplash.com/800x500/?travel+destination+beautiful',
+  unknownCityImage: 'https://picsum.photos/seed/travel-default/800/500',
   unknownCityMapsLink: 'https://maps.google.com/?q=travel+destination',
-  unknownAttractionImage: 'https://source.unsplash.com/400x300/?landmark+travel',
+  unknownAttractionImage: 'https://picsum.photos/seed/travel-activity/400/300',
   unknownRouteType: 'flight',
   genericBookingUrl: 'https://www.traveloka.com',
 };

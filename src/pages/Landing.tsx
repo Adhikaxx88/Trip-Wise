@@ -285,7 +285,7 @@ export default function Landing() {
                       className="w-full rounded-[12px] object-cover"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+                        e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
                       }}
                     />
                   </div>
@@ -323,7 +323,7 @@ export default function Landing() {
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+                      e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ocean-deepest via-ocean-deepest/50 to-ocean-deepest/10" />
@@ -371,7 +371,7 @@ export default function Landing() {
                     className="h-16 w-16 rounded-full border-2 border-[#FFD233] object-cover"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+                      e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
                     }}
                   />
                   <div className="mt-3 flex gap-0.5 text-[#FFD233]" aria-label="5 out of 5 stars">

@@ -3,17 +3,20 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
 import CostIcon from '../components/CostIcon';
+import DayCard from '../components/DayCard';
+import FlightPicker from '../components/FlightPicker';
 import GradientBackdrop from '../components/GradientBackdrop';
-import ItineraryDayCard from '../components/ItineraryDayCard';
+import HotelPicker from '../components/HotelPicker';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import Toast from '../components/Toast';
+import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { formatDateRange } from '../logic/dates';
 import { airportMapsLink, hotelAreaMapsLink } from '../logic/tripMedia';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
-import type { BookableItem } from '../types';
+import type { BookableItem, HotelTier, TripPackage } from '../types';
 
 export default function Summary() {
   const { id } = useParams<{ id: string }>();
@@ -22,6 +25,8 @@ export default function Summary() {
   const { currentTrip, updateCurrentTripPackage } = useCurrentTrip();
   const [justSaved, setJustSaved] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [editingHotel, setEditingHotel] = useState(false);
+  const [editingFlight, setEditingFlight] = useState(false);
 
   useEffect(() => {
     if (!showToast) return;
@@ -36,6 +41,15 @@ export default function Summary() {
   const { package: pkg, preferences, savedId } = resolved;
   const alreadySaved = isSaved(pkg.id) || justSaved;
 
+  const persistPackage = (updatedPkg: TripPackage) => {
+    if (currentTrip && currentTrip.package.id === pkg.id) {
+      updateCurrentTripPackage(updatedPkg);
+    }
+    if (savedId) {
+      updateSavedTrip(savedId, updatedPkg);
+    }
+  };
+
   const handleSave = () => {
     saveTrip(pkg, preferences);
     setJustSaved(true);
@@ -43,7 +57,7 @@ export default function Summary() {
   };
 
   const handleChangeTransport = (dayIndex: number, optionIndex: number) => {
-    const updatedPkg = {
+    persistPackage({
       ...pkg,
       itinerary: pkg.itinerary.map((day, i) => {
         if (i !== dayIndex || day.type !== 'transition') return day;
@@ -56,23 +70,55 @@ export default function Summary() {
             : day.activities,
         };
       }),
+    });
+  };
+
+  const nights = Math.max(1, pkg.itinerary.length - 1);
+  const rooms = Math.max(1, Math.ceil(groupSizeOf(preferences) / 2));
+
+  const handleSelectHotel = (tier: HotelTier) => {
+    if (!pkg.hotelOptions) return;
+    const option = getHotelOption(pkg.hotelOptions, tier);
+    const hotelDiscount = pkg.hotelDiscountPercent / 100;
+    const hotel: BookableItem = {
+      name: option.name,
+      cost: Math.round(option.pricePerNight * nights * rooms * (1 - hotelDiscount)),
+      bookingUrl: pkg.costBreakdown.hotel.bookingUrl,
     };
-    if (currentTrip && currentTrip.package.id === pkg.id) {
-      updateCurrentTripPackage(updatedPkg);
-    }
-    if (savedId) {
-      updateSavedTrip(savedId, updatedPkg);
-    }
+    persistPackage({
+      ...pkg,
+      selectedHotelTier: tier,
+      costBreakdown: { ...pkg.costBreakdown, hotel },
+      estimatedCost: pkg.estimatedCost - pkg.costBreakdown.hotel.cost + hotel.cost,
+    });
+  };
+
+  const handleSelectFlight = (flightId: string) => {
+    if (!pkg.flightOptions) return;
+    const option = getFlightOption(pkg.flightOptions, flightId);
+    const groupSize = groupSizeOf(preferences);
+    const flight: BookableItem = {
+      name: `${option.airline} round-trip to ${pkg.cities?.[0] ?? pkg.destination}`,
+      cost: Math.round(option.pricePerPerson * groupSize),
+      bookingUrl: option.bookingUrl,
+    };
+    persistPackage({
+      ...pkg,
+      selectedFlightId: flightId,
+      costBreakdown: { ...pkg.costBreakdown, flight },
+      estimatedCost: pkg.estimatedCost - pkg.costBreakdown.flight.cost + flight.cost,
+    });
   };
 
   const dateRangeLabel = formatDateRange(preferences.startDate, preferences.endDate);
-  const groupSize = preferences.groupSize ?? 1;
+  const groupSize = groupSizeOf(preferences);
 
   const costRows: { label: string; icon: 'hotel' | 'flight'; item: BookableItem }[] = [
     { label: 'Hotel', icon: 'hotel', item: pkg.costBreakdown.hotel },
     { label: 'Flights', icon: 'flight', item: pkg.costBreakdown.flight },
   ];
   const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
+  const primaryCountry = pkg.cities?.[0] ? preferences.selectedCities?.[0]?.country : undefined;
 
   return (
     <div className="min-h-dvh bg-ocean-deepest text-white">
@@ -165,10 +211,7 @@ export default function Summary() {
           <h2 className="font-display text-xl text-ink sm:text-2xl">Cost breakdown</h2>
           <div className="mt-6 space-y-3">
             {costRows.map((row) => (
-              <div
-                key={row.label}
-                className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5"
-              >
+              <div key={row.label} className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ocean-mid/10 text-ocean-mid">
@@ -198,19 +241,88 @@ export default function Summary() {
                   </div>
                   <div className="ml-auto flex shrink-0 items-center gap-3">
                     <div className="text-right">
-                      <p className="font-display text-lg text-ocean-mid">
-                        ${row.item.cost.toLocaleString()}
-                      </p>
+                      <p className="font-display text-lg text-ocean-mid">${row.item.cost.toLocaleString()}</p>
                       <p className="text-xs text-ink/50">
                         ${Math.round(row.item.cost / groupSize).toLocaleString()} / person
                       </p>
                     </div>
-                    <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
-                      <Button variant="accent" className="px-4 py-2 text-sm">
-                        Book ↗
-                      </Button>
-                    </a>
+                    {row.icon === 'hotel' && pkg.hotelOptions ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingHotel((v) => !v);
+                          setEditingFlight(false);
+                        }}
+                        className="cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                      >
+                        Edit hotel ✏
+                      </button>
+                    ) : row.icon === 'flight' && pkg.flightOptions ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingFlight((v) => !v);
+                          setEditingHotel(false);
+                        }}
+                        className="cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                      >
+                        Edit flight ✏
+                      </button>
+                    ) : (
+                      <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
+                        <Button variant="accent" className="px-4 py-2 text-sm">
+                          Book ↗
+                        </Button>
+                      </a>
+                    )}
                   </div>
+                </div>
+
+                <div
+                  className="overflow-hidden transition-all duration-300 ease-in-out"
+                  style={{
+                    maxHeight:
+                      (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
+                        ? 400
+                        : 0,
+                    opacity:
+                      (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
+                        ? 1
+                        : 0,
+                  }}
+                >
+                  {row.icon === 'hotel' && pkg.hotelOptions && (
+                    <div className="mt-4 border-t border-ink/10 pt-4">
+                      <HotelPicker
+                        options={pkg.hotelOptions}
+                        selectedTier={pkg.selectedHotelTier ?? 'standard'}
+                        onSelect={handleSelectHotel}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setEditingHotel(false)}
+                        className="mt-3 cursor-pointer rounded-full bg-gold-accent px-4 py-2 text-xs font-semibold text-ink hover:opacity-90"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  )}
+                  {row.icon === 'flight' && pkg.flightOptions && (
+                    <div className="mt-4 border-t border-ink/10 pt-4">
+                      <FlightPicker
+                        options={pkg.flightOptions}
+                        selectedId={pkg.selectedFlightId ?? pkg.flightOptions[0].id}
+                        onSelect={handleSelectFlight}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setEditingFlight(false)}
+                        className="mt-3 cursor-pointer rounded-full bg-gold-accent px-4 py-2 text-xs font-semibold text-ink hover:opacity-90"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -222,10 +334,14 @@ export default function Summary() {
           </p>
           <div className="mt-6 space-y-4">
             {pkg.itinerary.map((day, dayIndex) => (
-              <ItineraryDayCard
+              <DayCard
                 key={day.day}
                 day={day}
+                packageId={pkg.id}
+                destination={primaryCity}
+                country={primaryCountry}
                 groupSize={groupSize}
+                isEditing={false}
                 onChangeTransport={(optionIndex) => handleChangeTransport(dayIndex, optionIndex)}
               />
             ))}
@@ -237,4 +353,8 @@ export default function Summary() {
       <Toast message="Saved. Find it anytime on your Saved trips page." show={showToast} />
     </div>
   );
+}
+
+function groupSizeOf(preferences: { groupSize: number | null }): number {
+  return preferences.groupSize ?? 1;
 }
