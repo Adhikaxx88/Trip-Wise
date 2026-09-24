@@ -5,6 +5,7 @@ import GradientBackdrop from '../components/GradientBackdrop';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import { useSavedTrips } from '../context/SavedTripsContext';
+import { handleImageError, trustedImage } from '../data/getImage';
 
 export default function Saved() {
   const { savedTrips, removeSavedTrip } = useSavedTrips();
@@ -37,8 +38,7 @@ export default function Saved() {
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {savedTrips.map((trip) => {
-              const heroImage =
-                trip.package.coverImageUrl || 'https://picsum.photos/seed/travel-default/800/500';
+              const heroImage = trustedImage(trip.package.coverImageUrl);
               const title = trip.package.destination || 'My Trip';
               const dayCount = trip.package.itinerary?.length ?? 0;
               const durationLabel = dayCount > 0 ? `${dayCount} days` : 'Dates TBD';
@@ -60,10 +60,7 @@ export default function Saved() {
                       alt={title}
                       className="absolute inset-0 h-full w-full object-cover opacity-60"
                       loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-                      }}
+                      onError={handleImageError}
                     />
                   </div>
                   <div className="p-5">

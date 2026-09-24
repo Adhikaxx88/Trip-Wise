@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { MessageCircle, X } from 'lucide-react';
 import ChatBubble from './ChatBubble';
 
 interface ChatMessage {
@@ -73,9 +74,9 @@ export default function ItineraryAssistant(props: ItineraryAssistantProps) {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close assistant"
-              className="cursor-pointer rounded-full px-1.5 text-white/70 hover:text-white"
+              className="inline-flex cursor-pointer items-center rounded-full px-1.5 text-white/70 hover:text-white"
             >
-              ✕
+              <X className="h-4 w-4" aria-hidden />
             </button>
           </div>
 
@@ -116,7 +117,7 @@ export default function ItineraryAssistant(props: ItineraryAssistantProps) {
           right: 'calc(1rem + env(safe-area-inset-right))',
         }}
       >
-        💬
+        <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
       </button>
     </>
   );

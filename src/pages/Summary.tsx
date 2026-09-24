@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
+import { Hotel, MapPin, Pencil, Plane } from 'lucide-react';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
-import CostIcon from '../components/CostIcon';
+import CityStayStrip from '../components/CityStayStrip';
 import DayCard from '../components/DayCard';
 import FlightPicker from '../components/FlightPicker';
 import GradientBackdrop from '../components/GradientBackdrop';
@@ -10,6 +11,14 @@ import HotelPicker from '../components/HotelPicker';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import Toast from '../components/Toast';
+import {
+  getCityImage,
+  getHotelImage,
+  getTransportImage,
+  handleImageError,
+  isFallbackImage,
+  trustedImage,
+} from '../data/getImage';
 import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
@@ -119,15 +128,27 @@ export default function Summary() {
   ];
   const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
   const primaryCountry = pkg.cities?.[0] ? preferences.selectedCities?.[0]?.country : undefined;
+  const tripCities = pkg.cities ?? [];
+  const isMultiCity = tripCities.length > 1;
+  const selectedHotelTier = pkg.selectedHotelTier ?? 'standard';
+  const coverImage = trustedImage(pkg.coverImageUrl);
+  const hotelThumb = pkg.hotelOptions?.length
+    ? getHotelImage(getHotelOption(pkg.hotelOptions, selectedHotelTier).tier)
+    : pkg.cities?.[0]
+      ? getCityImage(pkg.cities[0], 'hotel')
+      : getHotelImage(selectedHotelTier);
 
   return (
     <div className="min-h-dvh bg-ocean-deepest text-white">
       <div className="relative overflow-hidden pb-16 pt-6">
         <GradientBackdrop vibe={pkg.vibe} />
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-60"
-          style={{ backgroundImage: `url(${pkg.coverImageUrl})` }}
-        />
+        {/* GradientBackdrop above stays visible if the cover is missing or fails to load. */}
+        {!isFallbackImage(coverImage) && (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-60"
+            style={{ backgroundImage: `url(${coverImage})` }}
+          />
+        )}
         <div
           className="absolute inset-0"
           style={{
@@ -214,11 +235,22 @@ export default function Summary() {
               <div key={row.label} className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ocean-mid/10 text-ocean-mid">
-                      <CostIcon type={row.icon} className="h-5 w-5" />
-                    </span>
+                    <img
+                      src={row.icon === 'hotel' ? hotelThumb : getTransportImage('flight')}
+                      alt={row.icon === 'hotel' ? 'Hotel' : 'Flight'}
+                      loading="lazy"
+                      onError={handleImageError}
+                      className="h-14 w-14 shrink-0 rounded-xl object-cover sm:h-16 sm:w-16"
+                    />
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-ink">{row.label}</p>
+                      <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink">
+                        {row.icon === 'hotel' ? (
+                          <Hotel className="h-4 w-4 text-ocean-mid" aria-hidden />
+                        ) : (
+                          <Plane className="h-4 w-4 text-ocean-mid" aria-hidden />
+                        )}
+                        {row.label}
+                      </p>
                       <p className="truncate text-xs text-ink/60">{row.item.name}</p>
                       <a
                         href={
@@ -228,12 +260,13 @@ export default function Summary() {
                         }
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-0.5 inline-block text-[11px] font-medium text-ocean-mid hover:text-ocean-deep"
+                        className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-ocean-mid hover:text-ocean-deep"
                       >
-                        {row.icon === 'hotel' ? '📍 View area on Maps' : '📍 Airport'}
+                        <MapPin className="h-3 w-3" aria-hidden />
+                        {row.icon === 'hotel' ? 'View area on Maps' : 'Airport'}
                       </a>
                       {row.icon === 'hotel' && pkg.hotelDiscountPercent > 0 && (
-                        <span className="mt-1 block rounded-full bg-gold-accent/15 px-2 py-0.5 text-[11px] font-semibold text-gold-accent-deep">
+                        <span className="mt-1 block w-fit rounded-full border border-[rgba(255,210,51,0.3)] bg-[rgba(255,210,51,0.15)] px-2 py-0.5 text-[11px] font-medium text-[#B8860B]">
                           Member discount applied · {pkg.hotelDiscountPercent}% off
                         </span>
                       )}
@@ -253,9 +286,10 @@ export default function Summary() {
                           setEditingHotel((v) => !v);
                           setEditingFlight(false);
                         }}
-                        className="cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
                       >
-                        Edit hotel ✏
+                        Edit hotel
+                        <Pencil className="h-3.5 w-3.5" aria-hidden />
                       </button>
                     ) : row.icon === 'flight' && pkg.flightOptions ? (
                       <button
@@ -264,9 +298,10 @@ export default function Summary() {
                           setEditingFlight((v) => !v);
                           setEditingHotel(false);
                         }}
-                        className="cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
                       >
-                        Edit flight ✏
+                        Edit flight
+                        <Pencil className="h-3.5 w-3.5" aria-hidden />
                       </button>
                     ) : (
                       <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
@@ -278,12 +313,15 @@ export default function Summary() {
                   </div>
                 </div>
 
+                {row.icon === 'hotel' && isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />}
+
                 <div
                   className="overflow-hidden transition-all duration-300 ease-in-out"
                   style={{
+                    // Tall enough for the hotel tiers stacked one per row on phones (~1000px).
                     maxHeight:
                       (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
-                        ? 400
+                        ? 1200
                         : 0,
                     opacity:
                       (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
@@ -295,7 +333,7 @@ export default function Summary() {
                     <div className="mt-4 border-t border-ink/10 pt-4">
                       <HotelPicker
                         options={pkg.hotelOptions}
-                        selectedTier={pkg.selectedHotelTier ?? 'standard'}
+                        selectedTier={selectedHotelTier}
                         onSelect={handleSelectHotel}
                       />
                       <button

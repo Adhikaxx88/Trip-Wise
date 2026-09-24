@@ -1,1524 +1,1476 @@
 {
   "cities": {
     "Tokyo": {
-      "hero": "https://picsum.photos/seed/tokyo-hero/1200/600",
-      "card": "https://picsum.photos/seed/tokyo-city/800/500",
-      "hotel": "https://picsum.photos/seed/tokyo-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Shibuya_Crossing,_Tokyo,_Japan_(6790070270).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Shibuya_Crossing,_Tokyo,_Japan_(6790070270).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Osaka": {
-      "hero": "https://picsum.photos/seed/osaka-hero/1200/600",
-      "card": "https://picsum.photos/seed/osaka-city/800/500",
-      "hotel": "https://picsum.photos/seed/osaka-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Dotonbori_at_night.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Dotonbori_at_night.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kyoto": {
-      "hero": "https://picsum.photos/seed/kyoto-hero/1200/600",
-      "card": "https://picsum.photos/seed/kyoto-city/800/500",
-      "hotel": "https://picsum.photos/seed/kyoto-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi_Inari-taisha_senbon-torii,_August_2019.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi_Inari-taisha_senbon-torii,_August_2019.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Hiroshima": {
-      "hero": "https://picsum.photos/seed/hiroshima-hero/1200/600",
-      "card": "https://picsum.photos/seed/hiroshima-city/800/500",
-      "hotel": "https://picsum.photos/seed/hiroshima-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Hiroshima_A-Dome.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Hiroshima_A-Dome.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sapporo": {
-      "hero": "https://picsum.photos/seed/sapporo-hero/1200/600",
-      "card": "https://picsum.photos/seed/sapporo-city/800/500",
-      "hotel": "https://picsum.photos/seed/sapporo-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Sapporo_TV_Tower_and_Odori_park.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Sapporo_TV_Tower_and_Odori_park.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Nara": {
-      "hero": "https://picsum.photos/seed/nara-hero/1200/600",
-      "card": "https://picsum.photos/seed/nara-city/800/500",
-      "hotel": "https://picsum.photos/seed/nara-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Todaiji_Daibutsuden.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Todaiji_Daibutsuden.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Seoul": {
-      "hero": "https://picsum.photos/seed/seoul-hero/1200/600",
-      "card": "https://picsum.photos/seed/seoul-city/800/500",
-      "hotel": "https://picsum.photos/seed/seoul-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Front_view_of_the_Imperial_Throne_Hall_Geunjeongjeon_at_Gyeongbokgung_Palace_with_blue_sky_in_Seoul.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Front_view_of_the_Imperial_Throne_Hall_Geunjeongjeon_at_Gyeongbokgung_Palace_with_blue_sky_in_Seoul.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Busan": {
-      "hero": "https://picsum.photos/seed/busan-hero/1200/600",
-      "card": "https://picsum.photos/seed/busan-city/800/500",
-      "hotel": "https://picsum.photos/seed/busan-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Haeundae_District_and_Beach.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Haeundae_District_and_Beach.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Jeju Island": {
-      "hero": "https://picsum.photos/seed/jeju-island-hero/1200/600",
-      "card": "https://picsum.photos/seed/jeju-island-city/800/500",
-      "hotel": "https://picsum.photos/seed/jeju-island-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Seongsan_Ilchulbong,_Jeju_Island.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Seongsan_Ilchulbong,_Jeju_Island.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Incheon": {
-      "hero": "https://picsum.photos/seed/incheon-hero/1200/600",
-      "card": "https://picsum.photos/seed/incheon-city/800/500",
-      "hotel": "https://picsum.photos/seed/incheon-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Songdo_Central_Park_and_Posco_Tower_Songdo.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Songdo_Central_Park_and_Posco_Tower_Songdo.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bangkok": {
-      "hero": "https://picsum.photos/seed/bangkok-hero/1200/600",
-      "card": "https://picsum.photos/seed/bangkok-city/800/500",
-      "hotel": "https://picsum.photos/seed/bangkok-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand_Palace_Bangkok.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand_Palace_Bangkok.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Chiang Mai": {
-      "hero": "https://picsum.photos/seed/chiang-mai-hero/1200/600",
-      "card": "https://picsum.photos/seed/chiang-mai-city/800/500",
-      "hotel": "https://picsum.photos/seed/chiang-mai-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Wat_Chedi_Luang,_Stupa,_Chiang_Mai,_Thailand.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Wat_Chedi_Luang,_Stupa,_Chiang_Mai,_Thailand.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Phuket": {
-      "hero": "https://picsum.photos/seed/phuket-hero/1200/600",
-      "card": "https://picsum.photos/seed/phuket-city/800/500",
-      "hotel": "https://picsum.photos/seed/phuket-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Patong_beach,_Phuket,_Thailand.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Patong_beach,_Phuket,_Thailand.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Koh Samui": {
-      "hero": "https://picsum.photos/seed/koh-samui-hero/1200/600",
-      "card": "https://picsum.photos/seed/koh-samui-city/800/500",
-      "hotel": "https://picsum.photos/seed/koh-samui-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Samui,_Island,_Beach,_Thailand.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Samui,_Island,_Beach,_Thailand.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Pai": {
-      "hero": "https://picsum.photos/seed/pai-hero/1200/600",
-      "card": "https://picsum.photos/seed/pai-city/800/500",
-      "hotel": "https://picsum.photos/seed/pai-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Pai_Canyon.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Pai_Canyon.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Ayutthaya": {
-      "hero": "https://picsum.photos/seed/ayutthaya-hero/1200/600",
-      "card": "https://picsum.photos/seed/ayutthaya-city/800/500",
-      "hotel": "https://picsum.photos/seed/ayutthaya-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/WatChaiwatthanaram_2295b.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/WatChaiwatthanaram_2295b.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Hanoi": {
-      "hero": "https://picsum.photos/seed/hanoi-hero/1200/600",
-      "card": "https://picsum.photos/seed/hanoi-city/800/500",
-      "hotel": "https://picsum.photos/seed/hanoi-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Hanoi_-_Turtle_Tower_(Th%C3%A1p_R%C3%B9a),_Ho%C3%A0n_Ki%E1%BA%BFm_Lake.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Hanoi_-_Turtle_Tower_(Th%C3%A1p_R%C3%B9a),_Ho%C3%A0n_Ki%E1%BA%BFm_Lake.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Ho Chi Minh City": {
-      "hero": "https://picsum.photos/seed/ho-chi-minh-city-hero/1200/600",
-      "card": "https://picsum.photos/seed/ho-chi-minh-city-city/800/500",
-      "hotel": "https://picsum.photos/seed/ho-chi-minh-city-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Notre_Dame_Cathedral_in_Ho_Chi_Minh_City.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Notre_Dame_Cathedral_in_Ho_Chi_Minh_City.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Da Nang": {
-      "hero": "https://picsum.photos/seed/da-nang-hero/1200/600",
-      "card": "https://picsum.photos/seed/da-nang-city/800/500",
-      "hotel": "https://picsum.photos/seed/da-nang-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Dragon_Bridge,_Da_Nang_at_night_-_20230819.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Dragon_Bridge,_Da_Nang_at_night_-_20230819.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Hoi An": {
-      "hero": "https://picsum.photos/seed/hoi-an-hero/1200/600",
-      "card": "https://picsum.photos/seed/hoi-an-city/800/500",
-      "hotel": "https://picsum.photos/seed/hoi-an-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Hoi_An,_Vietnam,_Japanese_Covered_Bridge.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Hoi_An,_Vietnam,_Japanese_Covered_Bridge.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Ha Long Bay": {
-      "hero": "https://picsum.photos/seed/ha-long-bay-hero/1200/600",
-      "card": "https://picsum.photos/seed/ha-long-bay-city/800/500",
-      "hotel": "https://picsum.photos/seed/ha-long-bay-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Ha_Long_Bay,_Vietnam,_Islands.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Ha_Long_Bay,_Vietnam,_Islands.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Singapore City": {
-      "hero": "https://picsum.photos/seed/singapore-city-hero/1200/600",
-      "card": "https://picsum.photos/seed/singapore-city-city/800/500",
-      "hotel": "https://picsum.photos/seed/singapore-city-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Marina_Bay_Sands_and_the_skyline_of_the_Central_Business_District,_Singapore,_at_dusk_-_20120805.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Marina_Bay_Sands_and_the_skyline_of_the_Central_Business_District,_Singapore,_at_dusk_-_20120805.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sentosa Island": {
-      "hero": "https://picsum.photos/seed/sentosa-island-hero/1200/600",
-      "card": "https://picsum.photos/seed/sentosa-island-city/800/500",
-      "hotel": "https://picsum.photos/seed/sentosa-island-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Siloso_Beach,_Sentosa.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Siloso_Beach,_Sentosa.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kuala Lumpur": {
-      "hero": "https://picsum.photos/seed/kuala-lumpur-hero/1200/600",
-      "card": "https://picsum.photos/seed/kuala-lumpur-city/800/500",
-      "hotel": "https://picsum.photos/seed/kuala-lumpur-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuala_Lumpur%27s_skyline_dominated_by_the_Petronas_Towers_(18977925005).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuala_Lumpur%27s_skyline_dominated_by_the_Petronas_Towers_(18977925005).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Penang": {
-      "hero": "https://picsum.photos/seed/penang-hero/1200/600",
-      "card": "https://picsum.photos/seed/penang-city/800/500",
-      "hotel": "https://picsum.photos/seed/penang-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/View_from_the_Penang_Hill,_Georgetown,_Penang,_Malaysia.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/View_from_the_Penang_Hill,_Georgetown,_Penang,_Malaysia.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Langkawi": {
-      "hero": "https://picsum.photos/seed/langkawi-hero/1200/600",
-      "card": "https://picsum.photos/seed/langkawi-city/800/500",
-      "hotel": "https://picsum.photos/seed/langkawi-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Langkawi_Malaysia_Langkawi-Sky-Bridge-01.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Langkawi_Malaysia_Langkawi-Sky-Bridge-01.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Malacca": {
-      "hero": "https://picsum.photos/seed/malacca-hero/1200/600",
-      "card": "https://picsum.photos/seed/malacca-city/800/500",
-      "hotel": "https://picsum.photos/seed/malacca-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Melaka-Dutch-Square-2201.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Melaka-Dutch-Square-2201.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Manila": {
-      "hero": "https://picsum.photos/seed/manila-hero/1200/600",
-      "card": "https://picsum.photos/seed/manila-city/800/500",
-      "hotel": "https://picsum.photos/seed/manila-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Manila_Cathedral,inside_Intramuros.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Manila_Cathedral,inside_Intramuros.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cebu": {
-      "hero": "https://picsum.photos/seed/cebu-hero/1200/600",
-      "card": "https://picsum.photos/seed/cebu-city/800/500",
-      "hotel": "https://picsum.photos/seed/cebu-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_Sight_of_Basilica_Minore_del_Sto._Ni%C3%B1o_de_Cebu.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_Sight_of_Basilica_Minore_del_Sto._Ni%C3%B1o_de_Cebu.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Palawan": {
-      "hero": "https://picsum.photos/seed/palawan-hero/1200/600",
-      "card": "https://picsum.photos/seed/palawan-city/800/500",
-      "hotel": "https://picsum.photos/seed/palawan-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Big_Lagoon_at_El_Nido,_Palawan,_Philippines.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Big_Lagoon_at_El_Nido,_Palawan,_Philippines.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Boracay": {
-      "hero": "https://picsum.photos/seed/boracay-hero/1200/600",
-      "card": "https://picsum.photos/seed/boracay-city/800/500",
-      "hotel": "https://picsum.photos/seed/boracay-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Boracay_White_Beach_in_day_(985286231).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Boracay_White_Beach_in_day_(985286231).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Phnom Penh": {
-      "hero": "https://picsum.photos/seed/phnom-penh-hero/1200/600",
-      "card": "https://picsum.photos/seed/phnom-penh-city/800/500",
-      "hotel": "https://picsum.photos/seed/phnom-penh-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Royal_Palace,_Phnom_Penh_Cambodia_1.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Royal_Palace,_Phnom_Penh_Cambodia_1.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Siem Reap": {
-      "hero": "https://picsum.photos/seed/siem-reap-hero/1200/600",
-      "card": "https://picsum.photos/seed/siem-reap-city/800/500",
-      "hotel": "https://picsum.photos/seed/siem-reap-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Angkor_Sunrise_Silhouette.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Angkor_Sunrise_Silhouette.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Yangon": {
-      "hero": "https://picsum.photos/seed/yangon-hero/1200/600",
-      "card": "https://picsum.photos/seed/yangon-city/800/500",
-      "hotel": "https://picsum.photos/seed/yangon-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/The_Shwedagon_Paya_in_Yangon_(Rangoon),_Myanmar_(Burma).JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/The_Shwedagon_Paya_in_Yangon_(Rangoon),_Myanmar_(Burma).JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bagan": {
-      "hero": "https://picsum.photos/seed/bagan-hero/1200/600",
-      "card": "https://picsum.photos/seed/bagan-city/800/500",
-      "hotel": "https://picsum.photos/seed/bagan-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Bagan,_Myanmar,_Htilominlo_Temple_and_other_Buddhist_stupas_in_Bagan_plain.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Bagan,_Myanmar,_Htilominlo_Temple_and_other_Buddhist_stupas_in_Bagan_plain.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mandalay": {
-      "hero": "https://picsum.photos/seed/mandalay-hero/1200/600",
-      "card": "https://picsum.photos/seed/mandalay-city/800/500",
-      "hotel": "https://picsum.photos/seed/mandalay-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay_Palace_from_Across_the_Moat.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Mandalay_Palace_from_Across_the_Moat.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "New Delhi": {
-      "hero": "https://picsum.photos/seed/new-delhi-hero/1200/600",
-      "card": "https://picsum.photos/seed/new-delhi-city/800/500",
-      "hotel": "https://picsum.photos/seed/new-delhi-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/India_Gate_at_night,_New_Delhi,_India.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/India_Gate_at_night,_New_Delhi,_India.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mumbai": {
-      "hero": "https://picsum.photos/seed/mumbai-hero/1200/600",
-      "card": "https://picsum.photos/seed/mumbai-city/800/500",
-      "hotel": "https://picsum.photos/seed/mumbai-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Gateway_of_India,_Mumbai,_IN.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Gateway_of_India,_Mumbai,_IN.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Jaipur": {
-      "hero": "https://picsum.photos/seed/jaipur-hero/1200/600",
-      "card": "https://picsum.photos/seed/jaipur-city/800/500",
-      "hotel": "https://picsum.photos/seed/jaipur-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Hawa_Mahal,_Jaipur,_Rajasthan,_India.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Hawa_Mahal,_Jaipur,_Rajasthan,_India.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Agra": {
-      "hero": "https://picsum.photos/seed/agra-hero/1200/600",
-      "card": "https://picsum.photos/seed/agra-city/800/500",
-      "hotel": "https://picsum.photos/seed/agra-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Taj_Mahal,_Agra,_India_edit3.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Taj_Mahal,_Agra,_India_edit3.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Goa": {
-      "hero": "https://picsum.photos/seed/goa-hero/1200/600",
-      "card": "https://picsum.photos/seed/goa-city/800/500",
-      "hotel": "https://picsum.photos/seed/goa-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Palolem_Beach_India.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Palolem_Beach_India.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kathmandu": {
-      "hero": "https://picsum.photos/seed/kathmandu-hero/1200/600",
-      "card": "https://picsum.photos/seed/kathmandu-city/800/500",
-      "hotel": "https://picsum.photos/seed/kathmandu-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Pokhara": {
-      "hero": "https://picsum.photos/seed/pokhara-hero/1200/600",
-      "card": "https://picsum.photos/seed/pokhara-city/800/500",
-      "hotel": "https://picsum.photos/seed/pokhara-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Colombo": {
-      "hero": "https://picsum.photos/seed/colombo-hero/1200/600",
-      "card": "https://picsum.photos/seed/colombo-city/800/500",
-      "hotel": "https://picsum.photos/seed/colombo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kandy": {
-      "hero": "https://picsum.photos/seed/kandy-hero/1200/600",
-      "card": "https://picsum.photos/seed/kandy-city/800/500",
-      "hotel": "https://picsum.photos/seed/kandy-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Galle": {
-      "hero": "https://picsum.photos/seed/galle-hero/1200/600",
-      "card": "https://picsum.photos/seed/galle-city/800/500",
-      "hotel": "https://picsum.photos/seed/galle-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Malé": {
-      "hero": "https://picsum.photos/seed/male-hero/1200/600",
-      "card": "https://picsum.photos/seed/male-city/800/500",
-      "hotel": "https://picsum.photos/seed/male-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Maafushi": {
-      "hero": "https://picsum.photos/seed/maafushi-hero/1200/600",
-      "card": "https://picsum.photos/seed/maafushi-city/800/500",
-      "hotel": "https://picsum.photos/seed/maafushi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Taipei": {
-      "hero": "https://picsum.photos/seed/taipei-hero/1200/600",
-      "card": "https://picsum.photos/seed/taipei-city/800/500",
-      "hotel": "https://picsum.photos/seed/taipei-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kaohsiung": {
-      "hero": "https://picsum.photos/seed/kaohsiung-hero/1200/600",
-      "card": "https://picsum.photos/seed/kaohsiung-city/800/500",
-      "hotel": "https://picsum.photos/seed/kaohsiung-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Taichung": {
-      "hero": "https://picsum.photos/seed/taichung-hero/1200/600",
-      "card": "https://picsum.photos/seed/taichung-city/800/500",
-      "hotel": "https://picsum.photos/seed/taichung-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Hong Kong Island": {
-      "hero": "https://picsum.photos/seed/hong-kong-island-hero/1200/600",
-      "card": "https://picsum.photos/seed/hong-kong-island-city/800/500",
-      "hotel": "https://picsum.photos/seed/hong-kong-island-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kowloon": {
-      "hero": "https://picsum.photos/seed/kowloon-hero/1200/600",
-      "card": "https://picsum.photos/seed/kowloon-city/800/500",
-      "hotel": "https://picsum.photos/seed/kowloon-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lantau Island": {
-      "hero": "https://picsum.photos/seed/lantau-island-hero/1200/600",
-      "card": "https://picsum.photos/seed/lantau-island-city/800/500",
-      "hotel": "https://picsum.photos/seed/lantau-island-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Beijing": {
-      "hero": "https://picsum.photos/seed/beijing-hero/1200/600",
-      "card": "https://picsum.photos/seed/beijing-city/800/500",
-      "hotel": "https://picsum.photos/seed/beijing-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Shanghai": {
-      "hero": "https://picsum.photos/seed/shanghai-hero/1200/600",
-      "card": "https://picsum.photos/seed/shanghai-city/800/500",
-      "hotel": "https://picsum.photos/seed/shanghai-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Xi’an": {
-      "hero": "https://picsum.photos/seed/xi-an-hero/1200/600",
-      "card": "https://picsum.photos/seed/xi-an-city/800/500",
-      "hotel": "https://picsum.photos/seed/xi-an-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Chengdu": {
-      "hero": "https://picsum.photos/seed/chengdu-hero/1200/600",
-      "card": "https://picsum.photos/seed/chengdu-city/800/500",
-      "hotel": "https://picsum.photos/seed/chengdu-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Guilin": {
-      "hero": "https://picsum.photos/seed/guilin-hero/1200/600",
-      "card": "https://picsum.photos/seed/guilin-city/800/500",
-      "hotel": "https://picsum.photos/seed/guilin-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Macau Peninsula": {
-      "hero": "https://picsum.photos/seed/macau-peninsula-hero/1200/600",
-      "card": "https://picsum.photos/seed/macau-peninsula-city/800/500",
-      "hotel": "https://picsum.photos/seed/macau-peninsula-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Taipa": {
-      "hero": "https://picsum.photos/seed/taipa-hero/1200/600",
-      "card": "https://picsum.photos/seed/taipa-city/800/500",
-      "hotel": "https://picsum.photos/seed/taipa-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Ulaanbaatar": {
-      "hero": "https://picsum.photos/seed/ulaanbaatar-hero/1200/600",
-      "card": "https://picsum.photos/seed/ulaanbaatar-city/800/500",
-      "hotel": "https://picsum.photos/seed/ulaanbaatar-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Gobi Desert": {
-      "hero": "https://picsum.photos/seed/gobi-desert-hero/1200/600",
-      "card": "https://picsum.photos/seed/gobi-desert-city/800/500",
-      "hotel": "https://picsum.photos/seed/gobi-desert-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tashkent": {
-      "hero": "https://picsum.photos/seed/tashkent-hero/1200/600",
-      "card": "https://picsum.photos/seed/tashkent-city/800/500",
-      "hotel": "https://picsum.photos/seed/tashkent-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Samarkand": {
-      "hero": "https://picsum.photos/seed/samarkand-hero/1200/600",
-      "card": "https://picsum.photos/seed/samarkand-city/800/500",
-      "hotel": "https://picsum.photos/seed/samarkand-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bukhara": {
-      "hero": "https://picsum.photos/seed/bukhara-hero/1200/600",
-      "card": "https://picsum.photos/seed/bukhara-city/800/500",
-      "hotel": "https://picsum.photos/seed/bukhara-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Almaty": {
-      "hero": "https://picsum.photos/seed/almaty-hero/1200/600",
-      "card": "https://picsum.photos/seed/almaty-city/800/500",
-      "hotel": "https://picsum.photos/seed/almaty-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Astana": {
-      "hero": "https://picsum.photos/seed/astana-hero/1200/600",
-      "card": "https://picsum.photos/seed/astana-city/800/500",
-      "hotel": "https://picsum.photos/seed/astana-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tbilisi": {
-      "hero": "https://picsum.photos/seed/tbilisi-hero/1200/600",
-      "card": "https://picsum.photos/seed/tbilisi-city/800/500",
-      "hotel": "https://picsum.photos/seed/tbilisi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Batumi": {
-      "hero": "https://picsum.photos/seed/batumi-hero/1200/600",
-      "card": "https://picsum.photos/seed/batumi-city/800/500",
-      "hotel": "https://picsum.photos/seed/batumi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Yerevan": {
-      "hero": "https://picsum.photos/seed/yerevan-hero/1200/600",
-      "card": "https://picsum.photos/seed/yerevan-city/800/500",
-      "hotel": "https://picsum.photos/seed/yerevan-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Baku": {
-      "hero": "https://picsum.photos/seed/baku-hero/1200/600",
-      "card": "https://picsum.photos/seed/baku-city/800/500",
-      "hotel": "https://picsum.photos/seed/baku-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Dubai": {
-      "hero": "https://picsum.photos/seed/dubai-hero/1200/600",
-      "card": "https://picsum.photos/seed/dubai-city/800/500",
-      "hotel": "https://picsum.photos/seed/dubai-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Burj_Khalifa_(worlds_tallest_building)_and_the_Dubai_skyline_(25781049892).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Burj_Khalifa_(worlds_tallest_building)_and_the_Dubai_skyline_(25781049892).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Abu Dhabi": {
-      "hero": "https://picsum.photos/seed/abu-dhabi-hero/1200/600",
-      "card": "https://picsum.photos/seed/abu-dhabi-city/800/500",
-      "hotel": "https://picsum.photos/seed/abu-dhabi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sharjah": {
-      "hero": "https://picsum.photos/seed/sharjah-hero/1200/600",
-      "card": "https://picsum.photos/seed/sharjah-city/800/500",
-      "hotel": "https://picsum.photos/seed/sharjah-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Ras Al Khaimah": {
-      "hero": "https://picsum.photos/seed/ras-al-khaimah-hero/1200/600",
-      "card": "https://picsum.photos/seed/ras-al-khaimah-city/800/500",
-      "hotel": "https://picsum.photos/seed/ras-al-khaimah-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Riyadh": {
-      "hero": "https://picsum.photos/seed/riyadh-hero/1200/600",
-      "card": "https://picsum.photos/seed/riyadh-city/800/500",
-      "hotel": "https://picsum.photos/seed/riyadh-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Jeddah": {
-      "hero": "https://picsum.photos/seed/jeddah-hero/1200/600",
-      "card": "https://picsum.photos/seed/jeddah-city/800/500",
-      "hotel": "https://picsum.photos/seed/jeddah-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "AlUla": {
-      "hero": "https://picsum.photos/seed/alula-hero/1200/600",
-      "card": "https://picsum.photos/seed/alula-city/800/500",
-      "hotel": "https://picsum.photos/seed/alula-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Doha": {
-      "hero": "https://picsum.photos/seed/doha-hero/1200/600",
-      "card": "https://picsum.photos/seed/doha-city/800/500",
-      "hotel": "https://picsum.photos/seed/doha-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Manama": {
-      "hero": "https://picsum.photos/seed/manama-hero/1200/600",
-      "card": "https://picsum.photos/seed/manama-city/800/500",
-      "hotel": "https://picsum.photos/seed/manama-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kuwait City": {
-      "hero": "https://picsum.photos/seed/kuwait-city-hero/1200/600",
-      "card": "https://picsum.photos/seed/kuwait-city-city/800/500",
-      "hotel": "https://picsum.photos/seed/kuwait-city-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Muscat": {
-      "hero": "https://picsum.photos/seed/muscat-hero/1200/600",
-      "card": "https://picsum.photos/seed/muscat-city/800/500",
-      "hotel": "https://picsum.photos/seed/muscat-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Salalah": {
-      "hero": "https://picsum.photos/seed/salalah-hero/1200/600",
-      "card": "https://picsum.photos/seed/salalah-city/800/500",
-      "hotel": "https://picsum.photos/seed/salalah-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Amman": {
-      "hero": "https://picsum.photos/seed/amman-hero/1200/600",
-      "card": "https://picsum.photos/seed/amman-city/800/500",
-      "hotel": "https://picsum.photos/seed/amman-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Petra": {
-      "hero": "https://picsum.photos/seed/petra-hero/1200/600",
-      "card": "https://picsum.photos/seed/petra-city/800/500",
-      "hotel": "https://picsum.photos/seed/petra-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Aqaba": {
-      "hero": "https://picsum.photos/seed/aqaba-hero/1200/600",
-      "card": "https://picsum.photos/seed/aqaba-city/800/500",
-      "hotel": "https://picsum.photos/seed/aqaba-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tel Aviv": {
-      "hero": "https://picsum.photos/seed/tel-aviv-hero/1200/600",
-      "card": "https://picsum.photos/seed/tel-aviv-city/800/500",
-      "hotel": "https://picsum.photos/seed/tel-aviv-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Jerusalem": {
-      "hero": "https://picsum.photos/seed/jerusalem-hero/1200/600",
-      "card": "https://picsum.photos/seed/jerusalem-city/800/500",
-      "hotel": "https://picsum.photos/seed/jerusalem-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Beirut": {
-      "hero": "https://picsum.photos/seed/beirut-hero/1200/600",
-      "card": "https://picsum.photos/seed/beirut-city/800/500",
-      "hotel": "https://picsum.photos/seed/beirut-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Istanbul": {
-      "hero": "https://picsum.photos/seed/istanbul-hero/1200/600",
-      "card": "https://picsum.photos/seed/istanbul-city/800/500",
-      "hotel": "https://picsum.photos/seed/istanbul-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cappadocia": {
-      "hero": "https://picsum.photos/seed/cappadocia-hero/1200/600",
-      "card": "https://picsum.photos/seed/cappadocia-city/800/500",
-      "hotel": "https://picsum.photos/seed/cappadocia-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Antalya": {
-      "hero": "https://picsum.photos/seed/antalya-hero/1200/600",
-      "card": "https://picsum.photos/seed/antalya-city/800/500",
-      "hotel": "https://picsum.photos/seed/antalya-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tehran": {
-      "hero": "https://picsum.photos/seed/tehran-hero/1200/600",
-      "card": "https://picsum.photos/seed/tehran-city/800/500",
-      "hotel": "https://picsum.photos/seed/tehran-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Isfahan": {
-      "hero": "https://picsum.photos/seed/isfahan-hero/1200/600",
-      "card": "https://picsum.photos/seed/isfahan-city/800/500",
-      "hotel": "https://picsum.photos/seed/isfahan-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Shiraz": {
-      "hero": "https://picsum.photos/seed/shiraz-hero/1200/600",
-      "card": "https://picsum.photos/seed/shiraz-city/800/500",
-      "hotel": "https://picsum.photos/seed/shiraz-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Paris": {
-      "hero": "https://picsum.photos/seed/paris-hero/1200/600",
-      "card": "https://picsum.photos/seed/paris-city/800/500",
-      "hotel": "https://picsum.photos/seed/paris-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Tour_Eiffel_Wikimedia_Commons.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Tour_Eiffel_Wikimedia_Commons.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Nice": {
-      "hero": "https://picsum.photos/seed/nice-hero/1200/600",
-      "card": "https://picsum.photos/seed/nice-city/800/500",
-      "hotel": "https://picsum.photos/seed/nice-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Promenade_des_Anglais_Nice_IMG_1255.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Promenade_des_Anglais_Nice_IMG_1255.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lyon": {
-      "hero": "https://picsum.photos/seed/lyon-hero/1200/600",
-      "card": "https://picsum.photos/seed/lyon-city/800/500",
-      "hotel": "https://picsum.photos/seed/lyon-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/01._Panorama_de_Lyon_pris_depuis_le_toit_de_la_Basilique_de_Fourvi%C3%A8re.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/01._Panorama_de_Lyon_pris_depuis_le_toit_de_la_Basilique_de_Fourvi%C3%A8re.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bordeaux": {
-      "hero": "https://picsum.photos/seed/bordeaux-hero/1200/600",
-      "card": "https://picsum.photos/seed/bordeaux-city/800/500",
-      "hotel": "https://picsum.photos/seed/bordeaux-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Miroir_d%27eau,_Bordeaux.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Miroir_d%27eau,_Bordeaux.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Marseille": {
-      "hero": "https://picsum.photos/seed/marseille-hero/1200/600",
-      "card": "https://picsum.photos/seed/marseille-city/800/500",
-      "hotel": "https://picsum.photos/seed/marseille-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Vieux-Port_de_Marseille,_France.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Vieux-Port_de_Marseille,_France.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Strasbourg": {
-      "hero": "https://picsum.photos/seed/strasbourg-hero/1200/600",
-      "card": "https://picsum.photos/seed/strasbourg-city/800/500",
-      "hotel": "https://picsum.photos/seed/strasbourg-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Petite_France_Strasbourg.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Petite_France_Strasbourg.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Rome": {
-      "hero": "https://picsum.photos/seed/rome-hero/1200/600",
-      "card": "https://picsum.photos/seed/rome-city/800/500",
-      "hotel": "https://picsum.photos/seed/rome-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Colosseum_in_Rome,_Italy_-_April_2007.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Colosseum_in_Rome,_Italy_-_April_2007.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Florence": {
-      "hero": "https://picsum.photos/seed/florence-hero/1200/600",
-      "card": "https://picsum.photos/seed/florence-city/800/500",
-      "hotel": "https://picsum.photos/seed/florence-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Florence_skyline.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Florence_skyline.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Venice": {
-      "hero": "https://picsum.photos/seed/venice-hero/1200/600",
-      "card": "https://picsum.photos/seed/venice-city/800/500",
-      "hotel": "https://picsum.photos/seed/venice-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Rialto_Bridge_Grand_Canal.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Rialto_Bridge_Grand_Canal.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Milan": {
-      "hero": "https://picsum.photos/seed/milan-hero/1200/600",
-      "card": "https://picsum.photos/seed/milan-city/800/500",
-      "hotel": "https://picsum.photos/seed/milan-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Milan_Cathedral_from_Piazza_del_Duomo.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Milan_Cathedral_from_Piazza_del_Duomo.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Naples": {
-      "hero": "https://picsum.photos/seed/naples-hero/1200/600",
-      "card": "https://picsum.photos/seed/naples-city/800/500",
-      "hotel": "https://picsum.photos/seed/naples-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Naples,_Italy,_A_view_over_Bay_of_Naples,_Port_of_Naples_and_Mt._Vesuvius.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Naples,_Italy,_A_view_over_Bay_of_Naples,_Port_of_Naples_and_Mt._Vesuvius.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sicily": {
-      "hero": "https://picsum.photos/seed/sicily-hero/1200/600",
-      "card": "https://picsum.photos/seed/sicily-city/800/500",
-      "hotel": "https://picsum.photos/seed/sicily-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Mt_Etna_and_Taormina_as_seen_from_the_Ancient_Theatre_of_Taormina_(22290641726).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Mt_Etna_and_Taormina_as_seen_from_the_Ancient_Theatre_of_Taormina_(22290641726).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Madrid": {
-      "hero": "https://picsum.photos/seed/madrid-hero/1200/600",
-      "card": "https://picsum.photos/seed/madrid-city/800/500",
-      "hotel": "https://picsum.photos/seed/madrid-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Madrid_Palacio_Real.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Madrid_Palacio_Real.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Barcelona": {
-      "hero": "https://picsum.photos/seed/barcelona-hero/1200/600",
-      "card": "https://picsum.photos/seed/barcelona-city/800/500",
-      "hotel": "https://picsum.photos/seed/barcelona-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Sagrada_Familia_in_Barcelona.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Sagrada_Familia_in_Barcelona.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Seville": {
-      "hero": "https://picsum.photos/seed/seville-hero/1200/600",
-      "card": "https://picsum.photos/seed/seville-city/800/500",
-      "hotel": "https://picsum.photos/seed/seville-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Plaza_de_Espa%C3%B1a_de_Sevilla.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Plaza_de_Espa%C3%B1a_de_Sevilla.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Valencia": {
-      "hero": "https://picsum.photos/seed/valencia-hero/1200/600",
-      "card": "https://picsum.photos/seed/valencia-city/800/500",
-      "hotel": "https://picsum.photos/seed/valencia-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Palacio_de_las_Artes_Reina_Sof%C3%ADa,_Ciudad_de_las_Artes_y_las_Ciencias,_Valencia,_Espa%C3%B1a,_2014-06-29,_DD_34.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Palacio_de_las_Artes_Reina_Sof%C3%ADa,_Ciudad_de_las_Artes_y_las_Ciencias,_Valencia,_Espa%C3%B1a,_2014-06-29,_DD_34.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Athens": {
-      "hero": "https://picsum.photos/seed/athens-hero/1200/600",
-      "card": "https://picsum.photos/seed/athens-city/800/500",
-      "hotel": "https://picsum.photos/seed/athens-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Acropolis_Parthenon_Athens_Greece.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Acropolis_Parthenon_Athens_Greece.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Santorini": {
-      "hero": "https://picsum.photos/seed/santorini-hero/1200/600",
-      "card": "https://picsum.photos/seed/santorini-city/800/500",
-      "hotel": "https://picsum.photos/seed/santorini-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Panoramic_view_of_Oia,_Santorini_island_(Thira),_Greece.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Panoramic_view_of_Oia,_Santorini_island_(Thira),_Greece.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mykonos": {
-      "hero": "https://picsum.photos/seed/mykonos-hero/1200/600",
-      "card": "https://picsum.photos/seed/mykonos-city/800/500",
-      "hotel": "https://picsum.photos/seed/mykonos-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Mykonos_windmills_with_a_view_of_the_Aegean_Sea_in_Greece_-_50662259091.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Mykonos_windmills_with_a_view_of_the_Aegean_Sea_in_Greece_-_50662259091.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Crete": {
-      "hero": "https://picsum.photos/seed/crete-hero/1200/600",
-      "card": "https://picsum.photos/seed/crete-city/800/500",
-      "hotel": "https://picsum.photos/seed/crete-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Balos_Beach.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Balos_Beach.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lisbon": {
-      "hero": "https://picsum.photos/seed/lisbon-hero/1200/600",
-      "card": "https://picsum.photos/seed/lisbon-city/800/500",
-      "hotel": "https://picsum.photos/seed/lisbon-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Lisbon_(37019885565).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Lisbon_(37019885565).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Porto": {
-      "hero": "https://picsum.photos/seed/porto-hero/1200/600",
-      "card": "https://picsum.photos/seed/porto-city/800/500",
-      "hotel": "https://picsum.photos/seed/porto-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponte_D_Luis_e_ribeira_do_Porto.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponte_D_Luis_e_ribeira_do_Porto.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Algarve": {
-      "hero": "https://picsum.photos/seed/algarve-hero/1200/600",
-      "card": "https://picsum.photos/seed/algarve-city/800/500",
-      "hotel": "https://picsum.photos/seed/algarve-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_da_Piedade_Algarve_Portugal_(27433535620).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_da_Piedade_Algarve_Portugal_(27433535620).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Amsterdam": {
-      "hero": "https://picsum.photos/seed/amsterdam-hero/1200/600",
-      "card": "https://picsum.photos/seed/amsterdam-city/800/500",
-      "hotel": "https://picsum.photos/seed/amsterdam-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Amsterdam_Canals_-_July_2006.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Amsterdam_Canals_-_July_2006.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Rotterdam": {
-      "hero": "https://picsum.photos/seed/rotterdam-hero/1200/600",
-      "card": "https://picsum.photos/seed/rotterdam-city/800/500",
-      "hotel": "https://picsum.photos/seed/rotterdam-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Skyline-rotterdam-_erasmusbrug-wilhelminapier_(27922388397).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Skyline-rotterdam-_erasmusbrug-wilhelminapier_(27922388397).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Utrecht": {
-      "hero": "https://picsum.photos/seed/utrecht-hero/1200/600",
-      "card": "https://picsum.photos/seed/utrecht-city/800/500",
-      "hotel": "https://picsum.photos/seed/utrecht-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Dom_van_Utrecht.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Dom_van_Utrecht.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "London": {
-      "hero": "https://picsum.photos/seed/london-hero/1200/600",
-      "card": "https://picsum.photos/seed/london-city/800/500",
-      "hotel": "https://picsum.photos/seed/london-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Big_Ben_%26_Houses_of_Parliament_(Along_The_River_Thames).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Big_Ben_%26_Houses_of_Parliament_(Along_The_River_Thames).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Edinburgh": {
-      "hero": "https://picsum.photos/seed/edinburgh-hero/1200/600",
-      "card": "https://picsum.photos/seed/edinburgh-city/800/500",
-      "hotel": "https://picsum.photos/seed/edinburgh-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Skyline_of_Edinburgh.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Skyline_of_Edinburgh.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Manchester": {
-      "hero": "https://picsum.photos/seed/manchester-hero/1200/600",
-      "card": "https://picsum.photos/seed/manchester-city/800/500",
-      "hotel": "https://picsum.photos/seed/manchester-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Manchester_Town_Hall_and_Memorial.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Manchester_Town_Hall_and_Memorial.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Oxford": {
-      "hero": "https://picsum.photos/seed/oxford-hero/1200/600",
-      "card": "https://picsum.photos/seed/oxford-city/800/500",
-      "hotel": "https://picsum.photos/seed/oxford-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Radcliffe_Camera,_Oxford.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Radcliffe_Camera,_Oxford.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Berlin": {
-      "hero": "https://picsum.photos/seed/berlin-hero/1200/600",
-      "card": "https://picsum.photos/seed/berlin-city/800/500",
-      "hotel": "https://picsum.photos/seed/berlin-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Brandenburger_Tor,_Berlin,_Germany.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Brandenburger_Tor,_Berlin,_Germany.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Munich": {
-      "hero": "https://picsum.photos/seed/munich-hero/1200/600",
-      "card": "https://picsum.photos/seed/munich-city/800/500",
-      "hotel": "https://picsum.photos/seed/munich-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Frauenkirche_and_Neues_Rathaus_Munich_March_2013.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Frauenkirche_and_Neues_Rathaus_Munich_March_2013.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Hamburg": {
-      "hero": "https://picsum.photos/seed/hamburg-hero/1200/600",
-      "card": "https://picsum.photos/seed/hamburg-city/800/500",
-      "hotel": "https://picsum.photos/seed/hamburg-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Hamburg,_HafenCity,_Elbphilharmonie_--_2016_--_3052.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Hamburg,_HafenCity,_Elbphilharmonie_--_2016_--_3052.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cologne": {
-      "hero": "https://picsum.photos/seed/cologne-hero/1200/600",
-      "card": "https://picsum.photos/seed/cologne-city/800/500",
-      "hotel": "https://picsum.photos/seed/cologne-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Cologne_Cathedral_and_the_Hohenzollern_Bridge_b.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Cologne_Cathedral_and_the_Hohenzollern_Bridge_b.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Zurich": {
-      "hero": "https://picsum.photos/seed/zurich-hero/1200/600",
-      "card": "https://picsum.photos/seed/zurich-city/800/500",
-      "hotel": "https://picsum.photos/seed/zurich-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Z%C3%BCrich_-_Limmatquai_-_Zunfth%C3%A4user_IMG_1513.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Z%C3%BCrich_-_Limmatquai_-_Zunfth%C3%A4user_IMG_1513.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Geneva": {
-      "hero": "https://picsum.photos/seed/geneva-hero/1200/600",
-      "card": "https://picsum.photos/seed/geneva-city/800/500",
-      "hotel": "https://picsum.photos/seed/geneva-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Jet_d%27eau_from_Lake_Geneva.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Jet_d%27eau_from_Lake_Geneva.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lucerne": {
-      "hero": "https://picsum.photos/seed/lucerne-hero/1200/600",
-      "card": "https://picsum.photos/seed/lucerne-city/800/500",
-      "hotel": "https://picsum.photos/seed/lucerne-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Interlaken": {
-      "hero": "https://picsum.photos/seed/interlaken-hero/1200/600",
-      "card": "https://picsum.photos/seed/interlaken-city/800/500",
-      "hotel": "https://picsum.photos/seed/interlaken-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Vienna": {
-      "hero": "https://picsum.photos/seed/vienna-hero/1200/600",
-      "card": "https://picsum.photos/seed/vienna-city/800/500",
-      "hotel": "https://picsum.photos/seed/vienna-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Salzburg": {
-      "hero": "https://picsum.photos/seed/salzburg-hero/1200/600",
-      "card": "https://picsum.photos/seed/salzburg-city/800/500",
-      "hotel": "https://picsum.photos/seed/salzburg-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Innsbruck": {
-      "hero": "https://picsum.photos/seed/innsbruck-hero/1200/600",
-      "card": "https://picsum.photos/seed/innsbruck-city/800/500",
-      "hotel": "https://picsum.photos/seed/innsbruck-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Brussels": {
-      "hero": "https://picsum.photos/seed/brussels-hero/1200/600",
-      "card": "https://picsum.photos/seed/brussels-city/800/500",
-      "hotel": "https://picsum.photos/seed/brussels-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bruges": {
-      "hero": "https://picsum.photos/seed/bruges-hero/1200/600",
-      "card": "https://picsum.photos/seed/bruges-city/800/500",
-      "hotel": "https://picsum.photos/seed/bruges-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Antwerp": {
-      "hero": "https://picsum.photos/seed/antwerp-hero/1200/600",
-      "card": "https://picsum.photos/seed/antwerp-city/800/500",
-      "hotel": "https://picsum.photos/seed/antwerp-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Stockholm": {
-      "hero": "https://picsum.photos/seed/stockholm-hero/1200/600",
-      "card": "https://picsum.photos/seed/stockholm-city/800/500",
-      "hotel": "https://picsum.photos/seed/stockholm-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Gothenburg": {
-      "hero": "https://picsum.photos/seed/gothenburg-hero/1200/600",
-      "card": "https://picsum.photos/seed/gothenburg-city/800/500",
-      "hotel": "https://picsum.photos/seed/gothenburg-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Oslo": {
-      "hero": "https://picsum.photos/seed/oslo-hero/1200/600",
-      "card": "https://picsum.photos/seed/oslo-city/800/500",
-      "hotel": "https://picsum.photos/seed/oslo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bergen": {
-      "hero": "https://picsum.photos/seed/bergen-hero/1200/600",
-      "card": "https://picsum.photos/seed/bergen-city/800/500",
-      "hotel": "https://picsum.photos/seed/bergen-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tromsø": {
-      "hero": "https://picsum.photos/seed/troms-hero/1200/600",
-      "card": "https://picsum.photos/seed/troms-city/800/500",
-      "hotel": "https://picsum.photos/seed/troms-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Copenhagen": {
-      "hero": "https://picsum.photos/seed/copenhagen-hero/1200/600",
-      "card": "https://picsum.photos/seed/copenhagen-city/800/500",
-      "hotel": "https://picsum.photos/seed/copenhagen-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Aarhus": {
-      "hero": "https://picsum.photos/seed/aarhus-hero/1200/600",
-      "card": "https://picsum.photos/seed/aarhus-city/800/500",
-      "hotel": "https://picsum.photos/seed/aarhus-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Helsinki": {
-      "hero": "https://picsum.photos/seed/helsinki-hero/1200/600",
-      "card": "https://picsum.photos/seed/helsinki-city/800/500",
-      "hotel": "https://picsum.photos/seed/helsinki-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Rovaniemi": {
-      "hero": "https://picsum.photos/seed/rovaniemi-hero/1200/600",
-      "card": "https://picsum.photos/seed/rovaniemi-city/800/500",
-      "hotel": "https://picsum.photos/seed/rovaniemi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Reykjavik": {
-      "hero": "https://picsum.photos/seed/reykjavik-hero/1200/600",
-      "card": "https://picsum.photos/seed/reykjavik-city/800/500",
-      "hotel": "https://picsum.photos/seed/reykjavik-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Vik": {
-      "hero": "https://picsum.photos/seed/vik-hero/1200/600",
-      "card": "https://picsum.photos/seed/vik-city/800/500",
-      "hotel": "https://picsum.photos/seed/vik-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Dublin": {
-      "hero": "https://picsum.photos/seed/dublin-hero/1200/600",
-      "card": "https://picsum.photos/seed/dublin-city/800/500",
-      "hotel": "https://picsum.photos/seed/dublin-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Galway": {
-      "hero": "https://picsum.photos/seed/galway-hero/1200/600",
-      "card": "https://picsum.photos/seed/galway-city/800/500",
-      "hotel": "https://picsum.photos/seed/galway-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Dubrovnik": {
-      "hero": "https://picsum.photos/seed/dubrovnik-hero/1200/600",
-      "card": "https://picsum.photos/seed/dubrovnik-city/800/500",
-      "hotel": "https://picsum.photos/seed/dubrovnik-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Split": {
-      "hero": "https://picsum.photos/seed/split-hero/1200/600",
-      "card": "https://picsum.photos/seed/split-city/800/500",
-      "hotel": "https://picsum.photos/seed/split-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Zagreb": {
-      "hero": "https://picsum.photos/seed/zagreb-hero/1200/600",
-      "card": "https://picsum.photos/seed/zagreb-city/800/500",
-      "hotel": "https://picsum.photos/seed/zagreb-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Prague": {
-      "hero": "https://picsum.photos/seed/prague-hero/1200/600",
-      "card": "https://picsum.photos/seed/prague-city/800/500",
-      "hotel": "https://picsum.photos/seed/prague-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cesky Krumlov": {
-      "hero": "https://picsum.photos/seed/cesky-krumlov-hero/1200/600",
-      "card": "https://picsum.photos/seed/cesky-krumlov-city/800/500",
-      "hotel": "https://picsum.photos/seed/cesky-krumlov-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Budapest": {
-      "hero": "https://picsum.photos/seed/budapest-hero/1200/600",
-      "card": "https://picsum.photos/seed/budapest-city/800/500",
-      "hotel": "https://picsum.photos/seed/budapest-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Warsaw": {
-      "hero": "https://picsum.photos/seed/warsaw-hero/1200/600",
-      "card": "https://picsum.photos/seed/warsaw-city/800/500",
-      "hotel": "https://picsum.photos/seed/warsaw-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Krakow": {
-      "hero": "https://picsum.photos/seed/krakow-hero/1200/600",
-      "card": "https://picsum.photos/seed/krakow-city/800/500",
-      "hotel": "https://picsum.photos/seed/krakow-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bucharest": {
-      "hero": "https://picsum.photos/seed/bucharest-hero/1200/600",
-      "card": "https://picsum.photos/seed/bucharest-city/800/500",
-      "hotel": "https://picsum.photos/seed/bucharest-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Brasov": {
-      "hero": "https://picsum.photos/seed/brasov-hero/1200/600",
-      "card": "https://picsum.photos/seed/brasov-city/800/500",
-      "hotel": "https://picsum.photos/seed/brasov-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sofia": {
-      "hero": "https://picsum.photos/seed/sofia-hero/1200/600",
-      "card": "https://picsum.photos/seed/sofia-city/800/500",
-      "hotel": "https://picsum.photos/seed/sofia-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Plovdiv": {
-      "hero": "https://picsum.photos/seed/plovdiv-hero/1200/600",
-      "card": "https://picsum.photos/seed/plovdiv-city/800/500",
-      "hotel": "https://picsum.photos/seed/plovdiv-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Belgrade": {
-      "hero": "https://picsum.photos/seed/belgrade-hero/1200/600",
-      "card": "https://picsum.photos/seed/belgrade-city/800/500",
-      "hotel": "https://picsum.photos/seed/belgrade-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tirana": {
-      "hero": "https://picsum.photos/seed/tirana-hero/1200/600",
-      "card": "https://picsum.photos/seed/tirana-city/800/500",
-      "hotel": "https://picsum.photos/seed/tirana-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kotor": {
-      "hero": "https://picsum.photos/seed/kotor-hero/1200/600",
-      "card": "https://picsum.photos/seed/kotor-city/800/500",
-      "hotel": "https://picsum.photos/seed/kotor-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Budva": {
-      "hero": "https://picsum.photos/seed/budva-hero/1200/600",
-      "card": "https://picsum.photos/seed/budva-city/800/500",
-      "hotel": "https://picsum.photos/seed/budva-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sarajevo": {
-      "hero": "https://picsum.photos/seed/sarajevo-hero/1200/600",
-      "card": "https://picsum.photos/seed/sarajevo-city/800/500",
-      "hotel": "https://picsum.photos/seed/sarajevo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mostar": {
-      "hero": "https://picsum.photos/seed/mostar-hero/1200/600",
-      "card": "https://picsum.photos/seed/mostar-city/800/500",
-      "hotel": "https://picsum.photos/seed/mostar-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Ljubljana": {
-      "hero": "https://picsum.photos/seed/ljubljana-hero/1200/600",
-      "card": "https://picsum.photos/seed/ljubljana-city/800/500",
-      "hotel": "https://picsum.photos/seed/ljubljana-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lake Bled": {
-      "hero": "https://picsum.photos/seed/lake-bled-hero/1200/600",
-      "card": "https://picsum.photos/seed/lake-bled-city/800/500",
-      "hotel": "https://picsum.photos/seed/lake-bled-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bratislava": {
-      "hero": "https://picsum.photos/seed/bratislava-hero/1200/600",
-      "card": "https://picsum.photos/seed/bratislava-city/800/500",
-      "hotel": "https://picsum.photos/seed/bratislava-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tallinn": {
-      "hero": "https://picsum.photos/seed/tallinn-hero/1200/600",
-      "card": "https://picsum.photos/seed/tallinn-city/800/500",
-      "hotel": "https://picsum.photos/seed/tallinn-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Riga": {
-      "hero": "https://picsum.photos/seed/riga-hero/1200/600",
-      "card": "https://picsum.photos/seed/riga-city/800/500",
-      "hotel": "https://picsum.photos/seed/riga-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Vilnius": {
-      "hero": "https://picsum.photos/seed/vilnius-hero/1200/600",
-      "card": "https://picsum.photos/seed/vilnius-city/800/500",
-      "hotel": "https://picsum.photos/seed/vilnius-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Valletta": {
-      "hero": "https://picsum.photos/seed/valletta-hero/1200/600",
-      "card": "https://picsum.photos/seed/valletta-city/800/500",
-      "hotel": "https://picsum.photos/seed/valletta-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Nicosia": {
-      "hero": "https://picsum.photos/seed/nicosia-hero/1200/600",
-      "card": "https://picsum.photos/seed/nicosia-city/800/500",
-      "hotel": "https://picsum.photos/seed/nicosia-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Limassol": {
-      "hero": "https://picsum.photos/seed/limassol-hero/1200/600",
-      "card": "https://picsum.photos/seed/limassol-city/800/500",
-      "hotel": "https://picsum.photos/seed/limassol-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Luxembourg City": {
-      "hero": "https://picsum.photos/seed/luxembourg-city-hero/1200/600",
-      "card": "https://picsum.photos/seed/luxembourg-city-city/800/500",
-      "hotel": "https://picsum.photos/seed/luxembourg-city-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Monte Carlo": {
-      "hero": "https://picsum.photos/seed/monte-carlo-hero/1200/600",
-      "card": "https://picsum.photos/seed/monte-carlo-city/800/500",
-      "hotel": "https://picsum.photos/seed/monte-carlo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Andorra la Vella": {
-      "hero": "https://picsum.photos/seed/andorra-la-vella-hero/1200/600",
-      "card": "https://picsum.photos/seed/andorra-la-vella-city/800/500",
-      "hotel": "https://picsum.photos/seed/andorra-la-vella-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "New York": {
-      "hero": "https://picsum.photos/seed/new-york-hero/1200/600",
-      "card": "https://picsum.photos/seed/new-york-city/800/500",
-      "hotel": "https://picsum.photos/seed/new-york-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Manhattan-New_York_City-NYC_Skyline_(36045884593).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Manhattan-New_York_City-NYC_Skyline_(36045884593).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Los Angeles": {
-      "hero": "https://picsum.photos/seed/los-angeles-hero/1200/600",
-      "card": "https://picsum.photos/seed/los-angeles-city/800/500",
-      "hotel": "https://picsum.photos/seed/los-angeles-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/LA_Skyline_Mountains2.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/LA_Skyline_Mountains2.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Miami": {
-      "hero": "https://picsum.photos/seed/miami-hero/1200/600",
-      "card": "https://picsum.photos/seed/miami-city/800/500",
-      "hotel": "https://picsum.photos/seed/miami-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Miami_Skyline_2020.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Miami_Skyline_2020.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Las Vegas": {
-      "hero": "https://picsum.photos/seed/las-vegas-hero/1200/600",
-      "card": "https://picsum.photos/seed/las-vegas-city/800/500",
-      "hotel": "https://picsum.photos/seed/las-vegas-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Vegas_Strip_lights_at_night.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Las_Vegas_Strip_lights_at_night.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Hawaii": {
-      "hero": "https://picsum.photos/seed/hawaii-hero/1200/600",
-      "card": "https://picsum.photos/seed/hawaii-city/800/500",
-      "hotel": "https://picsum.photos/seed/hawaii-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Honolulu_and_Waikiki_from_Diamond_Head.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Honolulu_and_Waikiki_from_Diamond_Head.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Chicago": {
-      "hero": "https://picsum.photos/seed/chicago-hero/1200/600",
-      "card": "https://picsum.photos/seed/chicago-city/800/500",
-      "hotel": "https://picsum.photos/seed/chicago-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Chicago_skyline,_viewed_from_John_Hancock_Center.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Chicago_skyline,_viewed_from_John_Hancock_Center.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "San Francisco": {
-      "hero": "https://picsum.photos/seed/san-francisco-hero/1200/600",
-      "card": "https://picsum.photos/seed/san-francisco-city/800/500",
-      "hotel": "https://picsum.photos/seed/san-francisco-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Golden_Gate_Bridge._San_Francisco._02.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Golden_Gate_Bridge._San_Francisco._02.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Toronto": {
-      "hero": "https://picsum.photos/seed/toronto-hero/1200/600",
-      "card": "https://picsum.photos/seed/toronto-city/800/500",
-      "hotel": "https://picsum.photos/seed/toronto-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Toronto-CN-tower-and-Canadian-flag-skyline.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Toronto-CN-tower-and-Canadian-flag-skyline.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Vancouver": {
-      "hero": "https://picsum.photos/seed/vancouver-hero/1200/600",
-      "card": "https://picsum.photos/seed/vancouver-city/800/500",
-      "hotel": "https://picsum.photos/seed/vancouver-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Skyline_of_Vancouver_viewed_from_Stanley_Park.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Skyline_of_Vancouver_viewed_from_Stanley_Park.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Montreal": {
-      "hero": "https://picsum.photos/seed/montreal-hero/1200/600",
-      "card": "https://picsum.photos/seed/montreal-city/800/500",
-      "hotel": "https://picsum.photos/seed/montreal-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Montreal_-_QC_-_Skyline.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Montreal_-_QC_-_Skyline.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Banff": {
-      "hero": "https://picsum.photos/seed/banff-hero/1200/600",
-      "card": "https://picsum.photos/seed/banff-city/800/500",
-      "hotel": "https://picsum.photos/seed/banff-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Moraine_Lake_17092005.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Moraine_Lake_17092005.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mexico City": {
-      "hero": "https://picsum.photos/seed/mexico-city-hero/1200/600",
-      "card": "https://picsum.photos/seed/mexico-city-city/800/500",
-      "hotel": "https://picsum.photos/seed/mexico-city-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Palacio_de_Bellas_Artes_CDMX.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Palacio_de_Bellas_Artes_CDMX.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cancun": {
-      "hero": "https://picsum.photos/seed/cancun-hero/1200/600",
-      "card": "https://picsum.photos/seed/cancun-city/800/500",
-      "hotel": "https://picsum.photos/seed/cancun-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Canc%C3%BAn_-_Playa_Gaviota_Azul_-_03.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Canc%C3%BAn_-_Playa_Gaviota_Azul_-_03.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tulum": {
-      "hero": "https://picsum.photos/seed/tulum-hero/1200/600",
-      "card": "https://picsum.photos/seed/tulum-city/800/500",
-      "hotel": "https://picsum.photos/seed/tulum-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Beach_and_Ruins_at_Tulum.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Beach_and_Ruins_at_Tulum.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Oaxaca": {
-      "hero": "https://picsum.photos/seed/oaxaca-hero/1200/600",
-      "card": "https://picsum.photos/seed/oaxaca-city/800/500",
-      "hotel": "https://picsum.photos/seed/oaxaca-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_de_Santo_Domingo,_Oaxaca.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Iglesia_de_Santo_Domingo,_Oaxaca.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Havana": {
-      "hero": "https://picsum.photos/seed/havana-hero/1200/600",
-      "card": "https://picsum.photos/seed/havana-city/800/500",
-      "hotel": "https://picsum.photos/seed/havana-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/El_Capitolio_Havana_Cuba.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/El_Capitolio_Havana_Cuba.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Varadero": {
-      "hero": "https://picsum.photos/seed/varadero-hero/1200/600",
-      "card": "https://picsum.photos/seed/varadero-city/800/500",
-      "hotel": "https://picsum.photos/seed/varadero-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Varaderobeach1.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Varaderobeach1.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kingston": {
-      "hero": "https://picsum.photos/seed/kingston-hero/1200/600",
-      "card": "https://picsum.photos/seed/kingston-city/800/500",
-      "hotel": "https://picsum.photos/seed/kingston-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Kingston,_Jamaica.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Kingston,_Jamaica.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Montego Bay": {
-      "hero": "https://picsum.photos/seed/montego-bay-hero/1200/600",
-      "card": "https://picsum.photos/seed/montego-bay-city/800/500",
-      "hotel": "https://picsum.photos/seed/montego-bay-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Panorama_Montego_Bay.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Panorama_Montego_Bay.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "San José": {
-      "hero": "https://picsum.photos/seed/san-jose-hero/1200/600",
-      "card": "https://picsum.photos/seed/san-jose-city/800/500",
-      "hotel": "https://picsum.photos/seed/san-jose-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Costa_Rica-Teatro_Nacional.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Costa_Rica-Teatro_Nacional.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tamarindo": {
-      "hero": "https://picsum.photos/seed/tamarindo-hero/1200/600",
-      "card": "https://picsum.photos/seed/tamarindo-city/800/500",
-      "hotel": "https://picsum.photos/seed/tamarindo-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Costa_Rica_Playa_Tamarindo_and_Rivermouth_2007_Aerial_Photograph_Tamarindowiki_01.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Costa_Rica_Playa_Tamarindo_and_Rivermouth_2007_Aerial_Photograph_Tamarindowiki_01.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Monteverde": {
-      "hero": "https://picsum.photos/seed/monteverde-hero/1200/600",
-      "card": "https://picsum.photos/seed/monteverde-city/800/500",
-      "hotel": "https://picsum.photos/seed/monteverde-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Cloud_Forest_at_Monteverde.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Cloud_Forest_at_Monteverde.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Panama City": {
-      "hero": "https://picsum.photos/seed/panama-city-hero/1200/600",
-      "card": "https://picsum.photos/seed/panama-city-city/800/500",
-      "hotel": "https://picsum.photos/seed/panama-city-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Panama_City_Skyline.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Panama_City_Skyline.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bocas del Toro": {
-      "hero": "https://picsum.photos/seed/bocas-del-toro-hero/1200/600",
-      "card": "https://picsum.photos/seed/bocas-del-toro-city/800/500",
-      "hotel": "https://picsum.photos/seed/bocas-del-toro-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Casa_en_Bocas_del_Toro,_Panama.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Casa_en_Bocas_del_Toro,_Panama.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bogotá": {
-      "hero": "https://picsum.photos/seed/bogota-hero/1200/600",
-      "card": "https://picsum.photos/seed/bogota-city/800/500",
-      "hotel": "https://picsum.photos/seed/bogota-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Vista_panor%C3%A1mica_de_Bogot%C3%A1_desde_el_Cerro_de_Monserrate.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Vista_panor%C3%A1mica_de_Bogot%C3%A1_desde_el_Cerro_de_Monserrate.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cartagena": {
-      "hero": "https://picsum.photos/seed/cartagena-hero/1200/600",
-      "card": "https://picsum.photos/seed/cartagena-city/800/500",
-      "hotel": "https://picsum.photos/seed/cartagena-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Cartagena_Old_City.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Cartagena_Old_City.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Medellín": {
-      "hero": "https://picsum.photos/seed/medellin-hero/1200/600",
-      "card": "https://picsum.photos/seed/medellin-city/800/500",
-      "hotel": "https://picsum.photos/seed/medellin-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Valley_of_Medell%C3%ADn-_skyline.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Valley_of_Medell%C3%ADn-_skyline.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Caracas": {
-      "hero": "https://picsum.photos/seed/caracas-hero/1200/600",
-      "card": "https://picsum.photos/seed/caracas-city/800/500",
-      "hotel": "https://picsum.photos/seed/caracas-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Caracas_skyline_and_Avila_mountain_from_my_penthouse.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Caracas_skyline_and_Avila_mountain_from_my_penthouse.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Quito": {
-      "hero": "https://picsum.photos/seed/quito-hero/1200/600",
-      "card": "https://picsum.photos/seed/quito-city/800/500",
-      "hotel": "https://picsum.photos/seed/quito-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Vista_de_Quito_(La_Bas%C3%ADlica_del_Voto_Nacional,_Quito)_pic._z4.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Vista_de_Quito_(La_Bas%C3%ADlica_del_Voto_Nacional,_Quito)_pic._z4.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Galápagos Islands": {
-      "hero": "https://picsum.photos/seed/galapagos-islands-hero/1200/600",
-      "card": "https://picsum.photos/seed/galapagos-islands-city/800/500",
-      "hotel": "https://picsum.photos/seed/galapagos-islands-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Bartolom%C3%A9_Island_Pinnacle_Rock.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Bartolom%C3%A9_Island_Pinnacle_Rock.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lima": {
-      "hero": "https://picsum.photos/seed/lima-hero/1200/600",
-      "card": "https://picsum.photos/seed/lima-city/800/500",
-      "hotel": "https://picsum.photos/seed/lima-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Costa_Verde_Lima_Peru.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Costa_Verde_Lima_Peru.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cusco": {
-      "hero": "https://picsum.photos/seed/cusco-hero/1200/600",
-      "card": "https://picsum.photos/seed/cusco-city/800/500",
-      "hotel": "https://picsum.photos/seed/cusco-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Plaza_de_Armas_-_Cusco.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Plaza_de_Armas_-_Cusco.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Machu Picchu": {
-      "hero": "https://picsum.photos/seed/machu-picchu-hero/1200/600",
-      "card": "https://picsum.photos/seed/machu-picchu-city/800/500",
-      "hotel": "https://picsum.photos/seed/machu-picchu-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Machu_Picchu_early_morning.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Machu_Picchu_early_morning.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Rio de Janeiro": {
-      "hero": "https://picsum.photos/seed/rio-de-janeiro-hero/1200/600",
-      "card": "https://picsum.photos/seed/rio-de-janeiro-city/800/500",
-      "hotel": "https://picsum.photos/seed/rio-de-janeiro-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Sugar_loaf_from_Cristo_Redentor_2010.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Sugar_loaf_from_Cristo_Redentor_2010.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "São Paulo": {
-      "hero": "https://picsum.photos/seed/sao-paulo-hero/1200/600",
-      "card": "https://picsum.photos/seed/sao-paulo-city/800/500",
-      "hotel": "https://picsum.photos/seed/sao-paulo-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Avenida_Paulista_-_Metr%C3%B4_e_skyline.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Avenida_Paulista_-_Metr%C3%B4_e_skyline.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Salvador": {
-      "hero": "https://picsum.photos/seed/salvador-hero/1200/600",
-      "card": "https://picsum.photos/seed/salvador-city/800/500",
-      "hotel": "https://picsum.photos/seed/salvador-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Salvador,_Largo_do_Pelourinho_(15744040228).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Salvador,_Largo_do_Pelourinho_(15744040228).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "La Paz": {
-      "hero": "https://picsum.photos/seed/la-paz-hero/1200/600",
-      "card": "https://picsum.photos/seed/la-paz-city/800/500",
-      "hotel": "https://picsum.photos/seed/la-paz-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Uyuni": {
-      "hero": "https://picsum.photos/seed/uyuni-hero/1200/600",
-      "card": "https://picsum.photos/seed/uyuni-city/800/500",
-      "hotel": "https://picsum.photos/seed/uyuni-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Salar_de_Uyuni,_Bolivia,_2016-02-04,_DD_10-12_HDR.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Salar_de_Uyuni,_Bolivia,_2016-02-04,_DD_10-12_HDR.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Santiago": {
-      "hero": "https://picsum.photos/seed/santiago-hero/1200/600",
-      "card": "https://picsum.photos/seed/santiago-city/800/500",
-      "hotel": "https://picsum.photos/seed/santiago-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Santiago_de_Chile,_Desde_Cerro_San_Crist%C3%B3bal_(cropped).jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Santiago_de_Chile,_Desde_Cerro_San_Crist%C3%B3bal_(cropped).jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Patagonia": {
-      "hero": "https://picsum.photos/seed/patagonia-hero/1200/600",
-      "card": "https://picsum.photos/seed/patagonia-city/800/500",
-      "hotel": "https://picsum.photos/seed/patagonia-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Valparaíso": {
-      "hero": "https://picsum.photos/seed/valparaiso-hero/1200/600",
-      "card": "https://picsum.photos/seed/valparaiso-city/800/500",
-      "hotel": "https://picsum.photos/seed/valparaiso-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Buenos Aires": {
-      "hero": "https://picsum.photos/seed/buenos-aires-hero/1200/600",
-      "card": "https://picsum.photos/seed/buenos-aires-city/800/500",
-      "hotel": "https://picsum.photos/seed/buenos-aires-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bariloche": {
-      "hero": "https://picsum.photos/seed/bariloche-hero/1200/600",
-      "card": "https://picsum.photos/seed/bariloche-city/800/500",
-      "hotel": "https://picsum.photos/seed/bariloche-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mendoza": {
-      "hero": "https://picsum.photos/seed/mendoza-hero/1200/600",
-      "card": "https://picsum.photos/seed/mendoza-city/800/500",
-      "hotel": "https://picsum.photos/seed/mendoza-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Montevideo": {
-      "hero": "https://picsum.photos/seed/montevideo-hero/1200/600",
-      "card": "https://picsum.photos/seed/montevideo-city/800/500",
-      "hotel": "https://picsum.photos/seed/montevideo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Punta del Este": {
-      "hero": "https://picsum.photos/seed/punta-del-este-hero/1200/600",
-      "card": "https://picsum.photos/seed/punta-del-este-city/800/500",
-      "hotel": "https://picsum.photos/seed/punta-del-este-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Asunción": {
-      "hero": "https://picsum.photos/seed/asuncion-hero/1200/600",
-      "card": "https://picsum.photos/seed/asuncion-city/800/500",
-      "hotel": "https://picsum.photos/seed/asuncion-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cape Town": {
-      "hero": "https://picsum.photos/seed/cape-town-hero/1200/600",
-      "card": "https://picsum.photos/seed/cape-town-city/800/500",
-      "hotel": "https://picsum.photos/seed/cape-town-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Johannesburg": {
-      "hero": "https://picsum.photos/seed/johannesburg-hero/1200/600",
-      "card": "https://picsum.photos/seed/johannesburg-city/800/500",
-      "hotel": "https://picsum.photos/seed/johannesburg-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kruger National Park": {
-      "hero": "https://picsum.photos/seed/kruger-national-park-hero/1200/600",
-      "card": "https://picsum.photos/seed/kruger-national-park-city/800/500",
-      "hotel": "https://picsum.photos/seed/kruger-national-park-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Marrakech": {
-      "hero": "https://picsum.photos/seed/marrakech-hero/1200/600",
-      "card": "https://picsum.photos/seed/marrakech-city/800/500",
-      "hotel": "https://picsum.photos/seed/marrakech-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Fez": {
-      "hero": "https://picsum.photos/seed/fez-hero/1200/600",
-      "card": "https://picsum.photos/seed/fez-city/800/500",
-      "hotel": "https://picsum.photos/seed/fez-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Casablanca": {
-      "hero": "https://picsum.photos/seed/casablanca-hero/1200/600",
-      "card": "https://picsum.photos/seed/casablanca-city/800/500",
-      "hotel": "https://picsum.photos/seed/casablanca-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Chefchaouen": {
-      "hero": "https://picsum.photos/seed/chefchaouen-hero/1200/600",
-      "card": "https://picsum.photos/seed/chefchaouen-city/800/500",
-      "hotel": "https://picsum.photos/seed/chefchaouen-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cairo": {
-      "hero": "https://picsum.photos/seed/cairo-hero/1200/600",
-      "card": "https://picsum.photos/seed/cairo-city/800/500",
-      "hotel": "https://picsum.photos/seed/cairo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Luxor": {
-      "hero": "https://picsum.photos/seed/luxor-hero/1200/600",
-      "card": "https://picsum.photos/seed/luxor-city/800/500",
-      "hotel": "https://picsum.photos/seed/luxor-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sharm El Sheikh": {
-      "hero": "https://picsum.photos/seed/sharm-el-sheikh-hero/1200/600",
-      "card": "https://picsum.photos/seed/sharm-el-sheikh-city/800/500",
-      "hotel": "https://picsum.photos/seed/sharm-el-sheikh-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Nairobi": {
-      "hero": "https://picsum.photos/seed/nairobi-hero/1200/600",
-      "card": "https://picsum.photos/seed/nairobi-city/800/500",
-      "hotel": "https://picsum.photos/seed/nairobi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Maasai Mara": {
-      "hero": "https://picsum.photos/seed/maasai-mara-hero/1200/600",
-      "card": "https://picsum.photos/seed/maasai-mara-city/800/500",
-      "hotel": "https://picsum.photos/seed/maasai-mara-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Zanzibar": {
-      "hero": "https://picsum.photos/seed/zanzibar-hero/1200/600",
-      "card": "https://picsum.photos/seed/zanzibar-city/800/500",
-      "hotel": "https://picsum.photos/seed/zanzibar-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Serengeti": {
-      "hero": "https://picsum.photos/seed/serengeti-hero/1200/600",
-      "card": "https://picsum.photos/seed/serengeti-city/800/500",
-      "hotel": "https://picsum.photos/seed/serengeti-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Arusha": {
-      "hero": "https://picsum.photos/seed/arusha-hero/1200/600",
-      "card": "https://picsum.photos/seed/arusha-city/800/500",
-      "hotel": "https://picsum.photos/seed/arusha-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Addis Ababa": {
-      "hero": "https://picsum.photos/seed/addis-ababa-hero/1200/600",
-      "card": "https://picsum.photos/seed/addis-ababa-city/800/500",
-      "hotel": "https://picsum.photos/seed/addis-ababa-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lalibela": {
-      "hero": "https://picsum.photos/seed/lalibela-hero/1200/600",
-      "card": "https://picsum.photos/seed/lalibela-city/800/500",
-      "hotel": "https://picsum.photos/seed/lalibela-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Accra": {
-      "hero": "https://picsum.photos/seed/accra-hero/1200/600",
-      "card": "https://picsum.photos/seed/accra-city/800/500",
-      "hotel": "https://picsum.photos/seed/accra-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kumasi": {
-      "hero": "https://picsum.photos/seed/kumasi-hero/1200/600",
-      "card": "https://picsum.photos/seed/kumasi-city/800/500",
-      "hotel": "https://picsum.photos/seed/kumasi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Dakar": {
-      "hero": "https://picsum.photos/seed/dakar-hero/1200/600",
-      "card": "https://picsum.photos/seed/dakar-city/800/500",
-      "hotel": "https://picsum.photos/seed/dakar-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Tunis": {
-      "hero": "https://picsum.photos/seed/tunis-hero/1200/600",
-      "card": "https://picsum.photos/seed/tunis-city/800/500",
-      "hotel": "https://picsum.photos/seed/tunis-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sousse": {
-      "hero": "https://picsum.photos/seed/sousse-hero/1200/600",
-      "card": "https://picsum.photos/seed/sousse-city/800/500",
-      "hotel": "https://picsum.photos/seed/sousse-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Port Louis": {
-      "hero": "https://picsum.photos/seed/port-louis-hero/1200/600",
-      "card": "https://picsum.photos/seed/port-louis-city/800/500",
-      "hotel": "https://picsum.photos/seed/port-louis-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Grand Baie": {
-      "hero": "https://picsum.photos/seed/grand-baie-hero/1200/600",
-      "card": "https://picsum.photos/seed/grand-baie-city/800/500",
-      "hotel": "https://picsum.photos/seed/grand-baie-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Mahé": {
-      "hero": "https://picsum.photos/seed/mahe-hero/1200/600",
-      "card": "https://picsum.photos/seed/mahe-city/800/500",
-      "hotel": "https://picsum.photos/seed/mahe-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Praslin": {
-      "hero": "https://picsum.photos/seed/praslin-hero/1200/600",
-      "card": "https://picsum.photos/seed/praslin-city/800/500",
-      "hotel": "https://picsum.photos/seed/praslin-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Antananarivo": {
-      "hero": "https://picsum.photos/seed/antananarivo-hero/1200/600",
-      "card": "https://picsum.photos/seed/antananarivo-city/800/500",
-      "hotel": "https://picsum.photos/seed/antananarivo-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Windhoek": {
-      "hero": "https://picsum.photos/seed/windhoek-hero/1200/600",
-      "card": "https://picsum.photos/seed/windhoek-city/800/500",
-      "hotel": "https://picsum.photos/seed/windhoek-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sossusvlei": {
-      "hero": "https://picsum.photos/seed/sossusvlei-hero/1200/600",
-      "card": "https://picsum.photos/seed/sossusvlei-city/800/500",
-      "hotel": "https://picsum.photos/seed/sossusvlei-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Gaborone": {
-      "hero": "https://picsum.photos/seed/gaborone-hero/1200/600",
-      "card": "https://picsum.photos/seed/gaborone-city/800/500",
-      "hotel": "https://picsum.photos/seed/gaborone-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Okavango Delta": {
-      "hero": "https://picsum.photos/seed/okavango-delta-hero/1200/600",
-      "card": "https://picsum.photos/seed/okavango-delta-city/800/500",
-      "hotel": "https://picsum.photos/seed/okavango-delta-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kigali": {
-      "hero": "https://picsum.photos/seed/kigali-hero/1200/600",
-      "card": "https://picsum.photos/seed/kigali-city/800/500",
-      "hotel": "https://picsum.photos/seed/kigali-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Kampala": {
-      "hero": "https://picsum.photos/seed/kampala-hero/1200/600",
-      "card": "https://picsum.photos/seed/kampala-city/800/500",
-      "hotel": "https://picsum.photos/seed/kampala-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Victoria Falls": {
-      "hero": "https://picsum.photos/seed/victoria-falls-hero/1200/600",
-      "card": "https://picsum.photos/seed/victoria-falls-city/800/500",
-      "hotel": "https://picsum.photos/seed/victoria-falls-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Harare": {
-      "hero": "https://picsum.photos/seed/harare-hero/1200/600",
-      "card": "https://picsum.photos/seed/harare-city/800/500",
-      "hotel": "https://picsum.photos/seed/harare-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Sydney": {
-      "hero": "https://picsum.photos/seed/sydney-hero/1200/600",
-      "card": "https://picsum.photos/seed/sydney-city/800/500",
-      "hotel": "https://picsum.photos/seed/sydney-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Melbourne": {
-      "hero": "https://picsum.photos/seed/melbourne-hero/1200/600",
-      "card": "https://picsum.photos/seed/melbourne-city/800/500",
-      "hotel": "https://picsum.photos/seed/melbourne-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Brisbane": {
-      "hero": "https://picsum.photos/seed/brisbane-hero/1200/600",
-      "card": "https://picsum.photos/seed/brisbane-city/800/500",
-      "hotel": "https://picsum.photos/seed/brisbane-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Cairns": {
-      "hero": "https://picsum.photos/seed/cairns-hero/1200/600",
-      "card": "https://picsum.photos/seed/cairns-city/800/500",
-      "hotel": "https://picsum.photos/seed/cairns-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Perth": {
-      "hero": "https://picsum.photos/seed/perth-hero/1200/600",
-      "card": "https://picsum.photos/seed/perth-city/800/500",
-      "hotel": "https://picsum.photos/seed/perth-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Auckland": {
-      "hero": "https://picsum.photos/seed/auckland-hero/1200/600",
-      "card": "https://picsum.photos/seed/auckland-city/800/500",
-      "hotel": "https://picsum.photos/seed/auckland-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Queenstown": {
-      "hero": "https://picsum.photos/seed/queenstown-hero/1200/600",
-      "card": "https://picsum.photos/seed/queenstown-city/800/500",
-      "hotel": "https://picsum.photos/seed/queenstown-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Wellington": {
-      "hero": "https://picsum.photos/seed/wellington-hero/1200/600",
-      "card": "https://picsum.photos/seed/wellington-city/800/500",
-      "hotel": "https://picsum.photos/seed/wellington-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Nadi": {
-      "hero": "https://picsum.photos/seed/nadi-hero/1200/600",
-      "card": "https://picsum.photos/seed/nadi-city/800/500",
-      "hotel": "https://picsum.photos/seed/nadi-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Denarau Island": {
-      "hero": "https://picsum.photos/seed/denarau-island-hero/1200/600",
-      "card": "https://picsum.photos/seed/denarau-island-city/800/500",
-      "hotel": "https://picsum.photos/seed/denarau-island-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Papeete": {
-      "hero": "https://picsum.photos/seed/papeete-hero/1200/600",
-      "card": "https://picsum.photos/seed/papeete-city/800/500",
-      "hotel": "https://picsum.photos/seed/papeete-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bora Bora": {
-      "hero": "https://picsum.photos/seed/bora-bora-hero/1200/600",
-      "card": "https://picsum.photos/seed/bora-bora-city/800/500",
-      "hotel": "https://picsum.photos/seed/bora-bora-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Port Moresby": {
-      "hero": "https://picsum.photos/seed/port-moresby-hero/1200/600",
-      "card": "https://picsum.photos/seed/port-moresby-city/800/500",
-      "hotel": "https://picsum.photos/seed/port-moresby-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Port Vila": {
-      "hero": "https://picsum.photos/seed/port-vila-hero/1200/600",
-      "card": "https://picsum.photos/seed/port-vila-city/800/500",
-      "hotel": "https://picsum.photos/seed/port-vila-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Apia": {
-      "hero": "https://picsum.photos/seed/apia-hero/1200/600",
-      "card": "https://picsum.photos/seed/apia-city/800/500",
-      "hotel": "https://picsum.photos/seed/apia-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Nuku'alofa": {
-      "hero": "https://picsum.photos/seed/nuku-alofa-hero/1200/600",
-      "card": "https://picsum.photos/seed/nuku-alofa-city/800/500",
-      "hotel": "https://picsum.photos/seed/nuku-alofa-hotel/600/400"
+      "hero": "/images/placeholder-travel.svg",
+      "card": "/images/placeholder-travel.svg",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Jakarta": {
-      "hero": "https://picsum.photos/seed/jakarta-hero/1200/600",
-      "card": "https://picsum.photos/seed/jakarta-city/800/500",
-      "hotel": "https://picsum.photos/seed/jakarta-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Monumen_Nasional,_Jakarta,_Indonesia.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Monumen_Nasional,_Jakarta,_Indonesia.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bali": {
-      "hero": "https://picsum.photos/seed/bali-hero/1200/600",
-      "card": "https://picsum.photos/seed/bali-city/800/500",
-      "hotel": "https://picsum.photos/seed/bali-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Pura_Tanah_Lot,_Bali,_Indonesia,_20220827_1029_1193.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Pura_Tanah_Lot,_Bali,_Indonesia,_20220827_1029_1193.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Yogyakarta": {
-      "hero": "https://picsum.photos/seed/yogyakarta-hero/1200/600",
-      "card": "https://picsum.photos/seed/yogyakarta-city/800/500",
-      "hotel": "https://picsum.photos/seed/yogyakarta-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Temple.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_Temple.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Bandung": {
-      "hero": "https://picsum.photos/seed/bandung-hero/1200/600",
-      "card": "https://picsum.photos/seed/bandung-city/800/500",
-      "hotel": "https://picsum.photos/seed/bandung-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Kawah_Putih_Bandung_Indonesia.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Kawah_Putih_Bandung_Indonesia.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Lombok": {
-      "hero": "https://picsum.photos/seed/lombok-hero/1200/600",
-      "card": "https://picsum.photos/seed/lombok-city/800/500",
-      "hotel": "https://picsum.photos/seed/lombok-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuta_Beach,_Lombok,_Indonesia.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Kuta_Beach,_Lombok,_Indonesia.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Surabaya": {
-      "hero": "https://picsum.photos/seed/surabaya-hero/1200/600",
-      "card": "https://picsum.photos/seed/surabaya-city/800/500",
-      "hotel": "https://picsum.photos/seed/surabaya-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Suramadu_Bridge_5.JPG?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Suramadu_Bridge_5.JPG?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Labuan Bajo": {
-      "hero": "https://picsum.photos/seed/labuan-bajo-hero/1200/600",
-      "card": "https://picsum.photos/seed/labuan-bajo-city/800/500",
-      "hotel": "https://picsum.photos/seed/labuan-bajo-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_Padar_Kawasan_Taman_Nasional_Komodo.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Pulau_Padar_Kawasan_Taman_Nasional_Komodo.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     },
     "Malang": {
-      "hero": "https://picsum.photos/seed/malang-hero/1200/600",
-      "card": "https://picsum.photos/seed/malang-city/800/500",
-      "hotel": "https://picsum.photos/seed/malang-hotel/600/400"
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Rainbow_village_in_Malang_01.jpg?width=1600",
+      "card": "https://commons.wikimedia.org/wiki/Special:FilePath/Rainbow_village_in_Malang_01.jpg?width=800",
+      "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800"
     }
   },
   "activities": {
-    "temple-visit": "https://picsum.photos/seed/activity-temple-visit/400/300",
-    "beach-walk": "https://picsum.photos/seed/activity-beach-walk/400/300",
-    "snorkeling": "https://picsum.photos/seed/activity-snorkeling/400/300",
-    "surfing": "https://picsum.photos/seed/activity-surfing/400/300",
-    "hiking": "https://picsum.photos/seed/activity-hiking/400/300",
-    "cooking-class": "https://picsum.photos/seed/activity-cooking-class/400/300",
-    "local-market": "https://picsum.photos/seed/activity-local-market/400/300",
-    "museum-visit": "https://picsum.photos/seed/activity-museum-visit/400/300",
-    "city-tour": "https://picsum.photos/seed/activity-city-tour/400/300",
-    "sunset-view": "https://picsum.photos/seed/activity-sunset-view/400/300",
-    "waterfall": "https://picsum.photos/seed/activity-waterfall/400/300",
-    "shopping": "https://picsum.photos/seed/activity-shopping/400/300",
-    "spa-wellness": "https://picsum.photos/seed/activity-spa-wellness/400/300",
-    "food-tour": "https://picsum.photos/seed/activity-food-tour/400/300",
-    "breakfast": "https://picsum.photos/seed/activity-breakfast/400/300",
-    "lunch": "https://picsum.photos/seed/activity-lunch/400/300",
-    "dinner": "https://picsum.photos/seed/activity-dinner/400/300",
-    "beach": "https://picsum.photos/seed/activity-beach-walk/400/300",
-    "temple": "https://picsum.photos/seed/activity-temple-visit/400/300",
-    "market": "https://picsum.photos/seed/activity-local-market/400/300",
-    "food": "https://picsum.photos/seed/activity-food-tour/400/300",
-    "museum": "https://picsum.photos/seed/activity-museum-visit/400/300",
-    "spa": "https://picsum.photos/seed/activity-spa-wellness/400/300",
-    "sunset": "https://picsum.photos/seed/activity-sunset-view/400/300",
-    "snorkel": "https://picsum.photos/seed/activity-snorkeling/400/300",
-    "surf": "https://picsum.photos/seed/activity-surfing/400/300",
-    "cook": "https://picsum.photos/seed/activity-cooking-class/400/300",
-    "shop": "https://picsum.photos/seed/activity-shopping/400/300",
-    "tour": "https://picsum.photos/seed/activity-city-tour/400/300",
-    "default": "https://picsum.photos/seed/travel-activity/400/300"
+    "default": "/images/placeholder-travel.svg"
   },
   "transport": {
-    "flight": "https://picsum.photos/seed/transport-flight/400/250",
-    "domestic-flight": "https://picsum.photos/seed/transport-domestic-flight/400/250",
-    "train": "https://picsum.photos/seed/transport-train/400/250",
-    "high-speed-train": "https://picsum.photos/seed/transport-high-speed-train/400/250",
-    "bus": "https://picsum.photos/seed/transport-bus/400/250",
-    "ferry": "https://picsum.photos/seed/transport-ferry/400/250",
-    "car": "https://picsum.photos/seed/transport-car/400/250",
-    "car-rental": "https://picsum.photos/seed/transport-car-rental/400/250",
-    "private-car": "https://picsum.photos/seed/transport-car-rental/400/250",
-    "taxi": "https://picsum.photos/seed/transport-taxi/400/250",
-    "grab": "https://picsum.photos/seed/transport-grab-taxi/400/250",
-    "grab-gojek": "https://picsum.photos/seed/transport-grab-taxi/400/250",
-    "grab-local-taxi": "https://picsum.photos/seed/transport-grab-taxi/400/250",
-    "motorbike": "https://picsum.photos/seed/transport-motorbike/400/250",
-    "motorbike-rental": "https://picsum.photos/seed/transport-motorbike/400/250",
-    "mrt-subway": "https://picsum.photos/seed/transport-mrt-subway/400/250",
-    "subway-metro": "https://picsum.photos/seed/transport-mrt-subway/400/250",
-    "metro-subway": "https://picsum.photos/seed/transport-mrt-subway/400/250",
-    "dubai-metro": "https://picsum.photos/seed/transport-mrt-subway/400/250",
-    "london-underground": "https://picsum.photos/seed/transport-mrt-subway/400/250",
-    "ic-card-suica": "https://picsum.photos/seed/transport-mrt-subway/400/250",
-    "tuk-tuk": "https://picsum.photos/seed/transport-tuk-tuk/400/250",
-    "bicycle": "https://picsum.photos/seed/transport-bicycle/400/250",
-    "bicycle-rental": "https://picsum.photos/seed/transport-bicycle/400/250",
-    "becak-rickshaw": "https://picsum.photos/seed/transport-becak/400/250",
-    "walk": "https://picsum.photos/seed/transport-walk/400/250",
-    "uber-lyft": "https://picsum.photos/seed/transport-taxi/400/250",
-    "black-cab": "https://picsum.photos/seed/transport-taxi/400/250",
-    "default": "https://picsum.photos/seed/travel-transport/400/250"
+    "flight": "https://commons.wikimedia.org/wiki/Special:FilePath/Airbus_A380_blue_sky.jpg?width=600",
+    "domestic-flight": "https://commons.wikimedia.org/wiki/Special:FilePath/Garuda_Indonesia_Boeing_737-800.JPG?width=600",
+    "default": "/images/placeholder-travel.svg"
   },
   "hotels": {
-    "budget": "https://picsum.photos/seed/hotel-budget-guesthouse/600/400",
-    "standard": "https://picsum.photos/seed/hotel-boutique-standard/600/400",
-    "luxury": "https://picsum.photos/seed/hotel-luxury-resort/600/400"
+    "budget": "https://commons.wikimedia.org/wiki/Special:FilePath/Hostel_Dormitory.jpg?width=800",
+    "standard": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800",
+    "luxury": "https://commons.wikimedia.org/wiki/Special:FilePath/Alila_Infinity_Pool_(HDR)_(1365818884).jpg?width=800"
+  },
+  "airlines": {
+    "Garuda Indonesia": "https://en.wikipedia.org/wiki/Special:FilePath/Garuda_Indonesia_Logo.svg?width=160",
+    "Citilink": "https://commons.wikimedia.org/wiki/Special:FilePath/2012_Citilink_Logo.svg?width=160",
+    "Emirates": "https://commons.wikimedia.org/wiki/Special:FilePath/Emirates_logo.svg?width=160",
+    "Singapore Airlines": "https://commons.wikimedia.org/wiki/Special:FilePath/Singapore_Airlines_Logo.svg?width=160",
+    "AirAsia": "https://commons.wikimedia.org/wiki/Special:FilePath/AirAsia_New_Logo.svg?width=160"
   },
   "fallback": {
-    "city": "https://picsum.photos/seed/travel-city/800/500",
-    "activity": "https://picsum.photos/seed/travel-activity/400/300",
-    "transport": "https://picsum.photos/seed/travel-transport/400/250",
-    "hotel": "https://picsum.photos/seed/travel-hotel/600/400",
-    "hero": "https://picsum.photos/seed/travel-hero/1200/600"
+    "city": "/images/placeholder-travel.svg",
+    "activity": "/images/placeholder-travel.svg",
+    "transport": "/images/placeholder-travel.svg",
+    "hotel": "https://commons.wikimedia.org/wiki/Special:FilePath/Swimming_pool_in_the_L%27_Fisher_Hotel.jpg?width=800",
+    "hero": "/images/placeholder-travel.svg"
   }
 }

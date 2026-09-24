@@ -1,23 +1,40 @@
 import { useState, type DragEvent } from 'react';
+import {
+  Bus,
+  Car,
+  CarTaxiFront,
+  Clock,
+  GripVertical,
+  Luggage,
+  MapPin,
+  Plane,
+  Ship,
+  TrainFront,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
 import Button from './Button';
 import TimePicker from './TimePicker';
 import { getActivitySuggestions, suggestionImage } from '../data/activitySuggestions';
 import { routeMapsLink } from '../data/transport';
 import { getMapsLink } from '../data/tripwiseMaster';
 import { dailyTransportCostIDR, formatIDR } from '../logic/tripMedia';
-import { getActivityImage, getTransportImage } from '../data/getImage';
+import { getActivityImage, getTransportImage, handleImageError, trustedImage } from '../data/getImage';
 import type { ItineraryActivity, ItineraryDay, TransportOption } from '../types';
 
-const TRANSPORT_ICON: Record<string, string> = {
-  train: '🚆',
-  bus: '🚌',
-  flight: '✈️',
-  ferry: '⛴️',
-  car: '🚗',
-  other: '🚕',
+const TRANSPORT_ICON: Record<string, LucideIcon> = {
+  train: TrainFront,
+  bus: Bus,
+  flight: Plane,
+  ferry: Ship,
+  car: Car,
+  other: CarTaxiFront,
 };
 
-const GENERIC_FALLBACK_IMAGE = 'https://picsum.photos/seed/travel-default/800/500';
+function TransportIcon({ type, className = 'h-4 w-4' }: { type: string; className?: string }) {
+  const Icon = TRANSPORT_ICON[type] ?? CarTaxiFront;
+  return <Icon className={className} aria-hidden />;
+}
 
 interface DragHandleProps {
   onDragStart: (e: DragEvent<HTMLSpanElement>) => void;
@@ -75,8 +92,11 @@ export default function DayCard({
             <span className="font-display text-xl text-gold-accent-deep sm:text-2xl">
               {String(day.day).padStart(2, '0')}
             </span>
-            <h3 className="text-base font-semibold text-ink sm:text-lg">
-              🧳 {day.fromCity} → {day.toCity}
+            <h3 className="inline-flex items-center gap-2 text-base font-semibold text-ink sm:text-lg">
+              <Luggage className="h-4 w-4 shrink-0 text-gold-accent-deep sm:h-5 sm:w-5" aria-hidden />
+              <span>
+                {day.fromCity} → {day.toCity}
+              </span>
             </h3>
           </div>
           {selected && (
@@ -94,9 +114,10 @@ export default function DayCard({
             href={routeMapsLink(day.fromCity, day.toCity)}
             target="_blank"
             rel="noreferrer"
-            className="mt-1 inline-block text-xs font-medium text-ocean-mid hover:text-ocean-deep"
+            className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-ocean-mid hover:text-ocean-deep"
           >
-            📍 View route
+            <MapPin className="h-3.5 w-3.5" aria-hidden />
+            View route
           </a>
         )}
 
@@ -104,19 +125,18 @@ export default function DayCard({
           <div className="mt-4 overflow-hidden rounded-xl border border-ink/10 bg-white">
             <div className="flex flex-col sm:flex-row">
               <img
-                src={selected.image || getTransportImage(selected.type)}
+                src={trustedImage(selected.image, getTransportImage(selected.type))}
                 alt={selected.name}
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = GENERIC_FALLBACK_IMAGE;
-                }}
+                onError={handleImageError}
                 className="h-32 w-full object-cover sm:h-auto sm:w-40"
               />
               <div className="flex flex-1 flex-col justify-between p-3 sm:p-4">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-lg">{TRANSPORT_ICON[selected.type] ?? '🚕'}</span>
+                    <span className="inline-flex text-ocean-mid">
+                      <TransportIcon type={selected.type} className="h-4 w-4" />
+                    </span>
                     <p className="text-sm font-semibold text-ink">{selected.name}</p>
                     {selected.badge && (
                       <span className="rounded-full bg-ocean-mid/10 px-2 py-0.5 text-[11px] font-semibold text-ocean-mid">
@@ -124,8 +144,9 @@ export default function DayCard({
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 text-xs text-ink/50">
-                    ⏱ {selected.duration} · 💰 {selected.costLabel ?? `$${selected.costPerPerson}`} / person
+                  <p className="mt-1 inline-flex items-center gap-1 text-xs text-ink/50">
+                    <Clock className="h-3.5 w-3.5" aria-hidden />
+                    {selected.duration} · {selected.costLabel ?? `$${selected.costPerPerson}`} / person
                   </p>
                 </div>
                 <div className="mt-3 flex items-center justify-between gap-3">
@@ -164,7 +185,8 @@ export default function DayCard({
                     }`}
                   >
                     <span className="flex items-center gap-1.5">
-                      {TRANSPORT_ICON[opt.type] ?? '🚕'} {opt.name}
+                      <TransportIcon type={opt.type} className="h-3.5 w-3.5 shrink-0" />
+                      {opt.name}
                     </span>
                     <span className="shrink-0 text-ink/50">
                       {opt.costLabel ?? `$${opt.costPerPerson}`} · {opt.duration}
@@ -209,11 +231,11 @@ export default function DayCard({
               draggable
               onDragStart={dragHandleProps.onDragStart}
               onDragEnd={dragHandleProps.onDragEnd}
-              className="cursor-grab select-none text-ink/30 hover:text-ink/60 active:cursor-grabbing"
+              className="inline-flex cursor-grab select-none text-ink/30 hover:text-ink/60 active:cursor-grabbing"
               aria-label="Drag to reorder this day"
               title="Drag to reorder"
             >
-              ⠿
+              <GripVertical className="h-4 w-4" aria-hidden />
             </span>
           )}
           <span className="font-display text-xl text-ocean-mid sm:text-2xl">
@@ -230,7 +252,7 @@ export default function DayCard({
       </div>
 
       <div className="mt-3 flex items-center gap-2 rounded-lg bg-ocean-mid/5 px-3 py-2 text-xs text-ocean-deep">
-        <span>🚌</span>
+        <Bus className="h-4 w-4 shrink-0" aria-hidden />
         <span>Estimated local transport (car/bus/MRT): {formatIDR(transportCost)}</span>
       </div>
 
@@ -248,10 +270,7 @@ export default function DayCard({
                 src={getActivityImage(activity.name)}
                 alt=""
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = GENERIC_FALLBACK_IMAGE;
-                }}
+                onError={handleImageError}
                 style={{ width: 96, height: 72, borderRadius: 8, objectFit: 'cover' }}
                 className="shrink-0"
               />
@@ -263,9 +282,10 @@ export default function DayCard({
                         href={getMapsLink(activity.name, destination)}
                         target="_blank"
                         rel="noreferrer"
-                        className="shrink-0 rounded-full bg-ocean-mid/10 px-2.5 py-1 text-[11px] font-semibold text-ocean-mid hover:bg-ocean-mid/20"
+                        className="inline-flex shrink-0 items-center gap-1 rounded-full bg-ocean-mid/10 px-2.5 py-1 text-[11px] font-semibold text-ocean-mid hover:bg-ocean-mid/20"
                       >
-                        📍 Maps
+                        <MapPin className="h-3 w-3" aria-hidden />
+                        Maps
                       </a>
                     </div>
                     <div className="mt-1.5 flex flex-wrap items-center gap-1.5 sm:gap-2">
@@ -293,10 +313,10 @@ export default function DayCard({
                       <button
                         type="button"
                         onClick={() => onRemoveActivity?.(i)}
-                        className="shrink-0 rounded-full px-2 py-1 text-ink/40 hover:text-red-500 cursor-pointer"
+                        className="inline-flex shrink-0 items-center rounded-full px-2 py-1 text-ink/40 hover:text-red-500 cursor-pointer"
                         aria-label="Remove activity"
                       >
-                        ✕
+                        <X className="h-4 w-4" aria-hidden />
                       </button>
                     </div>
                   </>
@@ -310,9 +330,10 @@ export default function DayCard({
                           href={getMapsLink(activity.name, destination)}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-xs text-gold-accent-deep hover:text-gold-accent"
+                          className="inline-flex items-center gap-0.5 text-xs text-gold-accent-deep hover:text-gold-accent"
                         >
-                          📍 Maps
+                          <MapPin className="h-3 w-3" aria-hidden />
+                          Maps
                         </a>
                       </div>
                       {activity.note && <p className="text-ink/50">{activity.note}</p>}
@@ -349,10 +370,7 @@ export default function DayCard({
                     <img
                       src={suggestionImage(s.name)}
                       alt=""
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = 'https://picsum.photos/seed/travel-default/80/60';
-                      }}
+                      onError={handleImageError}
                       style={{ width: 40, height: 30, borderRadius: 6, objectFit: 'cover' }}
                       className="shrink-0"
                     />

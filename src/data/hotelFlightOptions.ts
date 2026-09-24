@@ -1,8 +1,5 @@
 import type { FlightOption, HotelOption, HotelTier } from '../types';
-
-function picsum(seed: string, w: number, h: number): string {
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`;
-}
+import { getAirlineLogo, getHotelImage } from './getImage';
 
 function mapsLink(query: string): string {
   return `https://maps.google.com/?q=${encodeURIComponent(query)}`;
@@ -35,7 +32,7 @@ export function buildHotelOptions(city: string): HotelOption[] {
       name: `${city} ${meta.label}`,
       pricePerNight,
       rating,
-      image: picsum(`${city.toLowerCase().replace(/\s+/g, '-')}-${tier}-hotel`, 300, 200),
+      image: getHotelImage(tier),
       mapsLink: mapsLink(`${tier} hotel ${city}`),
     };
   });
@@ -49,7 +46,7 @@ const INDONESIA_DOMESTIC_AIRLINES: FlightOption[] = [
   {
     id: 'garuda',
     airline: 'Garuda Indonesia',
-    logo: picsum('garuda-logo', 80, 80),
+    logo: getAirlineLogo('Garuda Indonesia'),
     pricePerPerson: 115,
     duration: '1-2 hours',
     bookingUrl: 'https://www.garuda-indonesia.com',
@@ -57,7 +54,7 @@ const INDONESIA_DOMESTIC_AIRLINES: FlightOption[] = [
   {
     id: 'lionair',
     airline: 'Lion Air',
-    logo: picsum('lion-air-logo', 80, 80),
+    logo: getAirlineLogo('Lion Air'),
     pricePerPerson: 60,
     duration: '1-2 hours',
     bookingUrl: 'https://www.lionair.co.id',
@@ -65,7 +62,7 @@ const INDONESIA_DOMESTIC_AIRLINES: FlightOption[] = [
   {
     id: 'citilink',
     airline: 'Citilink',
-    logo: picsum('citilink-logo', 80, 80),
+    logo: getAirlineLogo('Citilink'),
     pricePerPerson: 42,
     duration: '1-2 hours',
     bookingUrl: 'https://www.citilink.co.id',
@@ -76,7 +73,7 @@ const REGION_SECOND_AIRLINE: Record<string, FlightOption> = {
   'Middle East': {
     id: 'emirates',
     airline: 'Emirates',
-    logo: picsum('emirates-logo', 80, 80),
+    logo: getAirlineLogo('Emirates'),
     pricePerPerson: 480,
     duration: '4-8 hours',
     bookingUrl: 'https://www.emirates.com',
@@ -84,7 +81,7 @@ const REGION_SECOND_AIRLINE: Record<string, FlightOption> = {
   Asia: {
     id: 'singapore-airlines',
     airline: 'Singapore Airlines',
-    logo: picsum('singapore-airlines-logo', 80, 80),
+    logo: getAirlineLogo('Singapore Airlines'),
     pricePerPerson: 420,
     duration: '4-8 hours',
     bookingUrl: 'https://www.singaporeair.com',
@@ -97,7 +94,7 @@ function internationalAirlines(region?: string): FlightOption[] {
     {
       id: 'garuda-intl',
       airline: 'Garuda Indonesia',
-      logo: picsum('garuda-logo', 80, 80),
+      logo: getAirlineLogo('Garuda Indonesia'),
       pricePerPerson: 650,
       duration: '6-12 hours',
       bookingUrl: 'https://www.garuda-indonesia.com',
@@ -106,7 +103,7 @@ function internationalAirlines(region?: string): FlightOption[] {
     {
       id: 'airasia',
       airline: 'AirAsia',
-      logo: picsum('airasia-logo', 80, 80),
+      logo: getAirlineLogo('AirAsia'),
       pricePerPerson: 320,
       duration: '5-10 hours',
       bookingUrl: 'https://www.airasia.com',

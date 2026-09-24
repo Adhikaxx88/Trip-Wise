@@ -1,10 +1,8 @@
+import { getActivityImage } from './getImage';
+
 export interface ActivitySuggestion {
   name: string;
   cost: number;
-}
-
-function picsum(seed: string, w: number, h: number): string {
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`;
 }
 
 export function suggestionSlug(name: string): string {
@@ -14,8 +12,9 @@ export function suggestionSlug(name: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+/** Verified activity thumbnail (or the neutral placeholder) — same lookup as itinerary activities. */
 export function suggestionImage(name: string): string {
-  return picsum(`${suggestionSlug(name)}-activity`, 80, 60);
+  return getActivityImage(name);
 }
 
 const BEACH_CITIES = new Set([
