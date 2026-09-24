@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ChatFab from '../components/ChatFab';
 import CityCard from '../components/CityCard';
+import DateRangePicker from '../components/DateRangePicker';
 import OptionCard from '../components/OptionCard';
 import QuestionShell from '../components/QuestionShell';
 import StepIndicator from '../components/StepIndicator';
@@ -17,15 +18,17 @@ import {
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
   TRIP_TYPE_OPTIONS,
+  VIBE_IDK_OPTION,
   VIBE_OPTIONS,
 } from '../data/questionOptions';
 import { COUNTRIES, INDONESIA_CITIES, MAX_CITIES, MAX_COUNTRIES, REGION_ORDER } from '../data/geography';
-import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } from '../logic/dates';
+import { daysBetweenInclusive, formatDateRange, formatFullDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
-import type { SelectedCity, TripPreferences } from '../types';
+import type { SelectedCity, TripPreferences, Vibe } from '../types';
 
 export default function Questionnaire() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { preferences, updatePreferences } = useTripPreferences();
   const { setCurrentTrip } = useCurrentTrip();
   const { subscription, canRegenerate, regenerationsRemaining, recordRegeneration } = useSubscription();
@@ -34,6 +37,17 @@ export default function Questionnaire() {
   const [isMatching, setIsMatching] = useState(false);
   const [limitReached, setLimitReached] = useState(false);
   const [groupSizeInput, setGroupSizeInput] = useState(draft.groupSize?.toString() ?? '');
+  const [useCustomBudget, setUseCustomBudget] = useState(false);
+  const [customMin, setCustomMin] = useState('');
+  const [customMax, setCustomMax] = useState('');
+
+  useEffect(() => {
+    const presetVibe = (location.state as { presetVibe?: Vibe } | null)?.presetVibe;
+    if (presetVibe && draft.vibe === null) {
+      setDraft((prev) => ({ ...prev, vibe: [presetVibe] }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const steps = useMemo(() => getVisibleSteps(draft), [draft]);
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
@@ -319,19 +333,39 @@ export default function Questionnaire() {
           onBack={goBack}
           onNext={goNext}
           nextLabel={nextLabel}
-          nextDisabled={!draft.vibe}
+          nextDisabled={draft.vibe === null}
         >
-          {VIBE_OPTIONS.map((opt) => (
-            <OptionCard
-              key={opt.value}
-              label={opt.label}
-              description={opt.description}
-              selected={draft.vibe === opt.value}
-              onClick={() => {
-                setDraft((d) => ({ ...d, vibe: opt.value }));
-              }}
-            />
-          ))}
+          {VIBE_OPTIONS.map((opt) => {
+            const selected = !!draft.vibe?.includes(opt.value);
+            return (
+              <OptionCard
+                key={opt.value}
+                label={opt.label}
+                description={opt.description}
+                selected={selected}
+                onClick={() => {
+                  setDraft((d) => {
+                    const current = d.vibe ?? [];
+                    const next = selected
+                      ? current.filter((v) => v !== opt.value)
+                      : [...current, opt.value];
+                    return { ...d, vibe: next };
+                  });
+                }}
+              />
+            );
+          })}
+          <OptionCard
+            label={VIBE_IDK_OPTION.label}
+            description={VIBE_IDK_OPTION.description}
+            selected={draft.vibe !== null && draft.vibe.length === 0}
+            onClick={() => setDraft((d) => ({ ...d, vibe: [] }))}
+          />
+          {draft.vibe !== null && draft.vibe.length === 0 && (
+            <p className="pt-1 text-center text-sm text-ocean-mid">
+              {VIBE_IDK_OPTION.description}
+            </p>
+          )}
         </QuestionShell>
       )}
 
@@ -365,41 +399,17 @@ export default function Questionnaire() {
             })}
           </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <label className="block text-left">
-              <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/50">
-                Departure
-              </span>
-              <input
-                type="date"
-                min={todayIsoDate()}
-                value={draft.startDate ?? ''}
-                onChange={(e) => setDateRange(e.target.value || null, draft.endDate)}
-                className="w-full rounded-2xl border-2 border-ink/10 px-4 py-3 text-base focus:border-ocean-mid focus:outline-none"
-              />
-            </label>
-            <label className="block text-left">
-              <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/50">
-                Return
-              </span>
-              <input
-                type="date"
-                min={draft.startDate ?? todayIsoDate()}
-                value={draft.endDate ?? ''}
-                onChange={(e) => setDateRange(draft.startDate, e.target.value || null)}
-                className="w-full rounded-2xl border-2 border-ink/10 px-4 py-3 text-base focus:border-ocean-mid focus:outline-none"
-              />
-            </label>
+          <div className="mt-4">
+            <DateRangePicker
+              startDate={draft.startDate}
+              endDate={draft.endDate}
+              onChange={setDateRange}
+            />
           </div>
 
           {draft.startDate && draft.endDate && draft.endDate >= draft.startDate && (
             <p className="mt-3 text-center text-sm text-ocean-mid">
               {formatDateRange(draft.startDate, draft.endDate)} · {draft.durationDays} days
-            </p>
-          )}
-          {draft.startDate && draft.endDate && draft.endDate < draft.startDate && (
-            <p className="mt-3 text-center text-sm text-red-500">
-              Return date needs to be after your departure date.
             </p>
           )}
         </QuestionShell>
@@ -415,20 +425,91 @@ export default function Questionnaire() {
           nextLabel={nextLabel}
           nextDisabled={!draft.budget}
         >
-          {BUDGET_OPTIONS.map((opt) => (
-            <OptionCard
-              key={opt.label}
-              label={opt.label}
-              description={opt.description}
-              selected={draft.budget?.min === opt.min && draft.budget?.max === opt.max}
-              onClick={() =>
-                setDraft((prev) => ({
-                  ...prev,
-                  budget: { min: opt.min, max: opt.max, currency: 'USD' },
-                }))
-              }
-            />
-          ))}
+          {BUDGET_OPTIONS.map((opt) => {
+            const selected =
+              !useCustomBudget && draft.budget?.min === opt.min && draft.budget?.max === opt.max;
+            return (
+              <OptionCard
+                key={opt.label}
+                label={opt.label}
+                description={opt.description}
+                selected={!!selected}
+                onClick={() => {
+                  setUseCustomBudget(false);
+                  setDraft((prev) => ({
+                    ...prev,
+                    budget: { min: opt.min, max: opt.max, currency: 'USD' },
+                  }));
+                }}
+              />
+            );
+          })}
+
+          <OptionCard
+            label="Set custom budget"
+            description="Type in an exact range (USD)"
+            selected={useCustomBudget}
+            onClick={() => setUseCustomBudget(true)}
+          />
+
+          {useCustomBudget && (
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <label className="block text-left">
+                <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/50">
+                  Min (USD)
+                </span>
+                <input
+                  type="number"
+                  min={0}
+                  placeholder="500"
+                  value={customMin}
+                  onChange={(e) => {
+                    setCustomMin(e.target.value);
+                    const min = parseInt(e.target.value, 10);
+                    const max = parseInt(customMax, 10);
+                    if (Number.isFinite(min)) {
+                      setDraft((prev) => ({
+                        ...prev,
+                        budget: {
+                          min,
+                          max: Number.isFinite(max) ? max : prev.budget?.max ?? min,
+                          currency: 'USD',
+                        },
+                      }));
+                    }
+                  }}
+                  className="w-full rounded-2xl border-2 border-ink/10 px-4 py-3 text-base focus:border-ocean-mid focus:outline-none"
+                />
+              </label>
+              <label className="block text-left">
+                <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/50">
+                  Max (USD)
+                </span>
+                <input
+                  type="number"
+                  min={0}
+                  placeholder="3000"
+                  value={customMax}
+                  onChange={(e) => {
+                    setCustomMax(e.target.value);
+                    const max = parseInt(e.target.value, 10);
+                    const min = parseInt(customMin, 10);
+                    if (Number.isFinite(max)) {
+                      setDraft((prev) => ({
+                        ...prev,
+                        budget: {
+                          min: Number.isFinite(min) ? min : prev.budget?.min ?? 0,
+                          max,
+                          currency: 'USD',
+                        },
+                      }));
+                    }
+                  }}
+                  className="w-full rounded-2xl border-2 border-ink/10 px-4 py-3 text-base focus:border-ocean-mid focus:outline-none"
+                />
+              </label>
+            </div>
+          )}
         </QuestionShell>
       )}
 

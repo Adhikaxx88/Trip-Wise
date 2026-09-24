@@ -11,6 +11,7 @@ import {
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
   matchFreeTextToStep,
+  VIBE_IDK_OPTION,
   VIBE_OPTIONS,
   type StepDef,
 } from '../data/questionOptions';
@@ -80,7 +81,7 @@ export default function Chatbot() {
     const nextDraft = { ...draft, ...patch };
     setDraft(nextDraft);
 
-    const nextSteps = getVisibleSteps(nextDraft);
+    const nextSteps = getVisibleSteps(nextDraft, false);
     if (stepIndex < nextSteps.length - 1) {
       setStepIndex((i) => i + 1);
     } else {
@@ -195,12 +196,18 @@ export default function Chatbot() {
                 {VIBE_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => advance(opt.label, { vibe: opt.value })}
+                    onClick={() => advance(opt.label, { vibe: [opt.value] })}
                     className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
                   >
                     {opt.label}
                   </button>
                 ))}
+                <button
+                  onClick={() => advance(VIBE_IDK_OPTION.label, { vibe: [] })}
+                  className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
+                >
+                  {VIBE_IDK_OPTION.label}
+                </button>
               </div>
             )}
 

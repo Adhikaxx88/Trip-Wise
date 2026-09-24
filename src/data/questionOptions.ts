@@ -13,6 +13,11 @@ export const VIBE_OPTIONS: { value: Vibe; label: string; description: string }[]
   { value: 'romantic', label: 'Romantic', description: 'Sunsets, wine, quiet moments together' },
 ];
 
+export const VIBE_IDK_OPTION = {
+  label: "I don't know",
+  description: "We'll surprise you with our top picks",
+};
+
 export const DATE_RANGE_PRESETS: { label: string; days: number }[] = [
   { label: 'Long weekend', days: 3 },
   { label: '1 week', days: 7 },
@@ -68,7 +73,7 @@ export function getVisibleSteps(prefs: TripPreferences, includeGeography = true)
     { id: 'budget', eyebrow: `Step ${steps.length + 3}` },
     { id: 'groupSize', eyebrow: `Step ${steps.length + 4}` },
   );
-  if (prefs.vibe === 'adventurous') {
+  if (prefs.vibe?.includes('adventurous')) {
     steps.push({ id: 'intensity', eyebrow: 'Almost there' });
   }
   if (prefs.groupSize && prefs.groupSize > 1) {
@@ -98,10 +103,13 @@ export function matchFreeTextToStep(text: string, stepId: StepDef['id']): FreeTe
 
   switch (stepId) {
     case 'vibe': {
-      const match = VIBE_OPTIONS.find(
+      if (/\b(idk|i don't know|dont know|not sure|surprise me|no idea)\b/.test(lower)) {
+        return { patch: { vibe: [] } };
+      }
+      const matches = VIBE_OPTIONS.filter(
         (o) => lower.includes(o.value) || lower.includes(o.label.toLowerCase()),
-      );
-      return match ? { patch: { vibe: match.value } } : null;
+      ).map((o) => o.value);
+      return matches.length > 0 ? { patch: { vibe: matches } } : null;
     }
     case 'dates': {
       const n = parseInt(lower.replace(/[^0-9]/g, ''), 10);

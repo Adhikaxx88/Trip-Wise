@@ -21,7 +21,7 @@ function isUnlockedForTier(destTier: SubscriptionTierId, currentTier: Subscripti
 function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): number {
   let score = 0;
 
-  if (prefs.vibe && dest.vibe === prefs.vibe) score += 10;
+  if (prefs.vibe && prefs.vibe.length > 0 && prefs.vibe.includes(dest.vibe)) score += 10;
 
   if (prefs.budget && prefs.durationDays) {
     const estimated = dest.costPerPersonPerDay * prefs.durationDays * (prefs.groupSize ?? 1);
@@ -412,8 +412,9 @@ function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTie
   const cities = prefs.selectedCities ?? [];
   const duration = prefs.durationDays ?? Math.max(cities.length * 2, 4);
   const groupSize = prefs.groupSize ?? 1;
+  const primaryVibe = prefs.vibe && prefs.vibe.length > 0 ? prefs.vibe[0] : null;
 
-  const itinerary = buildMultiCityItinerary(cities, duration, prefs.vibe ?? null);
+  const itinerary = buildMultiCityItinerary(cities, duration, primaryVibe);
   const costBreakdown = buildMultiCityCostBreakdown(cities, itinerary.length, groupSize, currentTier);
   const estimatedCost =
     costBreakdown.hotel.cost +
@@ -438,7 +439,7 @@ function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTie
     summary: `A ${itinerary.length}-day journey through ${cityNames.join(', ')}.`,
     coverImageUrl,
     estimatedCost,
-    vibe: (prefs.vibe ?? 'cultural') as TripPackage['vibe'],
+    vibe: (primaryVibe ?? 'cultural') as TripPackage['vibe'],
     tags,
     itinerary,
     bookingUrl: costBreakdown.hotel.bookingUrl,

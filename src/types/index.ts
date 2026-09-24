@@ -12,7 +12,9 @@ export interface SelectedCity {
 }
 
 export interface TripPreferences {
-  vibe: Vibe | null;
+  /** null = untouched / "surprise me" (match any vibe). An array (possibly empty) means the
+   * user has made an explicit choice: empty array means they picked "I don't know". */
+  vibe: Vibe[] | null;
   durationDays: number | null;
   startDate: string | null;
   endDate: string | null;
@@ -137,4 +139,7 @@ export interface SubscriptionState {
   regenerationsUsed: number;
   regenerationsResetAt: string;
   displayName: string;
+  /** One-time-purchase "pay as you go" match balance, independent of the monthly free quota
+   * and of paid-subscription unlimited access. Decrements as matches are consumed. */
+  payAsYouGoMatchesRemaining: number;
 }
