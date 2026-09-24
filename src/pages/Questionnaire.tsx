@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ChatFab from '../components/ChatFab';
+import CityCard from '../components/CityCard';
 import OptionCard from '../components/OptionCard';
 import QuestionShell from '../components/QuestionShell';
 import StepIndicator from '../components/StepIndicator';
@@ -15,11 +16,13 @@ import {
   GROUP_SIZE_PRESETS,
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
+  TRIP_TYPE_OPTIONS,
   VIBE_OPTIONS,
 } from '../data/questionOptions';
+import { COUNTRIES, INDONESIA_CITIES, MAX_CITIES, MAX_COUNTRIES, REGION_ORDER } from '../data/geography';
 import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
-import type { TripPreferences } from '../types';
+import type { SelectedCity, TripPreferences } from '../types';
 
 export default function Questionnaire() {
   const navigate = useNavigate();
@@ -60,6 +63,37 @@ export default function Questionnaire() {
     } else {
       navigate('/');
     }
+  };
+
+  const toggleCountry = (country: string) => {
+    setDraft((prev) => {
+      const current = prev.selectedCountries ?? [];
+      const isSelected = current.includes(country);
+      let nextCountries: string[];
+      if (isSelected) {
+        nextCountries = current.filter((c) => c !== country);
+      } else {
+        if (current.length >= MAX_COUNTRIES) return prev;
+        nextCountries = [...current, country];
+      }
+      const nextCities = (prev.selectedCities ?? []).filter((c) => nextCountries.includes(c.country));
+      return { ...prev, selectedCountries: nextCountries, selectedCities: nextCities };
+    });
+  };
+
+  const toggleCity = (country: string, cityName: string) => {
+    setDraft((prev) => {
+      const current = prev.selectedCities ?? [];
+      const exists = current.some((c) => c.country === country && c.city === cityName);
+      let next: SelectedCity[];
+      if (exists) {
+        next = current.filter((c) => !(c.country === country && c.city === cityName));
+      } else {
+        if (current.length >= MAX_CITIES) return prev;
+        next = [...current, { country, city: cityName }];
+      }
+      return { ...prev, selectedCities: next };
+    });
   };
 
   const finish = () => {
@@ -125,6 +159,156 @@ export default function Questionnaire() {
         >
           {regenerationsRemaining} match{regenerationsRemaining === 1 ? '' : 'es'} left this month
         </p>
+      )}
+
+      {currentStep.id === 'tripType' && (
+        <QuestionShell
+          stepKey="tripType"
+          eyebrow={currentStep.eyebrow}
+          question="Where are you headed?"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={!draft.tripType}
+        >
+          {TRIP_TYPE_OPTIONS.map((opt) => (
+            <OptionCard
+              key={opt.value}
+              label={opt.label}
+              description={opt.description}
+              selected={draft.tripType === opt.value}
+              onClick={() =>
+                setDraft((prev) => ({
+                  ...prev,
+                  tripType: opt.value,
+                  selectedCountries: [],
+                  selectedCities: [],
+                }))
+              }
+            />
+          ))}
+        </QuestionShell>
+      )}
+
+      {currentStep.id === 'countries' && (
+        <QuestionShell
+          stepKey="countries"
+          eyebrow={currentStep.eyebrow}
+          question="Which countries? (Pick up to 3)"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={(draft.selectedCountries?.length ?? 0) === 0}
+        >
+          <p className="mb-2 text-center text-xs text-ink/50">
+            {draft.selectedCountries?.length ?? 0} / {MAX_COUNTRIES} selected
+          </p>
+          <div className="max-h-[50vh] space-y-5 overflow-y-auto pr-1">
+            {REGION_ORDER.map((region) => {
+              const regionCountries = COUNTRIES.filter((c) => c.region === region);
+              if (regionCountries.length === 0) return null;
+              return (
+                <div key={region}>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/40">{region}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {regionCountries.map((c) => {
+                      const selected = (draft.selectedCountries ?? []).includes(c.name);
+                      const atMax = (draft.selectedCountries?.length ?? 0) >= MAX_COUNTRIES;
+                      return (
+                        <button
+                          key={c.name}
+                          type="button"
+                          disabled={!selected && atMax}
+                          onClick={() => toggleCountry(c.name)}
+                          className={`rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors ${
+                            selected
+                              ? 'border-ocean-mid bg-ocean-mid/10 text-ocean-deep'
+                              : 'border-ink/10 bg-white text-ink hover:border-ocean-light/60'
+                          } ${!selected && atMax ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                        >
+                          {c.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {(draft.selectedCountries?.length ?? 0) > 0 && (draft.selectedCountries?.length ?? 0) < MAX_COUNTRIES && (
+            <p className="mt-3 text-center text-xs font-medium text-ocean-mid">
+              + Add another country ({MAX_COUNTRIES - (draft.selectedCountries?.length ?? 0)} more allowed)
+            </p>
+          )}
+        </QuestionShell>
+      )}
+
+      {currentStep.id === 'cities' && (
+        <QuestionShell
+          stepKey="cities"
+          eyebrow={currentStep.eyebrow}
+          question="Pick your cities (up to 4)"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={(draft.selectedCities?.length ?? 0) === 0}
+        >
+          <p className="mb-2 text-center text-xs text-ink/50">
+            {draft.selectedCities?.length ?? 0} / {MAX_CITIES} selected
+          </p>
+          <div className="max-h-[55vh] space-y-5 overflow-y-auto pr-1">
+            {draft.tripType === 'local' ? (
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {INDONESIA_CITIES.map((city) => {
+                  const selected = (draft.selectedCities ?? []).some(
+                    (c) => c.country === 'Indonesia' && c.city === city.name,
+                  );
+                  const atMax = (draft.selectedCities?.length ?? 0) >= MAX_CITIES;
+                  return (
+                    <CityCard
+                      key={city.name}
+                      name={city.name}
+                      imageUrl={city.imageUrl}
+                      selected={selected}
+                      disabled={atMax}
+                      onClick={() => toggleCity('Indonesia', city.name)}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              (draft.selectedCountries ?? []).map((countryName) => {
+                const country = COUNTRIES.find((c) => c.name === countryName);
+                if (!country) return null;
+                return (
+                  <div key={countryName}>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/40">
+                      {countryName}
+                    </p>
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      {country.cities.map((city) => {
+                        const selected = (draft.selectedCities ?? []).some(
+                          (c) => c.country === countryName && c.city === city.name,
+                        );
+                        const atMax = (draft.selectedCities?.length ?? 0) >= MAX_CITIES;
+                        return (
+                          <CityCard
+                            key={city.name}
+                            name={city.name}
+                            imageUrl={city.imageUrl}
+                            selected={selected}
+                            disabled={atMax}
+                            onClick={() => toggleCity(countryName, city.name)}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </QuestionShell>
       )}
 
       {currentStep.id === 'vibe' && (

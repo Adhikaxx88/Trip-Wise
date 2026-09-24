@@ -22,7 +22,7 @@ import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } f
 import { matchTrip } from '../logic/matchTrip';
 import type { TripPreferences } from '../types';
 
-const PROMPTS: Record<StepDef['id'], string> = {
+const PROMPTS: Partial<Record<StepDef['id'], string>> = {
   vibe: "Hi! I'm the TripWise assistant. What's the vibe you're going for on this trip?",
   dates: 'Nice choice. When are you thinking of going?',
   budget: "Got it. What's your total budget for the trip?",
@@ -57,16 +57,15 @@ export default function Chatbot() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const promptedSteps = useRef(new Set<string>());
 
-  const steps = useMemo(() => getVisibleSteps(draft), [draft]);
+  const steps = useMemo(() => getVisibleSteps(draft, false), [draft]);
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
 
   useEffect(() => {
     if (!currentStep || promptedSteps.current.has(currentStep.id)) return;
+    const prompt = PROMPTS[currentStep.id];
+    if (!prompt) return;
     promptedSteps.current.add(currentStep.id);
-    setMessages((prev) => [
-      ...prev,
-      { id: nextMessageId('bot'), from: 'bot', text: PROMPTS[currentStep.id] },
-    ]);
+    setMessages((prev) => [...prev, { id: nextMessageId('bot'), from: 'bot', text: prompt }]);
   }, [currentStep]);
 
   useEffect(() => {

@@ -1,13 +1,133 @@
-import type { ItineraryDay } from '../types';
+import { useState } from 'react';
+import type { ItineraryDay, TransportOption } from '../types';
 
 interface ItineraryDayCardProps {
   day: ItineraryDay;
   groupSize?: number;
+  onChangeTransport?: (optionIndex: number) => void;
 }
 
-export default function ItineraryDayCard({ day, groupSize = 1 }: ItineraryDayCardProps) {
+const TRANSPORT_ICON: Record<string, string> = {
+  train: '🚆',
+  bus: '🚌',
+  flight: '✈️',
+  ferry: '⛴️',
+  car: '🚗',
+  other: '🚕',
+};
+
+export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport }: ItineraryDayCardProps) {
+  const [pickerOpen, setPickerOpen] = useState(false);
   const dayTotalPerPerson = day.activities.reduce((sum, a) => sum + (a.price ?? 0), 0);
   const dayTotal = dayTotalPerPerson * groupSize;
+
+  if (day.type === 'transition') {
+    const options = day.transportOptions ?? [];
+    const selectedIndex = day.selectedTransportIndex ?? 0;
+    const selected: TransportOption | undefined = options[selectedIndex];
+
+    return (
+      <div className="rounded-2xl border-2 border-dashed border-gold-accent/60 bg-gold-accent/5 p-4 shadow-sm sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-baseline gap-3">
+            <span className="font-display text-xl text-gold-accent-deep sm:text-2xl">
+              {String(day.day).padStart(2, '0')}
+            </span>
+            <h3 className="text-base font-semibold text-ink sm:text-lg">
+              🧳 {day.fromCity} → {day.toCity}
+            </h3>
+          </div>
+          {selected && (
+            <div className="text-right text-xs text-ink/50">
+              <p className="font-display text-sm text-gold-accent-deep sm:text-base">
+                {selected.costLabel ?? `$${selected.costPerPerson}`}
+              </p>
+              <p>per person</p>
+            </div>
+          )}
+        </div>
+
+        {selected && (
+          <div className="mt-4 overflow-hidden rounded-xl border border-ink/10 bg-white">
+            <div className="flex flex-col sm:flex-row">
+              <img
+                src={selected.image}
+                alt={selected.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://source.unsplash.com/400x300/?travel+transport';
+                }}
+                className="h-32 w-full object-cover sm:h-auto sm:w-40"
+              />
+              <div className="flex flex-1 flex-col justify-between p-3 sm:p-4">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-lg">{TRANSPORT_ICON[selected.type] ?? '🚕'}</span>
+                    <p className="text-sm font-semibold text-ink">{selected.name}</p>
+                    {selected.badge && (
+                      <span className="rounded-full bg-ocean-mid/10 px-2 py-0.5 text-[11px] font-semibold text-ocean-mid">
+                        {selected.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-xs text-ink/50">
+                    ⏱ {selected.duration} · 💰 {selected.costLabel ?? `$${selected.costPerPerson}`} / person
+                  </p>
+                </div>
+                <div className="mt-2 flex items-center gap-3">
+                  {options.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setPickerOpen((v) => !v)}
+                      className="text-xs font-semibold text-ocean-mid hover:text-ocean-deep cursor-pointer"
+                    >
+                      Change transport
+                    </button>
+                  )}
+                  {selected.bookingUrl && (
+                    <a
+                      href={selected.bookingUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs font-semibold text-ink/50 hover:text-ink"
+                    >
+                      Book ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {pickerOpen && (
+              <div className="space-y-2 border-t border-ink/10 p-3">
+                {options.map((opt, i) => (
+                  <button
+                    key={opt.name}
+                    type="button"
+                    onClick={() => {
+                      onChangeTransport?.(i);
+                      setPickerOpen(false);
+                    }}
+                    className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-xs cursor-pointer ${
+                      i === selectedIndex ? 'bg-ocean-mid/10 text-ocean-deep' : 'hover:bg-ink/5 text-ink'
+                    }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      {TRANSPORT_ICON[opt.type] ?? '🚕'} {opt.name}
+                    </span>
+                    <span className="shrink-0 text-ink/50">
+                      {opt.costLabel ?? `$${opt.costPerPerson}`} · {opt.duration}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-6">
@@ -29,23 +149,31 @@ export default function ItineraryDayCard({ day, groupSize = 1 }: ItineraryDayCar
       </div>
       <ul className="mt-4 space-y-3">
         {day.activities.map((activity, i) => (
-          <li key={i} className="flex items-start justify-between gap-2 text-sm sm:gap-3">
-            <div className="flex gap-2 sm:gap-3">
-              {activity.time && (
-                <span className="w-14 shrink-0 font-medium text-ocean-light sm:w-20">
-                  {activity.time}
+          <li key={i}>
+            {activity.transport && (
+              <p className="mb-1 text-xs text-ink/40">
+                Getting there: {activity.transport.type} · {activity.transport.duration}
+                {activity.transport.cost > 0 ? ` · $${activity.transport.cost}` : ''}
+              </p>
+            )}
+            <div className="flex items-start justify-between gap-2 text-sm sm:gap-3">
+              <div className="flex gap-2 sm:gap-3">
+                {activity.time && (
+                  <span className="w-14 shrink-0 font-medium text-ocean-light sm:w-20">
+                    {activity.time}
+                  </span>
+                )}
+                <div>
+                  <p className="text-ink">{activity.name}</p>
+                  {activity.note && <p className="text-ink/50">{activity.note}</p>}
+                </div>
+              </div>
+              {typeof activity.price === 'number' && activity.price > 0 && (
+                <span className="shrink-0 rounded-full bg-ocean-mid/10 px-2 py-0.5 text-xs font-medium text-ocean-mid">
+                  ${activity.price}
                 </span>
               )}
-              <div>
-                <p className="text-ink">{activity.name}</p>
-                {activity.note && <p className="text-ink/50">{activity.note}</p>}
-              </div>
             </div>
-            {typeof activity.price === 'number' && activity.price > 0 && (
-              <span className="shrink-0 rounded-full bg-ocean-mid/10 px-2 py-0.5 text-xs font-medium text-ocean-mid">
-                ${activity.price}
-              </span>
-            )}
           </li>
         ))}
       </ul>

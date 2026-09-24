@@ -1,5 +1,10 @@
 import { addDaysIso, daysBetweenInclusive, todayIsoDate } from '../logic/dates';
-import type { ActivityIntensity, GroupType, TripPreferences, Vibe } from '../types';
+import type { ActivityIntensity, GroupType, TripPreferences, TripType, Vibe } from '../types';
+
+export const TRIP_TYPE_OPTIONS: { value: TripType; label: string; description: string }[] = [
+  { value: 'local', label: 'Local (Indonesia)', description: 'Explore the best of Indonesia' },
+  { value: 'international', label: 'International', description: 'Pick countries and cities abroad' },
+];
 
 export const VIBE_OPTIONS: { value: Vibe; label: string; description: string }[] = [
   { value: 'relaxing', label: 'Relaxing', description: 'Slow mornings, beaches, spas' },
@@ -43,17 +48,26 @@ export const GROUP_TYPE_OPTIONS: { value: GroupType; label: string }[] = [
 ];
 
 export interface StepDef {
-  id: 'vibe' | 'dates' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
+  id: 'tripType' | 'countries' | 'cities' | 'vibe' | 'dates' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
   eyebrow: string;
 }
 
-export function getVisibleSteps(prefs: TripPreferences): StepDef[] {
-  const steps: StepDef[] = [
-    { id: 'vibe', eyebrow: 'Step 1' },
-    { id: 'dates', eyebrow: 'Step 2' },
-    { id: 'budget', eyebrow: 'Step 3' },
-    { id: 'groupSize', eyebrow: 'Step 4' },
-  ];
+export function getVisibleSteps(prefs: TripPreferences, includeGeography = true): StepDef[] {
+  const steps: StepDef[] = includeGeography ? [{ id: 'tripType', eyebrow: 'Step 1' }] : [];
+
+  if (includeGeography && prefs.tripType === 'international') {
+    steps.push({ id: 'countries', eyebrow: 'Step 2' });
+  }
+  if (includeGeography && prefs.tripType) {
+    steps.push({ id: 'cities', eyebrow: `Step ${steps.length + 1}` });
+  }
+
+  steps.push(
+    { id: 'vibe', eyebrow: `Step ${steps.length + 1}` },
+    { id: 'dates', eyebrow: `Step ${steps.length + 2}` },
+    { id: 'budget', eyebrow: `Step ${steps.length + 3}` },
+    { id: 'groupSize', eyebrow: `Step ${steps.length + 4}` },
+  );
   if (prefs.vibe === 'adventurous') {
     steps.push({ id: 'intensity', eyebrow: 'Almost there' });
   }
