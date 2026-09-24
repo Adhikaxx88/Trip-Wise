@@ -4,8 +4,17 @@ export type GroupType = 'solo' | 'couple' | 'family' | 'friends';
 
 export type ActivityIntensity = 'low' | 'medium' | 'high';
 
+export type TripType = 'local' | 'international';
+
+export interface SelectedCity {
+  country: string;
+  city: string;
+}
+
 export interface TripPreferences {
-  vibe: Vibe | null;
+  /** null = untouched / "surprise me" (match any vibe). An array (possibly empty) means the
+   * user has made an explicit choice: empty array means they picked "I don't know". */
+  vibe: Vibe[] | null;
   durationDays: number | null;
   startDate: string | null;
   endDate: string | null;
@@ -13,6 +22,9 @@ export interface TripPreferences {
   groupSize: number | null;
   activityIntensity?: ActivityIntensity;
   groupType?: GroupType;
+  tripType?: TripType | null;
+  selectedCountries?: string[];
+  selectedCities?: SelectedCity[];
 }
 
 export const createEmptyPreferences = (): TripPreferences => ({
@@ -22,19 +34,47 @@ export const createEmptyPreferences = (): TripPreferences => ({
   endDate: null,
   budget: null,
   groupSize: null,
+  tripType: null,
+  selectedCountries: [],
+  selectedCities: [],
 });
+
+export interface TransportOption {
+  type: 'train' | 'bus' | 'flight' | 'ferry' | 'car' | 'other';
+  name: string;
+  duration: string;
+  costPerPerson: number;
+  costLabel?: string;
+  image: string;
+  badge?: 'Fastest' | 'Best value';
+  bookingUrl?: string;
+}
+
+export interface ActivityTransport {
+  type: string;
+  duration: string;
+  cost: number;
+  alternatives: { type: string; cost: number; duration: string }[];
+}
 
 export interface ItineraryActivity {
   time?: string;
   name: string;
   note?: string;
   price?: number;
+  transport?: ActivityTransport;
 }
 
 export interface ItineraryDay {
   day: number;
+  type?: 'city' | 'transition';
   title: string;
+  city?: string;
   activities: ItineraryActivity[];
+  fromCity?: string;
+  toCity?: string;
+  transportOptions?: TransportOption[];
+  selectedTransportIndex?: number;
 }
 
 export interface BookableItem {
@@ -62,6 +102,7 @@ export interface TripPackage {
   costBreakdown: CostBreakdown;
   tier: SubscriptionTierId;
   hotelDiscountPercent: number;
+  cities?: string[];
 }
 
 export interface SavedTrip {
@@ -98,4 +139,7 @@ export interface SubscriptionState {
   regenerationsUsed: number;
   regenerationsResetAt: string;
   displayName: string;
+  /** One-time-purchase "pay as you go" match balance, independent of the monthly free quota
+   * and of paid-subscription unlimited access. Decrements as matches are consumed. */
+  payAsYouGoMatchesRemaining: number;
 }

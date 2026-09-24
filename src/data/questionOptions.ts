@@ -1,5 +1,10 @@
 import { addDaysIso, daysBetweenInclusive, todayIsoDate } from '../logic/dates';
-import type { ActivityIntensity, GroupType, TripPreferences, Vibe } from '../types';
+import type { ActivityIntensity, GroupType, TripPreferences, TripType, Vibe } from '../types';
+
+export const TRIP_TYPE_OPTIONS: { value: TripType; label: string; description: string }[] = [
+  { value: 'local', label: 'Local (Indonesia)', description: 'Explore the best of Indonesia' },
+  { value: 'international', label: 'International', description: 'Pick countries and cities abroad' },
+];
 
 export const VIBE_OPTIONS: { value: Vibe; label: string; description: string }[] = [
   { value: 'relaxing', label: 'Relaxing', description: 'Slow mornings, beaches, spas' },
@@ -7,6 +12,11 @@ export const VIBE_OPTIONS: { value: Vibe; label: string; description: string }[]
   { value: 'cultural', label: 'Cultural', description: 'History, food, local traditions' },
   { value: 'romantic', label: 'Romantic', description: 'Sunsets, wine, quiet moments together' },
 ];
+
+export const VIBE_IDK_OPTION = {
+  label: "I don't know",
+  description: "We'll surprise you with our top picks",
+};
 
 export const DATE_RANGE_PRESETS: { label: string; days: number }[] = [
   { label: 'Long weekend', days: 3 },
@@ -43,18 +53,27 @@ export const GROUP_TYPE_OPTIONS: { value: GroupType; label: string }[] = [
 ];
 
 export interface StepDef {
-  id: 'vibe' | 'dates' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
+  id: 'tripType' | 'countries' | 'cities' | 'vibe' | 'dates' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
   eyebrow: string;
 }
 
-export function getVisibleSteps(prefs: TripPreferences): StepDef[] {
-  const steps: StepDef[] = [
-    { id: 'vibe', eyebrow: 'Step 1' },
-    { id: 'dates', eyebrow: 'Step 2' },
-    { id: 'budget', eyebrow: 'Step 3' },
-    { id: 'groupSize', eyebrow: 'Step 4' },
-  ];
-  if (prefs.vibe === 'adventurous') {
+export function getVisibleSteps(prefs: TripPreferences, includeGeography = true): StepDef[] {
+  const steps: StepDef[] = includeGeography ? [{ id: 'tripType', eyebrow: 'Step 1' }] : [];
+
+  if (includeGeography && prefs.tripType === 'international') {
+    steps.push({ id: 'countries', eyebrow: 'Step 2' });
+  }
+  if (includeGeography && prefs.tripType) {
+    steps.push({ id: 'cities', eyebrow: `Step ${steps.length + 1}` });
+  }
+
+  steps.push(
+    { id: 'vibe', eyebrow: `Step ${steps.length + 1}` },
+    { id: 'dates', eyebrow: `Step ${steps.length + 2}` },
+    { id: 'budget', eyebrow: `Step ${steps.length + 3}` },
+    { id: 'groupSize', eyebrow: `Step ${steps.length + 4}` },
+  );
+  if (prefs.vibe?.includes('adventurous')) {
     steps.push({ id: 'intensity', eyebrow: 'Almost there' });
   }
   if (prefs.groupSize && prefs.groupSize > 1) {
@@ -84,10 +103,13 @@ export function matchFreeTextToStep(text: string, stepId: StepDef['id']): FreeTe
 
   switch (stepId) {
     case 'vibe': {
-      const match = VIBE_OPTIONS.find(
+      if (/\b(idk|i don't know|dont know|not sure|surprise me|no idea)\b/.test(lower)) {
+        return { patch: { vibe: [] } };
+      }
+      const matches = VIBE_OPTIONS.filter(
         (o) => lower.includes(o.value) || lower.includes(o.label.toLowerCase()),
-      );
-      return match ? { patch: { vibe: match.value } } : null;
+      ).map((o) => o.value);
+      return matches.length > 0 ? { patch: { vibe: matches } } : null;
     }
     case 'dates': {
       const n = parseInt(lower.replace(/[^0-9]/g, ''), 10);

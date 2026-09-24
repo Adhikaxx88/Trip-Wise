@@ -11,6 +11,7 @@ import {
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
   matchFreeTextToStep,
+  VIBE_IDK_OPTION,
   VIBE_OPTIONS,
   type StepDef,
 } from '../data/questionOptions';
@@ -22,7 +23,7 @@ import { daysBetweenInclusive, formatDateRange, formatFullDate, todayIsoDate } f
 import { matchTrip } from '../logic/matchTrip';
 import type { TripPreferences } from '../types';
 
-const PROMPTS: Record<StepDef['id'], string> = {
+const PROMPTS: Partial<Record<StepDef['id'], string>> = {
   vibe: "Hi! I'm the TripWise assistant. What's the vibe you're going for on this trip?",
   dates: 'Nice choice. When are you thinking of going?',
   budget: "Got it. What's your total budget for the trip?",
@@ -57,16 +58,15 @@ export default function Chatbot() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const promptedSteps = useRef(new Set<string>());
 
-  const steps = useMemo(() => getVisibleSteps(draft), [draft]);
+  const steps = useMemo(() => getVisibleSteps(draft, false), [draft]);
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];
 
   useEffect(() => {
     if (!currentStep || promptedSteps.current.has(currentStep.id)) return;
+    const prompt = PROMPTS[currentStep.id];
+    if (!prompt) return;
     promptedSteps.current.add(currentStep.id);
-    setMessages((prev) => [
-      ...prev,
-      { id: nextMessageId('bot'), from: 'bot', text: PROMPTS[currentStep.id] },
-    ]);
+    setMessages((prev) => [...prev, { id: nextMessageId('bot'), from: 'bot', text: prompt }]);
   }, [currentStep]);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function Chatbot() {
     const nextDraft = { ...draft, ...patch };
     setDraft(nextDraft);
 
-    const nextSteps = getVisibleSteps(nextDraft);
+    const nextSteps = getVisibleSteps(nextDraft, false);
     if (stepIndex < nextSteps.length - 1) {
       setStepIndex((i) => i + 1);
     } else {
@@ -196,12 +196,18 @@ export default function Chatbot() {
                 {VIBE_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => advance(opt.label, { vibe: opt.value })}
+                    onClick={() => advance(opt.label, { vibe: [opt.value] })}
                     className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
                   >
                     {opt.label}
                   </button>
                 ))}
+                <button
+                  onClick={() => advance(VIBE_IDK_OPTION.label, { vibe: [] })}
+                  className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
+                >
+                  {VIBE_IDK_OPTION.label}
+                </button>
               </div>
             )}
 

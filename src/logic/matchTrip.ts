@@ -1,9 +1,12 @@
 import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
+import { COUNTRIES, findCity } from '../data/geography';
 import { HOTEL_DISCOUNT_BY_TIER } from '../data/subscriptionTiers';
+import { getIntercityOptions, getIntracityOptions } from '../data/transport';
 import type {
   CostBreakdown,
   ItineraryActivity,
   ItineraryDay,
+  SelectedCity,
   SubscriptionTierId,
   TripPackage,
   TripPreferences,
@@ -18,7 +21,7 @@ function isUnlockedForTier(destTier: SubscriptionTierId, currentTier: Subscripti
 function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): number {
   let score = 0;
 
-  if (prefs.vibe && dest.vibe === prefs.vibe) score += 10;
+  if (prefs.vibe && prefs.vibe.length > 0 && prefs.vibe.includes(dest.vibe)) score += 10;
 
   if (prefs.budget && prefs.durationDays) {
     const estimated = dest.costPerPersonPerDay * prefs.durationDays * (prefs.groupSize ?? 1);
@@ -191,7 +194,267 @@ export function getSuggestedActivities(
   return suggestions;
 }
 
+const VIBE_ACTIVITY_TEMPLATES: Record<string, string[]> = {
+  relaxing: [
+    'Slow morning at a local café',
+    'Spa & wellness afternoon',
+    'Sunset by the waterfront',
+    'Boat or lake outing',
+    'Wander the local market',
+    'Poolside or beach afternoon',
+  ],
+  adventurous: [
+    'Hike a scenic trail near {city}',
+    'Adrenaline activity (zipline, rafting, or climbing)',
+    'Explore a nearby nature park',
+    'Bike tour through {city}',
+    'Sunset viewpoint hike',
+    'Local adventure sports excursion',
+  ],
+  cultural: [
+    'Visit the main landmark in {city}',
+    'Explore the old town / historic quarter',
+    'Local food market crawl',
+    'Museum or heritage site visit',
+    'Traditional craft workshop',
+    'Evening cultural show',
+  ],
+  romantic: [
+    'Sunset dinner or viewpoint',
+    'Couples spa or wine tasting',
+    'Romantic stroll through {city}',
+    'Candlelit dinner at a scenic spot',
+    'Private tour of a landmark',
+    'Rooftop evening drinks',
+  ],
+};
+
+const REGION_DAILY_COST: Record<string, number> = {
+  Asia: 70,
+  'Middle East': 140,
+  Europe: 150,
+  Americas: 140,
+  Africa: 90,
+  Pacific: 160,
+  Indonesia: 55,
+};
+
+function regionForCountry(country: string): string {
+  if (country === 'Indonesia') return 'Indonesia';
+  const match = COUNTRIES.find((c) => c.name === country);
+  return match?.region ?? 'Asia';
+}
+
+function dailyCostForCountry(country: string): number {
+  return REGION_DAILY_COST[regionForCountry(country)] ?? 90;
+}
+
+function distributeDays(totalDays: number, cityCount: number): number[] {
+  const safeDays = Math.max(cityCount, totalDays);
+  const base = Math.floor(safeDays / cityCount);
+  const remainder = safeDays % cityCount;
+  return Array.from({ length: cityCount }, (_, i) => base + (i < remainder ? 1 : 0));
+}
+
+function buildIntracityActivity(cityName: string, name: string, price: number): ItineraryActivity {
+  const intracity = getIntracityOptions(cityName);
+  const primary = intracity.options[0];
+  return {
+    name,
+    price,
+    transport: primary
+      ? {
+          type: primary.type,
+          duration: '15-30 min',
+          cost: 0,
+          alternatives: intracity.options.map((o) => ({ type: o.type, cost: 0, duration: o.costPerTrip })),
+        }
+      : undefined,
+  };
+}
+
+function buildCityDays(
+  selected: SelectedCity,
+  startDay: number,
+  numDays: number,
+  vibe: string | null,
+  isFirstCity: boolean,
+  isLastCity: boolean,
+): ItineraryDay[] {
+  const cityName = selected.city;
+  const template = VIBE_ACTIVITY_TEMPLATES[vibe ?? 'relaxing'] ?? VIBE_ACTIVITY_TEMPLATES.relaxing;
+  const dailyCost = dailyCostForCountry(selected.country);
+  const days: ItineraryDay[] = [];
+
+  for (let i = 0; i < numDays; i++) {
+    const dayNumber = startDay + i;
+    const isArrival = isFirstCity && i === 0;
+    const isDeparture = isLastCity && i === numDays - 1;
+    const activities: ItineraryActivity[] = [];
+
+    if (isArrival) {
+      activities.push({ time: '2:00 PM', name: `Arrive in ${cityName} & check in`, price: 0 });
+      activities.push({ time: '6:00 PM', name: 'Welcome dinner', price: Math.round(dailyCost * 0.25) });
+    } else if (isDeparture) {
+      activities.push({ time: '8:00 AM', name: 'Farewell breakfast', price: Math.round(dailyCost * 0.15) });
+      activities.push(
+        buildIntracityActivity(cityName, 'Last-minute exploring & souvenirs', Math.round(dailyCost * 0.2)),
+      );
+      activities.push({ time: '2:00 PM', name: `Transfer for departure from ${cityName}`, price: 0 });
+    } else {
+      const pick1 = template[(dayNumber - 1) % template.length].replace('{city}', cityName);
+      const pick2 = template[(dayNumber + 2) % template.length].replace('{city}', cityName);
+      activities.push({ time: '8:00 AM', name: 'Breakfast', price: Math.round(dailyCost * 0.1) });
+      activities.push(buildIntracityActivity(cityName, pick1, Math.round(dailyCost * 0.35)));
+      activities.push({ time: '1:00 PM', name: 'Lunch', price: Math.round(dailyCost * 0.15) });
+      activities.push(buildIntracityActivity(cityName, pick2, Math.round(dailyCost * 0.3)));
+      activities.push({ time: '7:30 PM', name: 'Dinner', price: Math.round(dailyCost * 0.2) });
+    }
+
+    days.push({
+      day: dayNumber,
+      type: 'city',
+      city: cityName,
+      title: isArrival
+        ? `Arrival in ${cityName}`
+        : isDeparture
+          ? `Last Day in ${cityName}`
+          : `Exploring ${cityName}`,
+      activities,
+    });
+  }
+
+  return days;
+}
+
+function buildTransitionDay(dayNumber: number, from: SelectedCity, to: SelectedCity): ItineraryDay {
+  const options = getIntercityOptions(from.city, to.city, from.country, to.country);
+  const best = options[0];
+  return {
+    day: dayNumber,
+    type: 'transition',
+    title: `Travel Day: ${from.city} → ${to.city}`,
+    fromCity: from.city,
+    toCity: to.city,
+    transportOptions: options,
+    selectedTransportIndex: 0,
+    activities: best
+      ? [{ time: 'All day', name: `${best.name} to ${to.city}`, price: best.costPerPerson }]
+      : [],
+  };
+}
+
+export function activitiesCostPerPersonWithTransition(itinerary: ItineraryDay[]): number {
+  return activitiesCostPerPerson(itinerary);
+}
+
+function buildMultiCityItinerary(
+  cities: SelectedCity[],
+  totalDays: number,
+  vibe: string | null,
+): ItineraryDay[] {
+  const perCity = distributeDays(Math.max(1, totalDays), cities.length);
+  const itinerary: ItineraryDay[] = [];
+  let dayCounter = 1;
+
+  cities.forEach((city, index) => {
+    const cityDays = buildCityDays(
+      city,
+      dayCounter,
+      perCity[index],
+      vibe,
+      index === 0,
+      index === cities.length - 1,
+    );
+    itinerary.push(...cityDays);
+    dayCounter += perCity[index];
+
+    if (index < cities.length - 1) {
+      itinerary.push(buildTransitionDay(dayCounter, city, cities[index + 1]));
+      dayCounter += 1;
+    }
+  });
+
+  return itinerary.map((day, i) => ({ ...day, day: i + 1 }));
+}
+
+function buildMultiCityCostBreakdown(
+  cities: SelectedCity[],
+  totalDays: number,
+  groupSize: number,
+  currentTier: SubscriptionTierId,
+): CostBreakdown {
+  const nights = Math.max(1, totalDays - 1);
+  const rooms = Math.max(1, Math.ceil(groupSize / 2));
+  const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
+  const avgHotelPerNight =
+    cities.reduce((sum, c) => sum + dailyCostForCountry(c.country) * 0.8, 0) / cities.length;
+
+  const isInternational = cities.some((c) => c.country !== cities[0].country);
+  const anchorCity = cities[0];
+  const flightBase = isInternational ? 650 : 120;
+
+  return {
+    hotel: {
+      name: `Hotels across ${cities.map((c) => c.city).join(', ')}`,
+      cost: Math.round(avgHotelPerNight * nights * rooms * (1 - hotelDiscount)),
+      bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(anchorCity.city)}`,
+    },
+    flight: {
+      name: `Round-trip flights to ${anchorCity.city}`,
+      cost: Math.round(flightBase * groupSize),
+      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${encodeURIComponent(anchorCity.city)}`,
+    },
+  };
+}
+
+function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTierId): TripPackage {
+  const cities = prefs.selectedCities ?? [];
+  const duration = prefs.durationDays ?? Math.max(cities.length * 2, 4);
+  const groupSize = prefs.groupSize ?? 1;
+  const primaryVibe = prefs.vibe && prefs.vibe.length > 0 ? prefs.vibe[0] : null;
+
+  const itinerary = buildMultiCityItinerary(cities, duration, primaryVibe);
+  const costBreakdown = buildMultiCityCostBreakdown(cities, itinerary.length, groupSize, currentTier);
+  const estimatedCost =
+    costBreakdown.hotel.cost +
+    costBreakdown.flight.cost +
+    Math.round(activitiesCostPerPerson(itinerary) * groupSize);
+
+  const cityNames = cities.map((c) => c.city);
+  const destinationLabel =
+    cityNames.length === 1
+      ? `${cityNames[0]}, ${cities[0].country}`
+      : cityNames.join(' + ');
+
+  const firstCity = findCity(cities[0].country, cities[0].city);
+  const coverImageUrl = firstCity?.imageUrl ?? 'https://source.unsplash.com/1600x900/?travel';
+
+  const tags = Array.from(new Set(cities.map((c) => c.country)));
+  const packageId = `multicity-${cityNames.map((c) => c.toLowerCase().replace(/\s+/g, '-')).join('_')}-${Date.now()}`;
+
+  return {
+    id: packageId,
+    destination: destinationLabel,
+    summary: `A ${itinerary.length}-day journey through ${cityNames.join(', ')}.`,
+    coverImageUrl,
+    estimatedCost,
+    vibe: (primaryVibe ?? 'cultural') as TripPackage['vibe'],
+    tags,
+    itinerary,
+    bookingUrl: costBreakdown.hotel.bookingUrl,
+    costBreakdown,
+    tier: 'free',
+    hotelDiscountPercent: HOTEL_DISCOUNT_BY_TIER[currentTier],
+    cities: cityNames,
+  };
+}
+
 export function matchTrip(prefs: TripPreferences, currentTier: SubscriptionTierId = 'free'): TripPackage {
+  if (prefs.selectedCities && prefs.selectedCities.length > 0) {
+    return matchMultiCityTrip(prefs, currentTier);
+  }
+
   const eligible = destinations.filter((dest) => isUnlockedForTier(dest.tier, currentTier));
   const pool = eligible.length > 0 ? eligible : destinations;
 

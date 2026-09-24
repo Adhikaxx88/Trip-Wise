@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
@@ -7,6 +7,8 @@ import GradientBackdrop from '../components/GradientBackdrop';
 import ItineraryDayCard from '../components/ItineraryDayCard';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
+import Toast from '../components/Toast';
+import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { formatDateRange } from '../logic/dates';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
@@ -15,19 +17,51 @@ import type { BookableItem } from '../types';
 export default function Summary() {
   const { id } = useParams<{ id: string }>();
   const resolved = useResolvedTrip(id);
-  const { saveTrip, isSaved } = useSavedTrips();
+  const { saveTrip, isSaved, updateSavedTrip } = useSavedTrips();
+  const { currentTrip, updateCurrentTripPackage } = useCurrentTrip();
   const [justSaved, setJustSaved] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (!showToast) return;
+    const timer = setTimeout(() => setShowToast(false), 3000);
+    return () => clearTimeout(timer);
+  }, [showToast]);
 
   if (!resolved) {
     return <Navigate to="/questionnaire" replace />;
   }
 
-  const { package: pkg, preferences } = resolved;
+  const { package: pkg, preferences, savedId } = resolved;
   const alreadySaved = isSaved(pkg.id) || justSaved;
 
   const handleSave = () => {
     saveTrip(pkg, preferences);
     setJustSaved(true);
+    setShowToast(true);
+  };
+
+  const handleChangeTransport = (dayIndex: number, optionIndex: number) => {
+    const updatedPkg = {
+      ...pkg,
+      itinerary: pkg.itinerary.map((day, i) => {
+        if (i !== dayIndex || day.type !== 'transition') return day;
+        const option = day.transportOptions?.[optionIndex];
+        return {
+          ...day,
+          selectedTransportIndex: optionIndex,
+          activities: option
+            ? [{ time: 'All day', name: `${option.name} to ${day.toCity}`, price: option.costPerPerson }]
+            : day.activities,
+        };
+      }),
+    };
+    if (currentTrip && currentTrip.package.id === pkg.id) {
+      updateCurrentTripPackage(updatedPkg);
+    }
+    if (savedId) {
+      updateSavedTrip(savedId, updatedPkg);
+    }
   };
 
   const dateRangeLabel = formatDateRange(preferences.startDate, preferences.endDate);
@@ -121,11 +155,6 @@ export default function Summary() {
               {alreadySaved ? 'Saved ✓' : 'Save this trip'}
             </Button>
           </div>
-          {justSaved && (
-            <p className="mt-4 text-sm text-gold-accent animate-fade-in">
-              Saved. Find it anytime on your Saved trips page.
-            </p>
-          )}
         </div>
       </div>
 
@@ -178,14 +207,20 @@ export default function Summary() {
             Meals, tickets, and transport are priced right where they happen.
           </p>
           <div className="mt-6 space-y-4">
-            {pkg.itinerary.map((day) => (
-              <ItineraryDayCard key={day.day} day={day} groupSize={groupSize} />
+            {pkg.itinerary.map((day, dayIndex) => (
+              <ItineraryDayCard
+                key={day.day}
+                day={day}
+                groupSize={groupSize}
+                onChangeTransport={(optionIndex) => handleChangeTransport(dayIndex, optionIndex)}
+              />
             ))}
           </div>
         </div>
       </div>
 
       <ChatFab />
+      <Toast message="Saved. Find it anytime on your Saved trips page." show={showToast} />
     </div>
   );
 }
