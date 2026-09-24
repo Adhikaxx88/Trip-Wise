@@ -1,5 +1,5 @@
 import { Plane } from 'lucide-react';
-import { getAirlineLogo, FALLBACK_IMAGE, handleImageError } from '../data/getImage';
+import { getAirlineLogo, handleImageError, isFallbackImage } from '../data/getImage';
 import type { FlightOption } from '../types';
 
 interface FlightPickerProps {
@@ -8,10 +8,22 @@ interface FlightPickerProps {
   onSelect: (id: string) => void;
 }
 
-/** Prefer the curated airline logo; fall back to the option's own logo when none is mapped. */
-function logoFor(option: FlightOption): string {
+/**
+ * Verified airline logo, or null when none is mapped (e.g. Lion Air). The
+ * option's own stored `logo` is intentionally ignored: trips saved by older
+ * builds carry random stock photos there.
+ */
+function logoFor(option: FlightOption): string | null {
   const curated = getAirlineLogo(option.airline);
-  return curated !== FALLBACK_IMAGE ? curated : option.logo || FALLBACK_IMAGE;
+  return isFallbackImage(curated) ? null : curated;
+}
+
+/** "Lion Air" → "LA", "Citilink" → "CI". */
+function airlineInitials(airline: string): string {
+  const words = airline.split(/\s+/).filter(Boolean);
+  const initials =
+    words.length > 1 ? words.slice(0, 2).map((w) => w[0]) : Array.from(words[0] ?? '?').slice(0, 2);
+  return initials.join('').toUpperCase();
 }
 
 export default function FlightPicker({ options, selectedId, onSelect }: FlightPickerProps) {
@@ -24,6 +36,7 @@ export default function FlightPicker({ options, selectedId, onSelect }: FlightPi
       <div className="flex gap-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'thin' }}>
         {options.map((option) => {
           const selected = option.id === selectedId;
+          const logo = logoFor(option);
           return (
             <div
               key={option.id}
@@ -33,13 +46,23 @@ export default function FlightPicker({ options, selectedId, onSelect }: FlightPi
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-white p-2 ring-1 ring-ink/10">
-                  <img
-                    src={logoFor(option)}
-                    alt={`${option.airline} logo`}
-                    loading="lazy"
-                    onError={handleImageError}
-                    className="h-full w-full object-contain"
-                  />
+                  {logo ? (
+                    <img
+                      src={logo}
+                      alt={`${option.airline} logo`}
+                      loading="lazy"
+                      onError={handleImageError}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <span
+                      role="img"
+                      aria-label={`${option.airline} logo`}
+                      className="font-display text-2xl font-bold tracking-wide text-ocean-deep"
+                    >
+                      {airlineInitials(option.airline)}
+                    </span>
+                  )}
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="line-clamp-2 text-sm font-semibold leading-snug text-ink">{option.airline}</p>

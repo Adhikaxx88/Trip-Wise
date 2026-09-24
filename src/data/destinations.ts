@@ -1,4 +1,5 @@
 import type { GroupType, ItineraryActivity, SubscriptionTierId, Vibe } from '../types';
+import { getCityImage } from './getImage';
 
 export interface DayTemplate {
   title: string;
@@ -44,6 +45,13 @@ export interface DestinationTemplate {
   departureDay: DayTemplate;
 }
 
+/**
+ * Cover images come from the verified images-master.json via getCityImage.
+ * Destinations without a verified photo yet (Maldives/Malé, Queenstown,
+ * Patagonia, Marrakech) resolve to the neutral placeholder rather than an
+ * unverified stock photo, and pick up a real photo automatically once one is
+ * added to images-master.json.
+ */
 export const destinations: DestinationTemplate[] = [
   {
     id: 'bali-relaxing',
@@ -51,8 +59,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'Indonesia',
     summary:
       'Sink into slow mornings, cliffside infinity pools, and warm turquoise water. Bali is built for travelers who want to do absolutely nothing, beautifully.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Bali', 'hero'),
     vibe: 'relaxing',
     tags: ['beach', 'spa', 'slow travel', 'nature'],
     goodFor: ['solo', 'couple', 'family', 'friends'],
@@ -150,8 +157,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'Maldives',
     summary:
       'Overwater villas, glass-clear lagoons, and nothing on the agenda but the tide. The Maldives is the purest version of a do-nothing escape.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Malé', 'hero'),
     vibe: 'relaxing',
     tags: ['beach', 'overwater villa', 'honeymoon', 'diving'],
     goodFor: ['couple', 'solo', 'family'],
@@ -240,8 +246,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'New Zealand',
     summary:
       "The adventure capital of the world: bungee, jet boats, and alpine trails ringed by the Southern Alps. Queenstown doesn't do idle.",
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1589871173980-5c353e64d550?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Queenstown', 'hero'),
     vibe: 'adventurous',
     tags: ['mountains', 'adrenaline', 'hiking', 'lakes'],
     goodFor: ['friends', 'solo', 'couple'],
@@ -339,8 +344,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'Chile',
     summary:
       'Windswept granite towers, glacier lakes, and trails that humble everyone who walks them. Patagonia rewards those chasing something wilder.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1520681279154-51b3fb4d7bc5?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Patagonia', 'hero'),
     vibe: 'adventurous',
     tags: ['hiking', 'glaciers', 'wilderness', 'trekking'],
     goodFor: ['friends', 'solo', 'couple'],
@@ -429,8 +433,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'Japan',
     summary:
       'A thousand years of temples, gardens, and quiet ritual. Kyoto moves at the pace of tea steeping: deliberate, layered, unforgettable.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Kyoto', 'hero'),
     vibe: 'cultural',
     tags: ['temples', 'history', 'food', 'gardens'],
     goodFor: ['solo', 'couple', 'family', 'friends'],
@@ -519,8 +522,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'Morocco',
     summary:
       'Maze-like souks, painted riads, and the call to prayer echoing over the Atlas Mountains. Marrakech is sensory in every direction.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Marrakech', 'hero'),
     vibe: 'cultural',
     tags: ['markets', 'architecture', 'desert', 'food'],
     goodFor: ['friends', 'couple', 'family'],
@@ -610,8 +612,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'Greece',
     summary:
       'Whitewashed cliffs, blue domes, and sunsets that stop conversations. Santorini is built for two people and nowhere to be.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Santorini', 'hero'),
     vibe: 'romantic',
     tags: ['sunset', 'wine', 'cliffside', 'honeymoon'],
     goodFor: ['couple', 'solo'],
@@ -700,8 +701,7 @@ export const destinations: DestinationTemplate[] = [
     country: 'France',
     summary:
       'The Seine at dusk, candlelit bistros, and art around every corner. Paris is the classic romantic escape, and it still delivers.',
-    coverImageUrl:
-      'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80',
+    coverImageUrl: getCityImage('Paris', 'hero'),
     vibe: 'romantic',
     tags: ['city', 'art', 'food', 'wine'],
     goodFor: ['couple', 'friends', 'solo'],

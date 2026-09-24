@@ -5,7 +5,7 @@ import GradientBackdrop from '../components/GradientBackdrop';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import { useSavedTrips } from '../context/SavedTripsContext';
-import { FALLBACK_IMAGE, handleImageError } from '../data/getImage';
+import { handleImageError, trustedImage } from '../data/getImage';
 
 export default function Saved() {
   const { savedTrips, removeSavedTrip } = useSavedTrips();
@@ -38,8 +38,7 @@ export default function Saved() {
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {savedTrips.map((trip) => {
-              const heroImage =
-                trip.package.coverImageUrl || FALLBACK_IMAGE;
+              const heroImage = trustedImage(trip.package.coverImageUrl);
               const title = trip.package.destination || 'My Trip';
               const dayCount = trip.package.itinerary?.length ?? 0;
               const durationLabel = dayCount > 0 ? `${dayCount} days` : 'Dates TBD';

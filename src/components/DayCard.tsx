@@ -19,7 +19,7 @@ import { getActivitySuggestions, suggestionImage } from '../data/activitySuggest
 import { routeMapsLink } from '../data/transport';
 import { getMapsLink } from '../data/tripwiseMaster';
 import { dailyTransportCostIDR, formatIDR } from '../logic/tripMedia';
-import { getActivityImage, getTransportImage, handleImageError } from '../data/getImage';
+import { getActivityImage, getTransportImage, handleImageError, trustedImage } from '../data/getImage';
 import type { ItineraryActivity, ItineraryDay, TransportOption } from '../types';
 
 const TRANSPORT_ICON: Record<string, LucideIcon> = {
@@ -125,7 +125,7 @@ export default function DayCard({
           <div className="mt-4 overflow-hidden rounded-xl border border-ink/10 bg-white">
             <div className="flex flex-col sm:flex-row">
               <img
-                src={selected.image || getTransportImage(selected.type)}
+                src={trustedImage(selected.image, getTransportImage(selected.type))}
                 alt={selected.name}
                 loading="lazy"
                 onError={handleImageError}

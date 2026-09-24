@@ -176,7 +176,10 @@ export default function Landing() {
       {/* Single fixed background image, locked in place for the entire page */}
       <div
         className="fixed inset-0 -z-20 bg-cover bg-center"
-        style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+        style={{
+          // Brand gradient underneath shows through if the photo fails to load.
+          backgroundImage: `url(${HERO_IMAGE}), linear-gradient(160deg, #0a466b 0%, #00172a 100%)`,
+        }}
         aria-hidden="true"
       />
       {/* Single fixed dark overlay, same layer, shared by every section */}

@@ -1,8 +1,12 @@
 import { getIntercityOptions as fallbackIntercityOptions, getIntracityOptions as fallbackIntracityOptions } from './transport';
 import type { TransportOption } from '../types';
+import { FALLBACK_IMAGE, getActivityImage, getCityImage, getHotelImage, getTransportImage } from './getImage';
 
 /**
  * tripwiseMaster.ts — single access layer over tripwise-master.json.
+ *
+ * Every image field in the JSON is a verified images-master.json entry (or the
+ * neutral /images/placeholder-travel.svg) — see scripts/generate-tripwise-master.ts.
  *
  * The JSON consolidates the real geography/transport data already in
  * geography.ts and transport.ts. Per-city attractions, restaurants, and
@@ -63,8 +67,6 @@ interface MasterData {
   routes: Record<string, TransportOption[]>;
 }
 
-const FALLBACK_UNKNOWN_CITY_IMAGE = 'https://picsum.photos/seed/travel-default/800/500';
-const FALLBACK_ATTRACTION_IMAGE = 'https://picsum.photos/seed/travel-activity/400/300';
 export const GENERIC_BOOKING_URL = 'https://www.traveloka.com';
 
 let dataPromise: Promise<MasterData> | null = null;
@@ -75,15 +77,6 @@ function loadMaster(): Promise<MasterData> {
     dataPromise = import('./tripwise-master.json').then((mod) => mod.default as unknown as MasterData);
   }
   return dataPromise;
-}
-
-function unsplash(keywords: string, w = 800, h = 500): string {
-  const seed = keywords
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`;
 }
 
 /** Get full city data (works for Indonesia and every international country in the JSON). */
@@ -108,11 +101,24 @@ export async function getCitiesForCountry(country: string): Promise<MasterCity[]
   return data.countries[country]?.cities ?? [];
 }
 
-/** Get a generic image URL for any entity type, built from keywords (no JSON lookup needed). */
+/**
+ * Verified image for any entity type via getImage.ts / images-master.json
+ * (`keywords` is the city name for 'city', the transport type for 'transport',
+ * and the activity name otherwise). Unknown → the neutral placeholder.
+ */
 export function getImage(type: 'city' | 'attraction' | 'hotel' | 'restaurant' | 'transport', keywords: string): string {
-  if (!keywords.trim()) return FALLBACK_UNKNOWN_CITY_IMAGE;
-  const isSmall = type === 'attraction' || type === 'restaurant' || type === 'transport';
-  return unsplash(keywords, isSmall ? 400 : 800, isSmall ? 300 : 500);
+  const key = keywords.trim();
+  if (!key) return FALLBACK_IMAGE;
+  switch (type) {
+    case 'city':
+      return getCityImage(key, 'card');
+    case 'hotel':
+      return getHotelImage('standard');
+    case 'transport':
+      return getTransportImage(key);
+    default:
+      return getActivityImage(key);
+  }
 }
 
 /** Google Maps link for any named place, optionally scoped to a city/country (pure string formatting, no JSON lookup). */
@@ -129,7 +135,7 @@ export async function getAttractions(country: string, city: string): Promise<Mas
     {
       name: `${city} Highlights`,
       description: `Popular things to see and do in ${city}.`,
-      image: FALLBACK_ATTRACTION_IMAGE,
+      image: getCityImage(city, 'card'),
       mapsLink: getMapsLink(`${city} attractions`, undefined, country),
       cost: 0,
       duration: '2 hours',

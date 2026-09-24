@@ -6,20 +6,16 @@
  * (no fabricated specific business names) since we have no verified data
  * source for real attractions/restaurants per city.
  *
+ * Images: every image field comes from src/data/images-master.json via
+ * getImage.ts (verified Wikimedia Commons files) or is the neutral
+ * /images/placeholder-travel.svg — never a random-photo service.
+ *
  * Run with: npx tsx scripts/generate-tripwise-master.ts
  */
 import { writeFileSync } from 'node:fs';
 import { COUNTRIES, INDONESIA_CITIES, type CityOption, type CountryOption } from '../src/data/geography';
 import { intercityTransport, getIntracityOptions } from '../src/data/transport';
-
-function unsplash(keywords: string, w = 800, h = 500): string {
-  const seed = keywords
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`;
-}
+import { FALLBACK_IMAGE, getActivityImage, getCityImage, isFallbackImage } from '../src/data/getImage';
 
 function mapsLink(place: string): string {
   return `https://maps.google.com/?q=${encodeURIComponent(place)}`;
@@ -41,22 +37,27 @@ const RESTAURANT_TEMPLATES: { suffix: string; mealType: 'breakfast' | 'lunch' | 
 
 function buildCityEntry(city: CityOption, countryName: string) {
   const label = `${city.name}, ${countryName}`;
+  const card = getCityImage(city.name, 'card');
+  const hero = getCityImage(city.name, 'hero');
+  // images-master's activity category photos are specific places (Borobudur,
+  // Bali rice terraces, ...), so attractions use this city's own verified photo.
+  const attractionImage = isFallbackImage(card) ? FALLBACK_IMAGE : card;
   return {
     name: city.name,
     country: countryName,
-    image: city.imageUrl,
+    image: card,
     mapsLink: city.mapsLink,
-    heroImages: [0, 1, 2].map((i) => unsplash(`${city.name} ${countryName} travel ${i}`, 400, 300)),
+    heroImages: isFallbackImage(hero) ? [] : [hero],
     hotels: {
       area: `Central ${city.name}`,
-      image: unsplash(`${city.name} hotel exterior`, 800, 500),
+      image: getCityImage(city.name, 'hotel'),
       mapsLink: mapsLink(`hotels in Central ${city.name} ${countryName}`),
       priceRange: '$$',
     },
     attractions: ATTRACTION_TEMPLATES.map((t) => ({
       name: `${city.name} ${t.suffix}`,
       description: `A popular ${t.category} stop when visiting ${label}.`,
-      image: unsplash(`${city.name} ${t.category}`, 400, 300),
+      image: attractionImage,
       mapsLink: mapsLink(`${city.name} ${t.suffix} ${countryName}`),
       cost: t.costTier,
       duration: '2 hours',
@@ -66,7 +67,7 @@ function buildCityEntry(city: CityOption, countryName: string) {
     restaurants: RESTAURANT_TEMPLATES.map((t) => ({
       name: `${city.name} ${t.suffix}`,
       cuisine: 'Local',
-      image: unsplash(`${city.name} restaurant food`, 400, 300),
+      image: getActivityImage('dinner'),
       mapsLink: mapsLink(`${city.name} ${t.suffix} ${countryName}`),
       priceRange: t.priceRange,
       mealType: t.mealType,
@@ -93,9 +94,9 @@ for (const [key, options] of Object.entries(intercityTransport)) {
 }
 
 const fallbacks = {
-  unknownCityImage: 'https://picsum.photos/seed/travel-default/800/500',
+  unknownCityImage: FALLBACK_IMAGE,
   unknownCityMapsLink: 'https://maps.google.com/?q=travel+destination',
-  unknownAttractionImage: 'https://picsum.photos/seed/travel-activity/400/300',
+  unknownAttractionImage: FALLBACK_IMAGE,
   unknownRouteType: 'flight',
   genericBookingUrl: 'https://www.traveloka.com',
 };

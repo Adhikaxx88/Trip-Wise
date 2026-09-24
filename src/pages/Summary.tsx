@@ -11,7 +11,14 @@ import HotelPicker from '../components/HotelPicker';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import Toast from '../components/Toast';
-import { getCityImage, getHotelImage, getTransportImage, handleImageError } from '../data/getImage';
+import {
+  getCityImage,
+  getHotelImage,
+  getTransportImage,
+  handleImageError,
+  isFallbackImage,
+  trustedImage,
+} from '../data/getImage';
 import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
@@ -124,8 +131,9 @@ export default function Summary() {
   const tripCities = pkg.cities ?? [];
   const isMultiCity = tripCities.length > 1;
   const selectedHotelTier = pkg.selectedHotelTier ?? 'standard';
+  const coverImage = trustedImage(pkg.coverImageUrl);
   const hotelThumb = pkg.hotelOptions?.length
-    ? getHotelOption(pkg.hotelOptions, selectedHotelTier).image || getHotelImage(selectedHotelTier)
+    ? getHotelImage(getHotelOption(pkg.hotelOptions, selectedHotelTier).tier)
     : pkg.cities?.[0]
       ? getCityImage(pkg.cities[0], 'hotel')
       : getHotelImage(selectedHotelTier);
@@ -134,10 +142,13 @@ export default function Summary() {
     <div className="min-h-dvh bg-ocean-deepest text-white">
       <div className="relative overflow-hidden pb-16 pt-6">
         <GradientBackdrop vibe={pkg.vibe} />
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-60"
-          style={{ backgroundImage: `url(${pkg.coverImageUrl})` }}
-        />
+        {/* GradientBackdrop above stays visible if the cover is missing or fails to load. */}
+        {!isFallbackImage(coverImage) && (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-60"
+            style={{ backgroundImage: `url(${coverImage})` }}
+          />
+        )}
         <div
           className="absolute inset-0"
           style={{

@@ -32,7 +32,7 @@ export default function HotelPicker({ options, selectedTier, onSelect }: HotelPi
               }`}
             >
               <img
-                src={option.image || getHotelImage(option.tier)}
+                src={getHotelImage(option.tier)}
                 alt={option.name}
                 loading="lazy"
                 onError={handleImageError}

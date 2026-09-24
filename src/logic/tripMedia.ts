@@ -1,20 +1,27 @@
-import { getCityImage } from '../data/getImage';
+import { getCityImage, isFallbackImage, trustedImage } from '../data/getImage';
 import type { TripPackage } from '../types';
 
 /**
  * Builds a destination-specific hero preview strip: the trip's own cover image,
  * plus one photo per city in a multi-city trip (or a couple of extra variations
  * for a legacy single-destination trip), sourced from the images-master.json
- * data layer via getImage.ts.
+ * data layer via getImage.ts. Duplicates and placeholder entries are dropped,
+ * so the strip only ever contains real, verified photos (and may be empty).
  */
 export function getHeroImages(pkg: TripPackage): string[] {
-  if (pkg.cities && pkg.cities.length > 0) {
-    const cityImages = pkg.cities.map((city) => getCityImage(city, 'hero'));
-    return [pkg.coverImageUrl, ...cityImages].slice(0, 4);
-  }
+  const candidates =
+    pkg.cities && pkg.cities.length > 0
+      ? pkg.cities.map((city) => getCityImage(city, 'hero'))
+      : (() => {
+          const destination = pkg.destination.split(',')[0].trim();
+          return [getCityImage(destination, 'hero'), getCityImage(destination, 'card')];
+        })();
 
-  const destination = pkg.destination.split(',')[0].trim();
-  return [pkg.coverImageUrl, getCityImage(destination, 'hero'), getCityImage(destination, 'card')].slice(0, 4);
+  const unique = new Set<string>();
+  for (const url of [trustedImage(pkg.coverImageUrl), ...candidates]) {
+    if (!isFallbackImage(url)) unique.add(url);
+  }
+  return Array.from(unique).slice(0, 4);
 }
 
 /** Google Maps link for the area a hotel sits in, e.g. "Best Hotels in Seminyak Bali". */

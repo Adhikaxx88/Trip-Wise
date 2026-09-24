@@ -1,5 +1,6 @@
 import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
-import { COUNTRIES, findCity } from '../data/geography';
+import { COUNTRIES } from '../data/geography';
+import { getCityImage } from '../data/getImage';
 import { buildFlightOptions, buildHotelOptions, getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { HOTEL_DISCOUNT_BY_TIER } from '../data/subscriptionTiers';
 import { getIntercityRoute as getIntercityOptions, getIntracityOptions } from '../data/tripwiseMaster';
@@ -459,8 +460,8 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
       ? `${cityNames[0]}, ${cities[0].country}`
       : cityNames.join(' + ');
 
-  const firstCity = findCity(cities[0].country, cities[0].city);
-  const coverImageUrl = firstCity?.imageUrl ?? 'https://picsum.photos/seed/travel-default/1600/900';
+  // Verified hero photo of the first city, or the neutral placeholder — never a random stock photo.
+  const coverImageUrl = getCityImage(cities[0].city, 'hero');
 
   const tags = Array.from(new Set(cities.map((c) => c.country)));
   const packageId = `multicity-${cityNames.map((c) => c.toLowerCase().replace(/\s+/g, '-')).join('_')}-${Date.now()}`;
