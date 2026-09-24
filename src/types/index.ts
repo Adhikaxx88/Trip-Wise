@@ -4,8 +4,17 @@ export type GroupType = 'solo' | 'couple' | 'family' | 'friends';
 
 export type ActivityIntensity = 'low' | 'medium' | 'high';
 
+export type TransportMode = 'car' | 'ship' | 'flight' | 'any';
+
+export type DestinationPreference =
+  | { type: 'international'; country: string }
+  | { type: 'local'; city: string }
+  | { type: 'surprise' };
+
 export interface TripPreferences {
-  vibe: Vibe | null;
+  /** null = untouched / "surprise me" (match any vibe). An array (possibly empty) means the
+   * user has made an explicit choice: empty array means they picked "I don't know". */
+  vibe: Vibe[] | null;
   durationDays: number | null;
   startDate: string | null;
   endDate: string | null;
@@ -13,6 +22,8 @@ export interface TripPreferences {
   groupSize: number | null;
   activityIntensity?: ActivityIntensity;
   groupType?: GroupType;
+  destinationPreference?: DestinationPreference | null;
+  transportModes?: TransportMode[];
 }
 
 export const createEmptyPreferences = (): TripPreferences => ({
@@ -22,6 +33,8 @@ export const createEmptyPreferences = (): TripPreferences => ({
   endDate: null,
   budget: null,
   groupSize: null,
+  destinationPreference: null,
+  transportModes: [],
 });
 
 export interface ItineraryActivity {
@@ -98,4 +111,7 @@ export interface SubscriptionState {
   regenerationsUsed: number;
   regenerationsResetAt: string;
   displayName: string;
+  /** One-time-purchase "pay as you go" match balance, independent of the monthly free quota
+   * and of paid-subscription unlimited access. Decrements as matches are consumed. */
+  payAsYouGoMatchesRemaining: number;
 }

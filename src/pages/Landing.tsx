@@ -6,13 +6,15 @@ import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import Reveal from '../components/Reveal';
 import { StaggerGroup, StaggerItem } from '../components/Stagger';
+import type { Vibe } from '../types';
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80';
 
-const differentiators = [
+const differentiators: { label: string; vibe: Vibe; image: string; old: string; fresh: string }[] = [
   {
     label: 'Beaches & Vibes',
+    vibe: 'relaxing',
     image:
       'https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&w=900&q=80',
     old: 'You search manually',
@@ -20,6 +22,7 @@ const differentiators = [
   },
   {
     label: 'Adventure & Wild',
+    vibe: 'adventurous',
     image:
       'https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=900&q=80',
     old: 'Generic recommendations',
@@ -27,6 +30,7 @@ const differentiators = [
   },
   {
     label: 'Hidden Gems',
+    vibe: 'cultural',
     image:
       'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80',
     old: 'Manual trip planning',
@@ -96,14 +100,49 @@ function Star() {
   );
 }
 
-const SNAP_SECTION_IDS = ['hero', 'how-it-works', 'testimonials'];
+const SNAP_SECTION_IDS = ['hero', 'how-it-works', 'destinations', 'testimonials'];
+
+function Navbar({ scrolled }: { scrolled: boolean }) {
+  return (
+    <header
+      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-5 transition-colors duration-300 sm:px-12 sm:py-6"
+      style={{
+        paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))',
+        backgroundColor: scrolled
+          ? 'color-mix(in srgb, var(--color-ocean-deepest) 60%, transparent)'
+          : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
+      }}
+    >
+      <div className="flex items-center gap-4 sm:gap-6">
+        <Logo />
+        <Link
+          to="/saved"
+          className="hidden text-sm font-medium text-white/80 transition-colors hover:text-gold-accent sm:inline-block"
+        >
+          Saved Trips
+        </Link>
+      </div>
+      <div className="flex items-center gap-4">
+        <Link
+          to="/saved"
+          className="text-xs font-medium text-white/80 transition-colors hover:text-gold-accent sm:hidden"
+        >
+          Saved
+        </Link>
+        <ProfileAvatarLink />
+      </div>
+    </header>
+  );
+}
 
 export default function Landing() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 0);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -131,6 +170,8 @@ export default function Landing() {
 
   return (
     <div className="min-h-dvh w-full text-white">
+      <Navbar scrolled={scrolled} />
+
       {/* Single fixed background image, locked in place for the entire page */}
       <div
         className="fixed inset-0 -z-20 bg-cover bg-center"
@@ -138,26 +179,16 @@ export default function Landing() {
         aria-hidden="true"
       />
       {/* Single fixed dark overlay, same layer, shared by every section */}
-      <div
-        className="fixed inset-0 -z-10 bg-[rgba(8,20,40,0.55)]"
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 -z-10 bg-[rgba(8,20,40,0.55)]" aria-hidden="true" />
 
       <div
         id="hero"
         className="snap-section relative flex min-h-dvh w-full flex-col justify-between"
       >
-        <header
-          className={`sticky top-0 z-50 flex items-center justify-between px-4 py-5 transition-colors duration-300 sm:px-12 sm:py-6 ${
-            scrolled ? 'bg-white/85 shadow-sm backdrop-blur-md' : 'bg-transparent'
-          }`}
-          style={{ paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))' }}
+        <main
+          className="flex flex-1 flex-col items-center justify-end px-4 pb-6 text-center sm:px-6 sm:pb-10"
+          style={{ paddingTop: 'max(5rem, calc(4.5rem + env(safe-area-inset-top)))' }}
         >
-          <Logo />
-          <ProfileAvatarLink />
-        </header>
-
-        <main className="flex flex-1 flex-col items-center justify-end px-4 pb-6 text-center sm:px-6 sm:pb-10">
           <Reveal variant="up">
             <p className="mb-4 text-sm tracking-wide text-white/80 sm:text-base">
               <span className="font-serif-accent italic">Your Journey</span>{' '}
@@ -200,41 +231,11 @@ export default function Landing() {
             </div>
           </Reveal>
         </main>
-
-        <section
-          className="relative z-20 px-4 pt-10 sm:px-12 sm:pb-16"
-          style={{ paddingBottom: 'max(320px, calc(2.5rem + env(safe-area-inset-bottom)))' }}
-        >
-          <StaggerGroup className="relative z-20 mx-auto mb-[60px] grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {differentiators.map((d) => (
-              <StaggerItem key={d.label}>
-                <div className="group relative isolate min-h-[320px] overflow-hidden rounded-2xl sm:min-h-[380px]">
-                  <img
-                    src={d.image}
-                    alt={d.label}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ocean-deepest via-ocean-deepest/50 to-ocean-deepest/10" />
-                  <div className="relative flex h-full flex-col justify-between p-5 text-left">
-                    <span className="w-fit rounded-full bg-black/30 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-1">
-                      {d.label}
-                    </span>
-                    <div>
-                      <p className="text-xs text-white/60 line-through">{d.old}</p>
-                      <p className="mt-1 text-sm font-bold text-white">{d.fresh}</p>
-                    </div>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </section>
       </div>
 
       <section
         id="how-it-works"
-        className="snap-section px-4 pb-20 pt-20 text-white sm:px-12"
+        className="snap-section px-4 pb-20 pt-10 text-white sm:px-12 sm:pt-14"
       >
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal variant="down">
@@ -288,6 +289,49 @@ export default function Landing() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section
+        id="destinations"
+        className="snap-section relative z-20 px-4 pt-2 sm:px-12"
+        style={{ paddingBottom: 'max(320px, calc(2.5rem + env(safe-area-inset-bottom)))' }}
+      >
+        <div className="mx-auto max-w-4xl">
+          <Reveal variant="up">
+            <h2 className="text-center font-serif-accent text-3xl font-bold text-white sm:text-4xl">
+              Pick a starting point
+            </h2>
+          </Reveal>
+
+          <StaggerGroup className="relative z-20 mt-10 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {differentiators.map((d) => (
+              <StaggerItem key={d.label}>
+                <Link
+                  to="/questionnaire"
+                  state={{ presetVibe: d.vibe }}
+                  className="group relative isolate block min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:scale-105 hover:border-gold-accent hover:shadow-[0_0_24px_0_var(--color-gold-accent)] sm:min-h-[380px]"
+                >
+                  <img
+                    src={d.image}
+                    alt={d.label}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ocean-deepest via-ocean-deepest/50 to-ocean-deepest/10" />
+                  <div className="relative flex h-full flex-col justify-between p-5 text-left">
+                    <span className="w-fit rounded-full bg-black/30 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-1">
+                      {d.label}
+                    </span>
+                    <div>
+                      <p className="text-xs text-white/60 line-through">{d.old}</p>
+                      <p className="mt-1 text-sm font-bold text-white">{d.fresh}</p>
+                    </div>
+                  </div>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
         </div>
       </section>
 
@@ -358,9 +402,7 @@ export default function Landing() {
             className={`dot ${activeSection === id ? 'active' : ''}`}
             aria-label={`Go to ${id.replace(/-/g, ' ')} section`}
             aria-current={activeSection === id ? 'true' : undefined}
-            onClick={() =>
-              document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-            }
+            onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
           />
         ))}
       </nav>

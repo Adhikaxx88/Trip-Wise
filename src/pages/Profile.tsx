@@ -1,19 +1,30 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
+import BuyMatchesModal from '../components/BuyMatchesModal';
 import CancelModal from '../components/CancelModal';
 import ChatFab from '../components/ChatFab';
 import Logo from '../components/Logo';
 import UpgradeModal from '../components/UpgradeModal';
 import { useSubscription } from '../context/SubscriptionContext';
-import { SUBSCRIPTION_TIERS, getTier } from '../data/subscriptionTiers';
+import {
+  PAY_AS_YOU_GO_BENEFITS,
+  PAY_AS_YOU_GO_BUNDLE_SIZE,
+  PAY_AS_YOU_GO_PRICE,
+  SUBSCRIPTION_TIERS,
+  getTier,
+} from '../data/subscriptionTiers';
 import { formatFullDate } from '../logic/dates';
+
+type PlansTab = 'subscribe' | 'payg';
 
 export default function Profile() {
   const { subscription, resumeSubscription, setDisplayName } = useSubscription();
   const [nameDraft, setNameDraft] = useState(subscription.displayName);
   const [upgradeTarget, setUpgradeTarget] = useState<'monthly' | 'yearly' | null>(null);
   const [showCancel, setShowCancel] = useState(false);
+  const [showBuyMatches, setShowBuyMatches] = useState(false);
+  const [plansTab, setPlansTab] = useState<PlansTab>('subscribe');
 
   const currentTier = getTier(subscription.currentTier);
   const isPaid = subscription.currentTier !== 'free';
@@ -132,9 +143,68 @@ export default function Profile() {
           </div>
         )}
 
+        {subscription.payAsYouGoMatchesRemaining > 0 && (
+          <div className="mt-4 rounded-2xl border border-gold-accent/40 bg-white/5 px-4 py-3 text-sm text-white/80">
+            You have{' '}
+            <span className="font-semibold text-gold-accent">
+              {subscription.payAsYouGoMatchesRemaining} pay-as-you-go match
+              {subscription.payAsYouGoMatchesRemaining === 1 ? '' : 'es'}
+            </span>{' '}
+            available.
+          </div>
+        )}
+
         {/* Plan comparison */}
         <div id="plans" className="mt-12 scroll-mt-6">
           <h2 className="font-display text-2xl">Compare plans</h2>
+
+          <div className="mt-4 inline-flex rounded-full bg-white/5 p-1">
+            <button
+              type="button"
+              onClick={() => setPlansTab('subscribe')}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
+                plansTab === 'subscribe' ? 'bg-gold-accent text-ink' : 'text-white/70 hover:text-white'
+              }`}
+            >
+              Subscribe
+            </button>
+            <button
+              type="button"
+              onClick={() => setPlansTab('payg')}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
+                plansTab === 'payg' ? 'bg-gold-accent text-ink' : 'text-white/70 hover:text-white'
+              }`}
+            >
+              Pay as you go
+            </button>
+          </div>
+
+          {plansTab === 'payg' ? (
+            <div className="mt-6 max-w-sm">
+              <div className="glass-panel flex flex-col rounded-3xl p-5">
+                <h3 className="font-display text-xl">{PAY_AS_YOU_GO_BUNDLE_SIZE} trip matches</h3>
+                <p className="mt-1 text-2xl font-semibold text-gold-accent">
+                  ${PAY_AS_YOU_GO_PRICE.amount}
+                  <span className="text-sm font-normal text-white/60"> one-time</span>
+                </p>
+                <ul className="mt-4 flex-1 space-y-2">
+                  {PAY_AS_YOU_GO_BENEFITS.map((b) => (
+                    <li key={b.id} className="flex items-start gap-2 text-xs text-white/80 sm:text-sm">
+                      <span className="mt-0.5 text-gold-accent">✓</span>
+                      <span>{b.label}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  variant="accent"
+                  className="mt-5 w-full"
+                  onClick={() => setShowBuyMatches(true)}
+                >
+                  Buy {PAY_AS_YOU_GO_BUNDLE_SIZE} matches
+                </Button>
+              </div>
+            </div>
+          ) : (
           <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {SUBSCRIPTION_TIERS.map((tier) => {
               const isCurrent = tier.id === subscription.currentTier;
@@ -194,6 +264,7 @@ export default function Profile() {
               );
             })}
           </div>
+          )}
         </div>
 
         <div className="mt-10">
@@ -205,6 +276,7 @@ export default function Profile() {
 
       {upgradeTarget && <UpgradeModal tierId={upgradeTarget} onClose={() => setUpgradeTarget(null)} />}
       {showCancel && <CancelModal onClose={() => setShowCancel(false)} />}
+      {showBuyMatches && <BuyMatchesModal onClose={() => setShowBuyMatches(false)} />}
 
       <ChatFab />
     </div>

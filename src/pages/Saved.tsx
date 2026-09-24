@@ -17,11 +17,6 @@ export default function Saved() {
       >
         <Logo />
         <div className="flex items-center gap-4">
-          <Link to="/questionnaire">
-            <Button variant="secondary" className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base">
-              Plan another trip
-            </Button>
-          </Link>
           <ProfileAvatarLink />
         </div>
       </header>
@@ -83,6 +78,15 @@ export default function Saved() {
                 </div>
               </div>
             ))}
+            <Link
+              to="/questionnaire"
+              className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed border-white/25 text-white/60 transition-colors hover:border-gold-accent/60 hover:text-white"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-2xl leading-none">
+                +
+              </span>
+              <span className="text-sm font-medium">New Trip</span>
+            </Link>
           </div>
         )}
       </div>
