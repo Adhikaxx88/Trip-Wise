@@ -25,7 +25,12 @@ export function todayIsoDate(): string {
 export function addDaysIso(isoDate: string, days: number): string {
   const d = new Date(`${isoDate}T00:00:00`);
   d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
+  // Format in local time: toISOString() is UTC and would shift the date back a day
+  // for users east of UTC (e.g. Indonesia, UTC+7).
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 export function formatFullDate(isoDateTime: string | null): string {
