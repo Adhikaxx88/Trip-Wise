@@ -81,7 +81,17 @@ export const getActivityImage = (activityName: string): string => {
     .replace(/-+/g, '-');
   if (images.activities[slug]) return images.activities[slug];
   const keywords = [
-    'beach',
+    // Specific/compound tokens first so e.g. "Arrive in Bali & check in" (slug
+    // contains "check-in") resolves to the hotel photo rather than falling
+    // through to a later, more generic keyword.
+    'check-in',
+    'departure',
+    'airport',
+    'hotel',
+    'waterfall',
+    'breakfast',
+    'lunch',
+    'dinner',
     'temple',
     'market',
     'food',
@@ -89,13 +99,11 @@ export const getActivityImage = (activityName: string): string => {
     'hiking',
     'spa',
     'sunset',
-    'breakfast',
-    'lunch',
-    'dinner',
     'snorkel',
     'surf',
     'cook',
     'shop',
+    'beach',
     // Deliberately no generic 'tour' keyword: the only tour photo is a specific
     // Hoi An landmark, which would mislabel e.g. a Paris walking tour.
   ];
