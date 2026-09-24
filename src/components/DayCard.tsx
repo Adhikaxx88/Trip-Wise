@@ -162,7 +162,7 @@ export default function DayCard({
                     <span />
                   )}
                   <a href={bookingUrl} target="_blank" rel="noreferrer">
-                    <Button variant="accent" className="px-4 py-2 text-xs">
+                    <Button variant="accent" className="px-4 py-2 text-sm">
                       Book ↗
                     </Button>
                   </a>
