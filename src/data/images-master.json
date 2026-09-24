@@ -1447,17 +1447,6 @@
     }
   },
   "activities": {
-    "temple": "https://commons.wikimedia.org/wiki/Special:FilePath/Wat_Chedi_Luang,_Buddhist_temple,_Chiang_Mai,_Thailand.jpg?width=600",
-    "beach": "https://commons.wikimedia.org/wiki/Special:FilePath/Boracay_White_Beach_in_day_(985286231).jpg?width=600",
-    "sunset": "https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_at_Patong_beach_Phuket_Thailand.jpg?width=600",
-    "tour": "https://commons.wikimedia.org/wiki/Special:FilePath/Japanese_Covered_Bridge,_Hoi_An,_Vietnam_(6944565326).jpg?width=600",
-    "landmark": "https://commons.wikimedia.org/wiki/Special:FilePath/Borobudur_temple_from_above.jpg?width=600",
-    "nature": "https://commons.wikimedia.org/wiki/Special:FilePath/Tegallalang_Rice_Terraces_Bali_1.jpg?width=600",
-    "viewpoint": "https://commons.wikimedia.org/wiki/Special:FilePath/Yun_Lai_Viewpoint,_Pai_(23900974576).jpg?width=600",
-    "temple-visit": "https://commons.wikimedia.org/wiki/Special:FilePath/Wat_Chedi_Luang,_Buddhist_temple,_Chiang_Mai,_Thailand.jpg?width=600",
-    "beach-walk": "https://commons.wikimedia.org/wiki/Special:FilePath/Boracay_White_Beach_in_day_(985286231).jpg?width=600",
-    "city-tour": "https://commons.wikimedia.org/wiki/Special:FilePath/Japanese_Covered_Bridge,_Hoi_An,_Vietnam_(6944565326).jpg?width=600",
-    "sunset-view": "https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_at_Patong_beach_Phuket_Thailand.jpg?width=600",
     "default": "/images/placeholder-travel.svg"
   },
   "transport": {

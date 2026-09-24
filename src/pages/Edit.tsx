@@ -354,7 +354,7 @@ export default function Edit() {
             {isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />}
             <div
               className="overflow-hidden transition-all duration-300 ease-in-out"
-              style={{ maxHeight: editingHotel ? 400 : 0, opacity: editingHotel ? 1 : 0 }}
+              style={{ maxHeight: editingHotel ? 1200 : 0, opacity: editingHotel ? 1 : 0 }}
             >
               {pkg.hotelOptions && (
                 <div className="mt-4 border-t border-ink/10 pt-4">

@@ -315,7 +315,7 @@ export default function Landing() {
                 <Link
                   to={`/questionnaire?preset=${d.preset}`}
                   aria-label={`Start planning: ${d.label}`}
-                  className="group relative isolate block min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:scale-105 hover:border-gold-accent hover:shadow-[0_0_24px_0_var(--color-gold-accent)] focus-visible:scale-105 focus-visible:border-gold-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent sm:min-h-[380px]"
+                  className="group relative isolate flex min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:scale-105 hover:border-gold-accent hover:shadow-[0_0_24px_0_var(--color-gold-accent)] focus-visible:scale-105 focus-visible:border-gold-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent sm:min-h-[380px]"
                 >
                   <img
                     src={d.image}
@@ -325,7 +325,7 @@ export default function Landing() {
                     onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ocean-deepest via-ocean-deepest/50 to-ocean-deepest/10" />
-                  <div className="relative flex h-full flex-col justify-between p-5 text-left">
+                  <div className="relative flex flex-1 flex-col justify-between p-5 text-left">
                     <span className="w-fit rounded-full bg-black/30 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-1">
                       {d.label}
                     </span>

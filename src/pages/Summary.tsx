@@ -318,9 +318,10 @@ export default function Summary() {
                 <div
                   className="overflow-hidden transition-all duration-300 ease-in-out"
                   style={{
+                    // Tall enough for the hotel tiers stacked one per row on phones (~1000px).
                     maxHeight:
                       (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
-                        ? 400
+                        ? 1200
                         : 0,
                     opacity:
                       (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
