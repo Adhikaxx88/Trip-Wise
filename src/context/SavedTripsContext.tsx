@@ -3,11 +3,30 @@ import type { SavedTrip, TripPackage, TripPreferences } from '../types';
 
 const STORAGE_KEY = 'tripwise.savedTrips';
 
+/** A saved trip is only renderable if it has the minimum fields every card needs. */
+function isValidSavedTrip(t: unknown): t is SavedTrip {
+  if (!t || typeof t !== 'object') return false;
+  const trip = t as Partial<SavedTrip>;
+  return (
+    typeof trip.savedId === 'string' &&
+    !!trip.package &&
+    typeof trip.package.id === 'string' &&
+    typeof trip.package.destination === 'string' &&
+    Array.isArray(trip.package.itinerary)
+  );
+}
+
 function loadSavedTrips(): SavedTrip[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
-    return JSON.parse(raw) as SavedTrip[];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    const valid = parsed.filter(isValidSavedTrip);
+    if (valid.length !== parsed.length) {
+      persist(valid);
+    }
+    return valid;
   } catch {
     return [];
   }

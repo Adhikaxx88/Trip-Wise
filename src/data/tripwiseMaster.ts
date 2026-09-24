@@ -63,8 +63,8 @@ interface MasterData {
   routes: Record<string, TransportOption[]>;
 }
 
-const FALLBACK_UNKNOWN_CITY_IMAGE = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
-const FALLBACK_ATTRACTION_IMAGE = 'https://source.unsplash.com/400x300/?landmark+travel';
+const FALLBACK_UNKNOWN_CITY_IMAGE = 'https://picsum.photos/seed/travel-default/800/500';
+const FALLBACK_ATTRACTION_IMAGE = 'https://picsum.photos/seed/travel-activity/400/300';
 export const GENERIC_BOOKING_URL = 'https://www.traveloka.com';
 
 let dataPromise: Promise<MasterData> | null = null;
@@ -78,7 +78,12 @@ function loadMaster(): Promise<MasterData> {
 }
 
 function unsplash(keywords: string, w = 800, h = 500): string {
-  return `https://source.unsplash.com/${w}x${h}/?${encodeURIComponent(keywords).replace(/%20/g, '+')}`;
+  const seed = keywords
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${w}/${h}`;
 }
 
 /** Get full city data (works for Indonesia and every international country in the JSON). */

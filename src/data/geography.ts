@@ -1,3 +1,5 @@
+import { getCityImage } from './getImage';
+
 export type Region = 'Asia' | 'Middle East' | 'Europe' | 'Americas' | 'Africa' | 'Pacific';
 
 export interface CityOption {
@@ -12,18 +14,14 @@ export interface CountryOption {
   cities: CityOption[];
 }
 
-function unsplash(keywords: string): string {
-  return `https://source.unsplash.com/800x500/?${encodeURIComponent(keywords).replace(/%20/g, '+')}`;
-}
-
 function mapsLink(place: string): string {
   return `https://maps.google.com/?q=${encodeURIComponent(place)}`;
 }
 
-function city(name: string, country: string, keywords: string): CityOption {
+function city(name: string, country: string): CityOption {
   return {
     name,
-    imageUrl: unsplash(keywords),
+    imageUrl: getCityImage(name, 'card'),
     mapsLink: mapsLink(`${name} ${country}`),
   };
 }
@@ -153,7 +151,7 @@ const COUNTRY_CITY_SEED: Record<string, [Region, string[]]> = {
 export const COUNTRIES: CountryOption[] = Object.entries(COUNTRY_CITY_SEED).map(([country, [region, cities]]) => ({
   name: country,
   region,
-  cities: cities.map((c) => city(c, country, `${c} ${country} travel`)),
+  cities: cities.map((c) => city(c, country)),
 }));
 
 export const REGION_ORDER: Region[] = ['Asia', 'Middle East', 'Europe', 'Americas', 'Africa', 'Pacific'];
@@ -162,14 +160,14 @@ export const MAX_COUNTRIES = 3;
 export const MAX_CITIES = 4;
 
 export const INDONESIA_CITIES: CityOption[] = [
-  city('Jakarta', 'Indonesia', 'Jakarta Indonesia skyline'),
-  city('Bali', 'Indonesia', 'Bali Indonesia beach temple'),
-  city('Yogyakarta', 'Indonesia', 'Yogyakarta Borobudur temple'),
-  city('Bandung', 'Indonesia', 'Bandung Indonesia hills'),
-  city('Lombok', 'Indonesia', 'Lombok Indonesia beach'),
-  city('Surabaya', 'Indonesia', 'Surabaya Indonesia city'),
-  city('Labuan Bajo', 'Indonesia', 'Labuan Bajo Komodo Indonesia'),
-  city('Malang', 'Indonesia', 'Malang Bromo Indonesia'),
+  city('Jakarta', 'Indonesia'),
+  city('Bali', 'Indonesia'),
+  city('Yogyakarta', 'Indonesia'),
+  city('Bandung', 'Indonesia'),
+  city('Lombok', 'Indonesia'),
+  city('Surabaya', 'Indonesia'),
+  city('Labuan Bajo', 'Indonesia'),
+  city('Malang', 'Indonesia'),
 ];
 
 export function findCountry(name: string): CountryOption | undefined {
