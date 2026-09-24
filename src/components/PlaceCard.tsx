@@ -32,7 +32,7 @@ export default function PlaceCard({
           </div>
         ) : (
           <img
-            src={activityImageUrl(activity.name)}
+            src={activityImageUrl(activity.name, destination)}
             onError={() => setImgFailed(true)}
             alt=""
             className="h-16 w-16 shrink-0 rounded-lg object-cover sm:h-20 sm:w-20"

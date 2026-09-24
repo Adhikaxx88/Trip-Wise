@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import Button from './Button';
+import { activityImageUrl, placeMapsLink } from '../logic/tripMedia';
+import { routeMapsLink } from '../data/transport';
 import type { ItineraryDay, TransportOption } from '../types';
 
 interface ItineraryDayCardProps {
@@ -16,6 +19,8 @@ const TRANSPORT_ICON: Record<string, string> = {
   other: '🚕',
 };
 
+const GENERIC_FALLBACK_IMAGE = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+
 export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport }: ItineraryDayCardProps) {
   const [pickerOpen, setPickerOpen] = useState(false);
   const dayTotalPerPerson = day.activities.reduce((sum, a) => sum + (a.price ?? 0), 0);
@@ -25,6 +30,7 @@ export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport
     const options = day.transportOptions ?? [];
     const selectedIndex = day.selectedTransportIndex ?? 0;
     const selected: TransportOption | undefined = options[selectedIndex];
+    const bookingUrl = selected?.bookingUrl ?? 'https://www.traveloka.com';
 
     return (
       <div className="rounded-2xl border-2 border-dashed border-gold-accent/60 bg-gold-accent/5 p-4 shadow-sm sm:p-6">
@@ -47,6 +53,17 @@ export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport
           )}
         </div>
 
+        {day.fromCity && day.toCity && (
+          <a
+            href={routeMapsLink(day.fromCity, day.toCity)}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1 inline-block text-xs font-medium text-ocean-mid hover:text-ocean-deep"
+          >
+            📍 View route
+          </a>
+        )}
+
         {selected && (
           <div className="mt-4 overflow-hidden rounded-xl border border-ink/10 bg-white">
             <div className="flex flex-col sm:flex-row">
@@ -56,7 +73,7 @@ export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport
                 loading="lazy"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://source.unsplash.com/400x300/?travel+transport';
+                  e.currentTarget.src = GENERIC_FALLBACK_IMAGE;
                 }}
                 className="h-32 w-full object-cover sm:h-auto sm:w-40"
               />
@@ -75,8 +92,8 @@ export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport
                     ⏱ {selected.duration} · 💰 {selected.costLabel ?? `$${selected.costPerPerson}`} / person
                   </p>
                 </div>
-                <div className="mt-2 flex items-center gap-3">
-                  {options.length > 1 && (
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  {options.length > 1 ? (
                     <button
                       type="button"
                       onClick={() => setPickerOpen((v) => !v)}
@@ -84,17 +101,14 @@ export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport
                     >
                       Change transport
                     </button>
+                  ) : (
+                    <span />
                   )}
-                  {selected.bookingUrl && (
-                    <a
-                      href={selected.bookingUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs font-semibold text-ink/50 hover:text-ink"
-                    >
+                  <a href={bookingUrl} target="_blank" rel="noreferrer">
+                    <Button variant="accent" className="px-4 py-2 text-xs">
                       Book ↗
-                    </a>
-                  )}
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -156,23 +170,42 @@ export default function ItineraryDayCard({ day, groupSize = 1, onChangeTransport
                 {activity.transport.cost > 0 ? ` · $${activity.transport.cost}` : ''}
               </p>
             )}
-            <div className="flex items-start justify-between gap-2 text-sm sm:gap-3">
-              <div className="flex gap-2 sm:gap-3">
-                {activity.time && (
-                  <span className="w-14 shrink-0 font-medium text-ocean-light sm:w-20">
-                    {activity.time}
-                  </span>
-                )}
-                <div>
-                  <p className="text-ink">{activity.name}</p>
+            <div className="flex items-start gap-3 text-sm">
+              <img
+                src={activityImageUrl(activity.name, day.city)}
+                alt=""
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = GENERIC_FALLBACK_IMAGE;
+                }}
+                style={{ width: 96, height: 72, borderRadius: 8, objectFit: 'cover' }}
+                className="shrink-0"
+              />
+              <div className="flex flex-1 items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    {activity.time && (
+                      <span className="font-medium text-ocean-light">{activity.time}</span>
+                    )}
+                    <p className="text-ink">{activity.name}</p>
+                    <a
+                      href={placeMapsLink(activity.name, day.city)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-gold-accent-deep hover:text-gold-accent"
+                    >
+                      📍 Maps
+                    </a>
+                  </div>
                   {activity.note && <p className="text-ink/50">{activity.note}</p>}
                 </div>
+                {typeof activity.price === 'number' && activity.price > 0 && (
+                  <span className="shrink-0 rounded-full bg-ocean-mid/10 px-2 py-0.5 text-xs font-medium text-ocean-mid">
+                    ${activity.price}
+                  </span>
+                )}
               </div>
-              {typeof activity.price === 'number' && activity.price > 0 && (
-                <span className="shrink-0 rounded-full bg-ocean-mid/10 px-2 py-0.5 text-xs font-medium text-ocean-mid">
-                  ${activity.price}
-                </span>
-              )}
             </div>
           </li>
         ))}

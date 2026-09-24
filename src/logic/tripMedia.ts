@@ -1,28 +1,32 @@
 import type { TripPackage } from '../types';
 
-/**
- * A small pool of known-good, hardcoded Unsplash photo IDs used to fill out
- * the hero preview strip alongside the trip's own cover image. These are
- * static travel/scenery photos (same URL pattern used in src/data/destinations.ts)
- * — there's no Unsplash API key configured, so we can't search dynamically.
- */
-const FILLER_HERO_PHOTO_IDS = [
-  '1488646953014-85cb44e25828', // mountain lake
-  '1502602898657-3e91760cbb34', // Paris / Seine
-  '1507525428034-b723cf961d3e', // beach aerial
-  '1500530855697-b586d89ba3ee', // scenic travel road
-];
-
 function unsplashUrl(photoId: string, width = 1600): string {
   return `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&w=${width}&q=80`;
 }
 
-/** Builds a 3-4 image hero strip: the trip's real cover image plus filler scenic photos. */
+function unsplashKeywords(keywords: string, width = 400, height = 300): string {
+  return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(keywords).replace(/%20/g, '+')}`;
+}
+
+/** Generic, always-available fallback used by every <img onError> in the app. */
+export const GENERIC_FALLBACK_IMAGE = 'https://source.unsplash.com/800x500/?travel+destination+beautiful';
+
+/**
+ * Builds a destination-specific hero preview strip: the trip's own cover image,
+ * plus one keyword-searched Unsplash photo per city in a multi-city trip (or a
+ * few destination/tag-based variations for a legacy single-destination trip).
+ */
 export function getHeroImages(pkg: TripPackage): string[] {
-  const filler = FILLER_HERO_PHOTO_IDS.map((id) => unsplashUrl(id)).filter(
-    (url) => url !== pkg.coverImageUrl,
+  if (pkg.cities && pkg.cities.length > 0) {
+    const cityImages = pkg.cities.map((city) => unsplashKeywords(`${city}+skyline+travel`));
+    return [pkg.coverImageUrl, ...cityImages].slice(0, 4);
+  }
+
+  const destination = pkg.destination.split(',')[0].trim();
+  const tagImages = (pkg.tags.length > 0 ? pkg.tags : ['landmark', 'city', 'travel']).map((tag) =>
+    unsplashKeywords(`${destination}+${tag}`),
   );
-  return [pkg.coverImageUrl, ...filler].slice(0, 4);
+  return [pkg.coverImageUrl, ...tagImages].slice(0, 4);
 }
 
 export const HOTEL_PLACEHOLDER_IMAGE = unsplashUrl('1566073771259-6a8506099945', 800);
@@ -32,8 +36,32 @@ export const FLIGHT_PLACEHOLDER_IMAGE = unsplashUrl('1436491865332-7a61a109cc05'
 export const ACTIVITY_FALLBACK_IMAGE = unsplashUrl('1476514525535-07fb3b4ae5f1', 800);
 
 /** Best-effort dynamic photo for a place by name. Unreliable — callers must handle onError. */
-export function activityImageUrl(name: string): string {
-  return `https://source.unsplash.com/400x300/?${encodeURIComponent(name)}`;
+export function activityImageUrl(name: string, city?: string): string {
+  const keywords = name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 3)
+    .join('+');
+  const suffix = city ? `+${city.toLowerCase().replace(/\s+/g, '+')}` : '';
+  return `https://source.unsplash.com/120x90/?${keywords}${suffix}`;
+}
+
+/** Google Maps link for a named place, optionally scoped to a city. */
+export function placeMapsLink(name: string, city?: string): string {
+  const query = city ? `${name} ${city}` : name;
+  return `https://maps.google.com/?q=${encodeURIComponent(query)}`;
+}
+
+/** Google Maps link for the area a hotel sits in, e.g. "Best Hotels in Seminyak Bali". */
+export function hotelAreaMapsLink(hotelArea: string, city: string): string {
+  return `https://maps.google.com/?q=${encodeURIComponent(`hotels in ${hotelArea} ${city}`)}`;
+}
+
+/** Google Maps link for a city's international airport. */
+export function airportMapsLink(city: string): string {
+  return `https://maps.google.com/?q=${encodeURIComponent(`${city} International Airport`)}`;
 }
 
 /** Deterministic pseudo-random 0..1 value derived from a string, for stable "random" values. */
