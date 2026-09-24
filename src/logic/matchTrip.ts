@@ -1,9 +1,12 @@
 import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
 import { COUNTRIES, findCity } from '../data/geography';
+import { buildFlightOptions, buildHotelOptions, getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { HOTEL_DISCOUNT_BY_TIER } from '../data/subscriptionTiers';
-import { getIntercityOptions, getIntracityOptions } from '../data/transport';
+import { getIntercityRoute as getIntercityOptions, getIntracityOptions } from '../data/tripwiseMaster';
 import type {
   CostBreakdown,
+  FlightOption,
+  HotelOption,
   ItineraryActivity,
   ItineraryDay,
   SelectedCity,
@@ -11,6 +14,49 @@ import type {
   TripPackage,
   TripPreferences,
 } from '../types';
+
+interface HotelFlightSelection {
+  hotelOptions: HotelOption[];
+  flightOptions: FlightOption[];
+  selectedHotelTier: 'budget' | 'standard' | 'luxury';
+  selectedFlightId: string;
+  hotel: CostBreakdown['hotel'];
+  flight: CostBreakdown['flight'];
+}
+
+function buildHotelFlightSelection(
+  city: string,
+  isDomesticIndonesia: boolean,
+  region: string | undefined,
+  nights: number,
+  rooms: number,
+  groupSize: number,
+  hotelDiscount: number,
+): HotelFlightSelection {
+  const hotelOptions = buildHotelOptions(city);
+  const flightOptions = buildFlightOptions(isDomesticIndonesia, region);
+  const selectedHotelTier = 'standard' as const;
+  const selectedFlightId = flightOptions[0].id;
+  const hotelOption = getHotelOption(hotelOptions, selectedHotelTier);
+  const flightOption = getFlightOption(flightOptions, selectedFlightId);
+
+  return {
+    hotelOptions,
+    flightOptions,
+    selectedHotelTier,
+    selectedFlightId,
+    hotel: {
+      name: hotelOption.name,
+      cost: Math.round(hotelOption.pricePerNight * nights * rooms * (1 - hotelDiscount)),
+      bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city)}`,
+    },
+    flight: {
+      name: `${flightOption.airline} round-trip to ${city}`,
+      cost: Math.round(flightOption.pricePerPerson * groupSize),
+      bookingUrl: flightOption.bookingUrl,
+    },
+  };
+}
 
 const TIER_RANK: Record<SubscriptionTierId, number> = { free: 0, monthly: 1, yearly: 2 };
 
@@ -139,24 +185,21 @@ function buildCostBreakdown(
   durationDays: number,
   groupSize: number,
   currentTier: SubscriptionTierId,
-): CostBreakdown {
+): HotelFlightSelection {
   const nights = Math.max(1, durationDays - 1);
   const rooms = Math.max(1, Math.ceil(groupSize / 2));
-  const destinationQuery = encodeURIComponent(dest.destination);
   const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
+  const isDomesticIndonesia = dest.country === 'Indonesia';
 
-  return {
-    hotel: {
-      name: dest.hotelName,
-      cost: Math.round(dest.hotelCostPerNight * nights * rooms * (1 - hotelDiscount)),
-      bookingUrl: dest.bookingUrl,
-    },
-    flight: {
-      name: `${dest.airline} round-trip to ${dest.destination}`,
-      cost: Math.round(dest.flightEstimatePerPerson * groupSize),
-      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${destinationQuery}`,
-    },
-  };
+  return buildHotelFlightSelection(
+    dest.destination,
+    isDomesticIndonesia,
+    regionForCountry(dest.country),
+    nights,
+    rooms,
+    groupSize,
+    hotelDiscount,
+  );
 }
 
 export function activitiesCostPerPerson(itinerary: ItineraryDay[]): number {
@@ -256,8 +299,8 @@ function distributeDays(totalDays: number, cityCount: number): number[] {
   return Array.from({ length: cityCount }, (_, i) => base + (i < remainder ? 1 : 0));
 }
 
-function buildIntracityActivity(cityName: string, name: string, price: number): ItineraryActivity {
-  const intracity = getIntracityOptions(cityName);
+async function buildIntracityActivity(cityName: string, name: string, price: number): Promise<ItineraryActivity> {
+  const intracity = await getIntracityOptions(cityName);
   const primary = intracity.options[0];
   return {
     name,
@@ -273,14 +316,14 @@ function buildIntracityActivity(cityName: string, name: string, price: number): 
   };
 }
 
-function buildCityDays(
+async function buildCityDays(
   selected: SelectedCity,
   startDay: number,
   numDays: number,
   vibe: string | null,
   isFirstCity: boolean,
   isLastCity: boolean,
-): ItineraryDay[] {
+): Promise<ItineraryDay[]> {
   const cityName = selected.city;
   const template = VIBE_ACTIVITY_TEMPLATES[vibe ?? 'relaxing'] ?? VIBE_ACTIVITY_TEMPLATES.relaxing;
   const dailyCost = dailyCostForCountry(selected.country);
@@ -298,16 +341,16 @@ function buildCityDays(
     } else if (isDeparture) {
       activities.push({ time: '8:00 AM', name: 'Farewell breakfast', price: Math.round(dailyCost * 0.15) });
       activities.push(
-        buildIntracityActivity(cityName, 'Last-minute exploring & souvenirs', Math.round(dailyCost * 0.2)),
+        await buildIntracityActivity(cityName, 'Last-minute exploring & souvenirs', Math.round(dailyCost * 0.2)),
       );
       activities.push({ time: '2:00 PM', name: `Transfer for departure from ${cityName}`, price: 0 });
     } else {
       const pick1 = template[(dayNumber - 1) % template.length].replace('{city}', cityName);
       const pick2 = template[(dayNumber + 2) % template.length].replace('{city}', cityName);
       activities.push({ time: '8:00 AM', name: 'Breakfast', price: Math.round(dailyCost * 0.1) });
-      activities.push(buildIntracityActivity(cityName, pick1, Math.round(dailyCost * 0.35)));
+      activities.push(await buildIntracityActivity(cityName, pick1, Math.round(dailyCost * 0.35)));
       activities.push({ time: '1:00 PM', name: 'Lunch', price: Math.round(dailyCost * 0.15) });
-      activities.push(buildIntracityActivity(cityName, pick2, Math.round(dailyCost * 0.3)));
+      activities.push(await buildIntracityActivity(cityName, pick2, Math.round(dailyCost * 0.3)));
       activities.push({ time: '7:30 PM', name: 'Dinner', price: Math.round(dailyCost * 0.2) });
     }
 
@@ -327,8 +370,8 @@ function buildCityDays(
   return days;
 }
 
-function buildTransitionDay(dayNumber: number, from: SelectedCity, to: SelectedCity): ItineraryDay {
-  const options = getIntercityOptions(from.city, to.city, from.country, to.country);
+async function buildTransitionDay(dayNumber: number, from: SelectedCity, to: SelectedCity): Promise<ItineraryDay> {
+  const options = await getIntercityOptions(from.city, to.city, from.country, to.country);
   const best = options[0];
   return {
     day: dayNumber,
@@ -348,17 +391,18 @@ export function activitiesCostPerPersonWithTransition(itinerary: ItineraryDay[])
   return activitiesCostPerPerson(itinerary);
 }
 
-function buildMultiCityItinerary(
+async function buildMultiCityItinerary(
   cities: SelectedCity[],
   totalDays: number,
   vibe: string | null,
-): ItineraryDay[] {
+): Promise<ItineraryDay[]> {
   const perCity = distributeDays(Math.max(1, totalDays), cities.length);
   const itinerary: ItineraryDay[] = [];
   let dayCounter = 1;
 
-  cities.forEach((city, index) => {
-    const cityDays = buildCityDays(
+  for (let index = 0; index < cities.length; index++) {
+    const city = cities[index];
+    const cityDays = await buildCityDays(
       city,
       dayCounter,
       perCity[index],
@@ -370,52 +414,40 @@ function buildMultiCityItinerary(
     dayCounter += perCity[index];
 
     if (index < cities.length - 1) {
-      itinerary.push(buildTransitionDay(dayCounter, city, cities[index + 1]));
+      itinerary.push(await buildTransitionDay(dayCounter, city, cities[index + 1]));
       dayCounter += 1;
     }
-  });
+  }
 
   return itinerary.map((day, i) => ({ ...day, day: i + 1 }));
 }
 
-function buildMultiCityCostBreakdown(
-  cities: SelectedCity[],
-  totalDays: number,
-  groupSize: number,
-  currentTier: SubscriptionTierId,
-): CostBreakdown {
-  const nights = Math.max(1, totalDays - 1);
-  const rooms = Math.max(1, Math.ceil(groupSize / 2));
-  const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
-  const avgHotelPerNight =
-    cities.reduce((sum, c) => sum + dailyCostForCountry(c.country) * 0.8, 0) / cities.length;
-
-  const isInternational = cities.some((c) => c.country !== cities[0].country);
-  const anchorCity = cities[0];
-  const flightBase = isInternational ? 650 : 120;
-
-  return {
-    hotel: {
-      name: `Hotels across ${cities.map((c) => c.city).join(', ')}`,
-      cost: Math.round(avgHotelPerNight * nights * rooms * (1 - hotelDiscount)),
-      bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(anchorCity.city)}`,
-    },
-    flight: {
-      name: `Round-trip flights to ${anchorCity.city}`,
-      cost: Math.round(flightBase * groupSize),
-      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${encodeURIComponent(anchorCity.city)}`,
-    },
-  };
+function isDomesticIndonesiaTrip(cities: SelectedCity[]): boolean {
+  return cities.every((c) => c.country === 'Indonesia');
 }
 
-function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTierId): TripPackage {
+async function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTierId): Promise<TripPackage> {
   const cities = prefs.selectedCities ?? [];
   const duration = prefs.durationDays ?? Math.max(cities.length * 2, 4);
   const groupSize = prefs.groupSize ?? 1;
   const primaryVibe = prefs.vibe && prefs.vibe.length > 0 ? prefs.vibe[0] : null;
 
-  const itinerary = buildMultiCityItinerary(cities, duration, primaryVibe);
-  const costBreakdown = buildMultiCityCostBreakdown(cities, itinerary.length, groupSize, currentTier);
+  const itinerary = await buildMultiCityItinerary(cities, duration, primaryVibe);
+
+  const nights = Math.max(1, itinerary.length - 1);
+  const rooms = Math.max(1, Math.ceil(groupSize / 2));
+  const hotelDiscount = HOTEL_DISCOUNT_BY_TIER[currentTier] / 100;
+  const anchorCity = cities[0];
+  const selection = buildHotelFlightSelection(
+    anchorCity.city,
+    isDomesticIndonesiaTrip(cities),
+    regionForCountry(anchorCity.country),
+    nights,
+    rooms,
+    groupSize,
+    hotelDiscount,
+  );
+  const costBreakdown: CostBreakdown = { hotel: selection.hotel, flight: selection.flight };
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
@@ -428,7 +460,7 @@ function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTie
       : cityNames.join(' + ');
 
   const firstCity = findCity(cities[0].country, cities[0].city);
-  const coverImageUrl = firstCity?.imageUrl ?? 'https://source.unsplash.com/1600x900/?travel';
+  const coverImageUrl = firstCity?.imageUrl ?? 'https://picsum.photos/seed/travel-default/1600/900';
 
   const tags = Array.from(new Set(cities.map((c) => c.country)));
   const packageId = `multicity-${cityNames.map((c) => c.toLowerCase().replace(/\s+/g, '-')).join('_')}-${Date.now()}`;
@@ -447,10 +479,17 @@ function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTie
     tier: 'free',
     hotelDiscountPercent: HOTEL_DISCOUNT_BY_TIER[currentTier],
     cities: cityNames,
+    hotelOptions: selection.hotelOptions,
+    flightOptions: selection.flightOptions,
+    selectedHotelTier: selection.selectedHotelTier,
+    selectedFlightId: selection.selectedFlightId,
   };
 }
 
-export function matchTrip(prefs: TripPreferences, currentTier: SubscriptionTierId = 'free'): TripPackage {
+export async function matchTrip(
+  prefs: TripPreferences,
+  currentTier: SubscriptionTierId = 'free',
+): Promise<TripPackage> {
   if (prefs.selectedCities && prefs.selectedCities.length > 0) {
     return matchMultiCityTrip(prefs, currentTier);
   }
@@ -467,7 +506,8 @@ export function matchTrip(prefs: TripPreferences, currentTier: SubscriptionTierI
   const groupSize = prefs.groupSize ?? 1;
 
   const itinerary = buildItinerary(best, duration);
-  const costBreakdown = buildCostBreakdown(best, duration, groupSize, currentTier);
+  const selection = buildCostBreakdown(best, duration, groupSize, currentTier);
+  const costBreakdown: CostBreakdown = { hotel: selection.hotel, flight: selection.flight };
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
@@ -491,6 +531,11 @@ export function matchTrip(prefs: TripPreferences, currentTier: SubscriptionTierI
     costBreakdown,
     tier: best.tier,
     hotelDiscountPercent: HOTEL_DISCOUNT_BY_TIER[currentTier],
+    cities: [best.destination],
+    hotelOptions: selection.hotelOptions,
+    flightOptions: selection.flightOptions,
+    selectedHotelTier: selection.selectedHotelTier,
+    selectedFlightId: selection.selectedFlightId,
   };
 }
 

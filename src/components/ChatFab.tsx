@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ChatBubble from './ChatBubble';
 import { getFaqAnswer, SUGGESTED_QUESTIONS } from '../data/chatbotFaq';
 
 interface Message {
@@ -15,7 +14,8 @@ function nextMessageId(prefix: string) {
   return `${prefix}-${messageCounter}`;
 }
 
-const WELCOME = "Hi! I'm the TripWise assistant. Ask me anything about planning your trip, or head to the full questionnaire to get matched.";
+const WELCOME =
+  "Hi! I'm your itinerary assistant. Tell me what to change and I'll update your trip instantly. ✈";
 
 export default function ChatFab() {
   const [chatOpen, setChatOpen] = useState(false);
@@ -62,21 +62,26 @@ export default function ChatFab() {
     <>
       {chatOpen && (
         <div
-          className="fixed z-[9999] flex flex-col overflow-hidden rounded-2xl border border-white/15 text-white shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
+          className="fixed z-[9999] flex flex-col overflow-hidden rounded-2xl border border-white/10 text-white shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
           style={{
             bottom: 'calc(90px + env(safe-area-inset-bottom))',
             right: 'calc(24px + env(safe-area-inset-right))',
-            width: 320,
-            height: 420,
-            maxWidth: 'calc(100vw - 32px)',
-            background: 'rgba(13, 33, 55, 0.95)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
+            width: 380,
+            height: 520,
+            maxWidth: 'calc(100vw - 24px)',
+            maxHeight: '70vh',
+            background: 'linear-gradient(145deg, #1a2f4a, #0f1f35)',
           }}
         >
-          <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-3">
-            <p className="flex items-center gap-2 text-sm font-semibold">
-              <span aria-hidden>✈</span> Itinerary Assistant
+          <div
+            className="flex shrink-0 items-center justify-between px-4 py-3"
+            style={{
+              background: 'rgba(255, 210, 51, 0.12)',
+              borderBottom: '1px solid rgba(255, 210, 51, 0.2)',
+            }}
+          >
+            <p className="flex items-center gap-2 text-sm font-semibold" style={{ color: '#FFD233' }}>
+              <span aria-hidden style={{ color: '#FFD233' }}>✈</span> Itinerary Assistant
             </p>
             <button
               type="button"
@@ -88,11 +93,29 @@ export default function ChatFab() {
             </button>
           </div>
 
-          <div className="flex-1 space-y-2.5 overflow-y-auto px-3 py-3">
+          <div className="chat-scroll flex-1 space-y-2.5 overflow-y-auto px-3 py-3">
             {messages.map((m) => (
-              <ChatBubble key={m.id} from={m.from}>
-                {m.text}
-              </ChatBubble>
+              <div key={m.id} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className="max-w-[80%] px-4 py-2.5 text-sm"
+                  style={
+                    m.from === 'user'
+                      ? {
+                          background: '#FFD233',
+                          color: '#0D1B2A',
+                          borderRadius: '16px 16px 4px 16px',
+                        }
+                      : {
+                          background: 'rgba(255,255,255,0.08)',
+                          color: 'rgba(255,255,255,0.9)',
+                          borderRadius: '16px 16px 16px 4px',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                        }
+                  }
+                >
+                  {m.text}
+                </div>
+              </div>
             ))}
 
             <div className="flex flex-wrap gap-1.5 pt-1">
@@ -110,7 +133,8 @@ export default function ChatFab() {
             <Link
               to="/questionnaire"
               onClick={() => setChatOpen(false)}
-              className="mt-1 inline-block rounded-full bg-gold-accent px-3 py-1.5 text-xs font-semibold text-ink hover:opacity-90"
+              className="mt-1 inline-block rounded-full px-3 py-1.5 text-xs font-semibold hover:opacity-90"
+              style={{ background: '#FFD233', color: '#0D1B2A' }}
             >
               Start full questionnaire →
             </Link>
@@ -125,13 +149,27 @@ export default function ChatFab() {
               onChange={(e) => setFreeformInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleFreeformSubmit()}
               placeholder="Type a request..."
-              className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/5 px-3.5 py-2 text-sm text-white placeholder:text-white/40 focus:border-gold-accent focus:outline-none"
+              className="min-w-0 flex-1 text-sm text-white placeholder:text-white/40 focus:outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: 24,
+                padding: '12px 16px',
+              }}
             />
             <button
               onClick={handleFreeformSubmit}
-              className="shrink-0 rounded-full bg-gold-accent px-3.5 py-2 text-xs font-semibold text-ink cursor-pointer"
+              aria-label="Send message"
+              className="flex shrink-0 items-center justify-center font-bold cursor-pointer"
+              style={{
+                background: '#FFD233',
+                color: '#0D1B2A',
+                borderRadius: '50%',
+                width: 40,
+                height: 40,
+              }}
             >
-              Send
+              →
             </button>
           </div>
         </div>

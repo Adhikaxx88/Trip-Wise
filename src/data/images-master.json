@@ -1,0 +1,1524 @@
+{
+  "cities": {
+    "Tokyo": {
+      "hero": "https://picsum.photos/seed/tokyo-hero/1200/600",
+      "card": "https://picsum.photos/seed/tokyo-city/800/500",
+      "hotel": "https://picsum.photos/seed/tokyo-hotel/600/400"
+    },
+    "Osaka": {
+      "hero": "https://picsum.photos/seed/osaka-hero/1200/600",
+      "card": "https://picsum.photos/seed/osaka-city/800/500",
+      "hotel": "https://picsum.photos/seed/osaka-hotel/600/400"
+    },
+    "Kyoto": {
+      "hero": "https://picsum.photos/seed/kyoto-hero/1200/600",
+      "card": "https://picsum.photos/seed/kyoto-city/800/500",
+      "hotel": "https://picsum.photos/seed/kyoto-hotel/600/400"
+    },
+    "Hiroshima": {
+      "hero": "https://picsum.photos/seed/hiroshima-hero/1200/600",
+      "card": "https://picsum.photos/seed/hiroshima-city/800/500",
+      "hotel": "https://picsum.photos/seed/hiroshima-hotel/600/400"
+    },
+    "Sapporo": {
+      "hero": "https://picsum.photos/seed/sapporo-hero/1200/600",
+      "card": "https://picsum.photos/seed/sapporo-city/800/500",
+      "hotel": "https://picsum.photos/seed/sapporo-hotel/600/400"
+    },
+    "Nara": {
+      "hero": "https://picsum.photos/seed/nara-hero/1200/600",
+      "card": "https://picsum.photos/seed/nara-city/800/500",
+      "hotel": "https://picsum.photos/seed/nara-hotel/600/400"
+    },
+    "Seoul": {
+      "hero": "https://picsum.photos/seed/seoul-hero/1200/600",
+      "card": "https://picsum.photos/seed/seoul-city/800/500",
+      "hotel": "https://picsum.photos/seed/seoul-hotel/600/400"
+    },
+    "Busan": {
+      "hero": "https://picsum.photos/seed/busan-hero/1200/600",
+      "card": "https://picsum.photos/seed/busan-city/800/500",
+      "hotel": "https://picsum.photos/seed/busan-hotel/600/400"
+    },
+    "Jeju Island": {
+      "hero": "https://picsum.photos/seed/jeju-island-hero/1200/600",
+      "card": "https://picsum.photos/seed/jeju-island-city/800/500",
+      "hotel": "https://picsum.photos/seed/jeju-island-hotel/600/400"
+    },
+    "Incheon": {
+      "hero": "https://picsum.photos/seed/incheon-hero/1200/600",
+      "card": "https://picsum.photos/seed/incheon-city/800/500",
+      "hotel": "https://picsum.photos/seed/incheon-hotel/600/400"
+    },
+    "Bangkok": {
+      "hero": "https://picsum.photos/seed/bangkok-hero/1200/600",
+      "card": "https://picsum.photos/seed/bangkok-city/800/500",
+      "hotel": "https://picsum.photos/seed/bangkok-hotel/600/400"
+    },
+    "Chiang Mai": {
+      "hero": "https://picsum.photos/seed/chiang-mai-hero/1200/600",
+      "card": "https://picsum.photos/seed/chiang-mai-city/800/500",
+      "hotel": "https://picsum.photos/seed/chiang-mai-hotel/600/400"
+    },
+    "Phuket": {
+      "hero": "https://picsum.photos/seed/phuket-hero/1200/600",
+      "card": "https://picsum.photos/seed/phuket-city/800/500",
+      "hotel": "https://picsum.photos/seed/phuket-hotel/600/400"
+    },
+    "Koh Samui": {
+      "hero": "https://picsum.photos/seed/koh-samui-hero/1200/600",
+      "card": "https://picsum.photos/seed/koh-samui-city/800/500",
+      "hotel": "https://picsum.photos/seed/koh-samui-hotel/600/400"
+    },
+    "Pai": {
+      "hero": "https://picsum.photos/seed/pai-hero/1200/600",
+      "card": "https://picsum.photos/seed/pai-city/800/500",
+      "hotel": "https://picsum.photos/seed/pai-hotel/600/400"
+    },
+    "Ayutthaya": {
+      "hero": "https://picsum.photos/seed/ayutthaya-hero/1200/600",
+      "card": "https://picsum.photos/seed/ayutthaya-city/800/500",
+      "hotel": "https://picsum.photos/seed/ayutthaya-hotel/600/400"
+    },
+    "Hanoi": {
+      "hero": "https://picsum.photos/seed/hanoi-hero/1200/600",
+      "card": "https://picsum.photos/seed/hanoi-city/800/500",
+      "hotel": "https://picsum.photos/seed/hanoi-hotel/600/400"
+    },
+    "Ho Chi Minh City": {
+      "hero": "https://picsum.photos/seed/ho-chi-minh-city-hero/1200/600",
+      "card": "https://picsum.photos/seed/ho-chi-minh-city-city/800/500",
+      "hotel": "https://picsum.photos/seed/ho-chi-minh-city-hotel/600/400"
+    },
+    "Da Nang": {
+      "hero": "https://picsum.photos/seed/da-nang-hero/1200/600",
+      "card": "https://picsum.photos/seed/da-nang-city/800/500",
+      "hotel": "https://picsum.photos/seed/da-nang-hotel/600/400"
+    },
+    "Hoi An": {
+      "hero": "https://picsum.photos/seed/hoi-an-hero/1200/600",
+      "card": "https://picsum.photos/seed/hoi-an-city/800/500",
+      "hotel": "https://picsum.photos/seed/hoi-an-hotel/600/400"
+    },
+    "Ha Long Bay": {
+      "hero": "https://picsum.photos/seed/ha-long-bay-hero/1200/600",
+      "card": "https://picsum.photos/seed/ha-long-bay-city/800/500",
+      "hotel": "https://picsum.photos/seed/ha-long-bay-hotel/600/400"
+    },
+    "Singapore City": {
+      "hero": "https://picsum.photos/seed/singapore-city-hero/1200/600",
+      "card": "https://picsum.photos/seed/singapore-city-city/800/500",
+      "hotel": "https://picsum.photos/seed/singapore-city-hotel/600/400"
+    },
+    "Sentosa Island": {
+      "hero": "https://picsum.photos/seed/sentosa-island-hero/1200/600",
+      "card": "https://picsum.photos/seed/sentosa-island-city/800/500",
+      "hotel": "https://picsum.photos/seed/sentosa-island-hotel/600/400"
+    },
+    "Kuala Lumpur": {
+      "hero": "https://picsum.photos/seed/kuala-lumpur-hero/1200/600",
+      "card": "https://picsum.photos/seed/kuala-lumpur-city/800/500",
+      "hotel": "https://picsum.photos/seed/kuala-lumpur-hotel/600/400"
+    },
+    "Penang": {
+      "hero": "https://picsum.photos/seed/penang-hero/1200/600",
+      "card": "https://picsum.photos/seed/penang-city/800/500",
+      "hotel": "https://picsum.photos/seed/penang-hotel/600/400"
+    },
+    "Langkawi": {
+      "hero": "https://picsum.photos/seed/langkawi-hero/1200/600",
+      "card": "https://picsum.photos/seed/langkawi-city/800/500",
+      "hotel": "https://picsum.photos/seed/langkawi-hotel/600/400"
+    },
+    "Malacca": {
+      "hero": "https://picsum.photos/seed/malacca-hero/1200/600",
+      "card": "https://picsum.photos/seed/malacca-city/800/500",
+      "hotel": "https://picsum.photos/seed/malacca-hotel/600/400"
+    },
+    "Manila": {
+      "hero": "https://picsum.photos/seed/manila-hero/1200/600",
+      "card": "https://picsum.photos/seed/manila-city/800/500",
+      "hotel": "https://picsum.photos/seed/manila-hotel/600/400"
+    },
+    "Cebu": {
+      "hero": "https://picsum.photos/seed/cebu-hero/1200/600",
+      "card": "https://picsum.photos/seed/cebu-city/800/500",
+      "hotel": "https://picsum.photos/seed/cebu-hotel/600/400"
+    },
+    "Palawan": {
+      "hero": "https://picsum.photos/seed/palawan-hero/1200/600",
+      "card": "https://picsum.photos/seed/palawan-city/800/500",
+      "hotel": "https://picsum.photos/seed/palawan-hotel/600/400"
+    },
+    "Boracay": {
+      "hero": "https://picsum.photos/seed/boracay-hero/1200/600",
+      "card": "https://picsum.photos/seed/boracay-city/800/500",
+      "hotel": "https://picsum.photos/seed/boracay-hotel/600/400"
+    },
+    "Phnom Penh": {
+      "hero": "https://picsum.photos/seed/phnom-penh-hero/1200/600",
+      "card": "https://picsum.photos/seed/phnom-penh-city/800/500",
+      "hotel": "https://picsum.photos/seed/phnom-penh-hotel/600/400"
+    },
+    "Siem Reap": {
+      "hero": "https://picsum.photos/seed/siem-reap-hero/1200/600",
+      "card": "https://picsum.photos/seed/siem-reap-city/800/500",
+      "hotel": "https://picsum.photos/seed/siem-reap-hotel/600/400"
+    },
+    "Yangon": {
+      "hero": "https://picsum.photos/seed/yangon-hero/1200/600",
+      "card": "https://picsum.photos/seed/yangon-city/800/500",
+      "hotel": "https://picsum.photos/seed/yangon-hotel/600/400"
+    },
+    "Bagan": {
+      "hero": "https://picsum.photos/seed/bagan-hero/1200/600",
+      "card": "https://picsum.photos/seed/bagan-city/800/500",
+      "hotel": "https://picsum.photos/seed/bagan-hotel/600/400"
+    },
+    "Mandalay": {
+      "hero": "https://picsum.photos/seed/mandalay-hero/1200/600",
+      "card": "https://picsum.photos/seed/mandalay-city/800/500",
+      "hotel": "https://picsum.photos/seed/mandalay-hotel/600/400"
+    },
+    "New Delhi": {
+      "hero": "https://picsum.photos/seed/new-delhi-hero/1200/600",
+      "card": "https://picsum.photos/seed/new-delhi-city/800/500",
+      "hotel": "https://picsum.photos/seed/new-delhi-hotel/600/400"
+    },
+    "Mumbai": {
+      "hero": "https://picsum.photos/seed/mumbai-hero/1200/600",
+      "card": "https://picsum.photos/seed/mumbai-city/800/500",
+      "hotel": "https://picsum.photos/seed/mumbai-hotel/600/400"
+    },
+    "Jaipur": {
+      "hero": "https://picsum.photos/seed/jaipur-hero/1200/600",
+      "card": "https://picsum.photos/seed/jaipur-city/800/500",
+      "hotel": "https://picsum.photos/seed/jaipur-hotel/600/400"
+    },
+    "Agra": {
+      "hero": "https://picsum.photos/seed/agra-hero/1200/600",
+      "card": "https://picsum.photos/seed/agra-city/800/500",
+      "hotel": "https://picsum.photos/seed/agra-hotel/600/400"
+    },
+    "Goa": {
+      "hero": "https://picsum.photos/seed/goa-hero/1200/600",
+      "card": "https://picsum.photos/seed/goa-city/800/500",
+      "hotel": "https://picsum.photos/seed/goa-hotel/600/400"
+    },
+    "Kathmandu": {
+      "hero": "https://picsum.photos/seed/kathmandu-hero/1200/600",
+      "card": "https://picsum.photos/seed/kathmandu-city/800/500",
+      "hotel": "https://picsum.photos/seed/kathmandu-hotel/600/400"
+    },
+    "Pokhara": {
+      "hero": "https://picsum.photos/seed/pokhara-hero/1200/600",
+      "card": "https://picsum.photos/seed/pokhara-city/800/500",
+      "hotel": "https://picsum.photos/seed/pokhara-hotel/600/400"
+    },
+    "Colombo": {
+      "hero": "https://picsum.photos/seed/colombo-hero/1200/600",
+      "card": "https://picsum.photos/seed/colombo-city/800/500",
+      "hotel": "https://picsum.photos/seed/colombo-hotel/600/400"
+    },
+    "Kandy": {
+      "hero": "https://picsum.photos/seed/kandy-hero/1200/600",
+      "card": "https://picsum.photos/seed/kandy-city/800/500",
+      "hotel": "https://picsum.photos/seed/kandy-hotel/600/400"
+    },
+    "Galle": {
+      "hero": "https://picsum.photos/seed/galle-hero/1200/600",
+      "card": "https://picsum.photos/seed/galle-city/800/500",
+      "hotel": "https://picsum.photos/seed/galle-hotel/600/400"
+    },
+    "Malé": {
+      "hero": "https://picsum.photos/seed/male-hero/1200/600",
+      "card": "https://picsum.photos/seed/male-city/800/500",
+      "hotel": "https://picsum.photos/seed/male-hotel/600/400"
+    },
+    "Maafushi": {
+      "hero": "https://picsum.photos/seed/maafushi-hero/1200/600",
+      "card": "https://picsum.photos/seed/maafushi-city/800/500",
+      "hotel": "https://picsum.photos/seed/maafushi-hotel/600/400"
+    },
+    "Taipei": {
+      "hero": "https://picsum.photos/seed/taipei-hero/1200/600",
+      "card": "https://picsum.photos/seed/taipei-city/800/500",
+      "hotel": "https://picsum.photos/seed/taipei-hotel/600/400"
+    },
+    "Kaohsiung": {
+      "hero": "https://picsum.photos/seed/kaohsiung-hero/1200/600",
+      "card": "https://picsum.photos/seed/kaohsiung-city/800/500",
+      "hotel": "https://picsum.photos/seed/kaohsiung-hotel/600/400"
+    },
+    "Taichung": {
+      "hero": "https://picsum.photos/seed/taichung-hero/1200/600",
+      "card": "https://picsum.photos/seed/taichung-city/800/500",
+      "hotel": "https://picsum.photos/seed/taichung-hotel/600/400"
+    },
+    "Hong Kong Island": {
+      "hero": "https://picsum.photos/seed/hong-kong-island-hero/1200/600",
+      "card": "https://picsum.photos/seed/hong-kong-island-city/800/500",
+      "hotel": "https://picsum.photos/seed/hong-kong-island-hotel/600/400"
+    },
+    "Kowloon": {
+      "hero": "https://picsum.photos/seed/kowloon-hero/1200/600",
+      "card": "https://picsum.photos/seed/kowloon-city/800/500",
+      "hotel": "https://picsum.photos/seed/kowloon-hotel/600/400"
+    },
+    "Lantau Island": {
+      "hero": "https://picsum.photos/seed/lantau-island-hero/1200/600",
+      "card": "https://picsum.photos/seed/lantau-island-city/800/500",
+      "hotel": "https://picsum.photos/seed/lantau-island-hotel/600/400"
+    },
+    "Beijing": {
+      "hero": "https://picsum.photos/seed/beijing-hero/1200/600",
+      "card": "https://picsum.photos/seed/beijing-city/800/500",
+      "hotel": "https://picsum.photos/seed/beijing-hotel/600/400"
+    },
+    "Shanghai": {
+      "hero": "https://picsum.photos/seed/shanghai-hero/1200/600",
+      "card": "https://picsum.photos/seed/shanghai-city/800/500",
+      "hotel": "https://picsum.photos/seed/shanghai-hotel/600/400"
+    },
+    "Xi’an": {
+      "hero": "https://picsum.photos/seed/xi-an-hero/1200/600",
+      "card": "https://picsum.photos/seed/xi-an-city/800/500",
+      "hotel": "https://picsum.photos/seed/xi-an-hotel/600/400"
+    },
+    "Chengdu": {
+      "hero": "https://picsum.photos/seed/chengdu-hero/1200/600",
+      "card": "https://picsum.photos/seed/chengdu-city/800/500",
+      "hotel": "https://picsum.photos/seed/chengdu-hotel/600/400"
+    },
+    "Guilin": {
+      "hero": "https://picsum.photos/seed/guilin-hero/1200/600",
+      "card": "https://picsum.photos/seed/guilin-city/800/500",
+      "hotel": "https://picsum.photos/seed/guilin-hotel/600/400"
+    },
+    "Macau Peninsula": {
+      "hero": "https://picsum.photos/seed/macau-peninsula-hero/1200/600",
+      "card": "https://picsum.photos/seed/macau-peninsula-city/800/500",
+      "hotel": "https://picsum.photos/seed/macau-peninsula-hotel/600/400"
+    },
+    "Taipa": {
+      "hero": "https://picsum.photos/seed/taipa-hero/1200/600",
+      "card": "https://picsum.photos/seed/taipa-city/800/500",
+      "hotel": "https://picsum.photos/seed/taipa-hotel/600/400"
+    },
+    "Ulaanbaatar": {
+      "hero": "https://picsum.photos/seed/ulaanbaatar-hero/1200/600",
+      "card": "https://picsum.photos/seed/ulaanbaatar-city/800/500",
+      "hotel": "https://picsum.photos/seed/ulaanbaatar-hotel/600/400"
+    },
+    "Gobi Desert": {
+      "hero": "https://picsum.photos/seed/gobi-desert-hero/1200/600",
+      "card": "https://picsum.photos/seed/gobi-desert-city/800/500",
+      "hotel": "https://picsum.photos/seed/gobi-desert-hotel/600/400"
+    },
+    "Tashkent": {
+      "hero": "https://picsum.photos/seed/tashkent-hero/1200/600",
+      "card": "https://picsum.photos/seed/tashkent-city/800/500",
+      "hotel": "https://picsum.photos/seed/tashkent-hotel/600/400"
+    },
+    "Samarkand": {
+      "hero": "https://picsum.photos/seed/samarkand-hero/1200/600",
+      "card": "https://picsum.photos/seed/samarkand-city/800/500",
+      "hotel": "https://picsum.photos/seed/samarkand-hotel/600/400"
+    },
+    "Bukhara": {
+      "hero": "https://picsum.photos/seed/bukhara-hero/1200/600",
+      "card": "https://picsum.photos/seed/bukhara-city/800/500",
+      "hotel": "https://picsum.photos/seed/bukhara-hotel/600/400"
+    },
+    "Almaty": {
+      "hero": "https://picsum.photos/seed/almaty-hero/1200/600",
+      "card": "https://picsum.photos/seed/almaty-city/800/500",
+      "hotel": "https://picsum.photos/seed/almaty-hotel/600/400"
+    },
+    "Astana": {
+      "hero": "https://picsum.photos/seed/astana-hero/1200/600",
+      "card": "https://picsum.photos/seed/astana-city/800/500",
+      "hotel": "https://picsum.photos/seed/astana-hotel/600/400"
+    },
+    "Tbilisi": {
+      "hero": "https://picsum.photos/seed/tbilisi-hero/1200/600",
+      "card": "https://picsum.photos/seed/tbilisi-city/800/500",
+      "hotel": "https://picsum.photos/seed/tbilisi-hotel/600/400"
+    },
+    "Batumi": {
+      "hero": "https://picsum.photos/seed/batumi-hero/1200/600",
+      "card": "https://picsum.photos/seed/batumi-city/800/500",
+      "hotel": "https://picsum.photos/seed/batumi-hotel/600/400"
+    },
+    "Yerevan": {
+      "hero": "https://picsum.photos/seed/yerevan-hero/1200/600",
+      "card": "https://picsum.photos/seed/yerevan-city/800/500",
+      "hotel": "https://picsum.photos/seed/yerevan-hotel/600/400"
+    },
+    "Baku": {
+      "hero": "https://picsum.photos/seed/baku-hero/1200/600",
+      "card": "https://picsum.photos/seed/baku-city/800/500",
+      "hotel": "https://picsum.photos/seed/baku-hotel/600/400"
+    },
+    "Dubai": {
+      "hero": "https://picsum.photos/seed/dubai-hero/1200/600",
+      "card": "https://picsum.photos/seed/dubai-city/800/500",
+      "hotel": "https://picsum.photos/seed/dubai-hotel/600/400"
+    },
+    "Abu Dhabi": {
+      "hero": "https://picsum.photos/seed/abu-dhabi-hero/1200/600",
+      "card": "https://picsum.photos/seed/abu-dhabi-city/800/500",
+      "hotel": "https://picsum.photos/seed/abu-dhabi-hotel/600/400"
+    },
+    "Sharjah": {
+      "hero": "https://picsum.photos/seed/sharjah-hero/1200/600",
+      "card": "https://picsum.photos/seed/sharjah-city/800/500",
+      "hotel": "https://picsum.photos/seed/sharjah-hotel/600/400"
+    },
+    "Ras Al Khaimah": {
+      "hero": "https://picsum.photos/seed/ras-al-khaimah-hero/1200/600",
+      "card": "https://picsum.photos/seed/ras-al-khaimah-city/800/500",
+      "hotel": "https://picsum.photos/seed/ras-al-khaimah-hotel/600/400"
+    },
+    "Riyadh": {
+      "hero": "https://picsum.photos/seed/riyadh-hero/1200/600",
+      "card": "https://picsum.photos/seed/riyadh-city/800/500",
+      "hotel": "https://picsum.photos/seed/riyadh-hotel/600/400"
+    },
+    "Jeddah": {
+      "hero": "https://picsum.photos/seed/jeddah-hero/1200/600",
+      "card": "https://picsum.photos/seed/jeddah-city/800/500",
+      "hotel": "https://picsum.photos/seed/jeddah-hotel/600/400"
+    },
+    "AlUla": {
+      "hero": "https://picsum.photos/seed/alula-hero/1200/600",
+      "card": "https://picsum.photos/seed/alula-city/800/500",
+      "hotel": "https://picsum.photos/seed/alula-hotel/600/400"
+    },
+    "Doha": {
+      "hero": "https://picsum.photos/seed/doha-hero/1200/600",
+      "card": "https://picsum.photos/seed/doha-city/800/500",
+      "hotel": "https://picsum.photos/seed/doha-hotel/600/400"
+    },
+    "Manama": {
+      "hero": "https://picsum.photos/seed/manama-hero/1200/600",
+      "card": "https://picsum.photos/seed/manama-city/800/500",
+      "hotel": "https://picsum.photos/seed/manama-hotel/600/400"
+    },
+    "Kuwait City": {
+      "hero": "https://picsum.photos/seed/kuwait-city-hero/1200/600",
+      "card": "https://picsum.photos/seed/kuwait-city-city/800/500",
+      "hotel": "https://picsum.photos/seed/kuwait-city-hotel/600/400"
+    },
+    "Muscat": {
+      "hero": "https://picsum.photos/seed/muscat-hero/1200/600",
+      "card": "https://picsum.photos/seed/muscat-city/800/500",
+      "hotel": "https://picsum.photos/seed/muscat-hotel/600/400"
+    },
+    "Salalah": {
+      "hero": "https://picsum.photos/seed/salalah-hero/1200/600",
+      "card": "https://picsum.photos/seed/salalah-city/800/500",
+      "hotel": "https://picsum.photos/seed/salalah-hotel/600/400"
+    },
+    "Amman": {
+      "hero": "https://picsum.photos/seed/amman-hero/1200/600",
+      "card": "https://picsum.photos/seed/amman-city/800/500",
+      "hotel": "https://picsum.photos/seed/amman-hotel/600/400"
+    },
+    "Petra": {
+      "hero": "https://picsum.photos/seed/petra-hero/1200/600",
+      "card": "https://picsum.photos/seed/petra-city/800/500",
+      "hotel": "https://picsum.photos/seed/petra-hotel/600/400"
+    },
+    "Aqaba": {
+      "hero": "https://picsum.photos/seed/aqaba-hero/1200/600",
+      "card": "https://picsum.photos/seed/aqaba-city/800/500",
+      "hotel": "https://picsum.photos/seed/aqaba-hotel/600/400"
+    },
+    "Tel Aviv": {
+      "hero": "https://picsum.photos/seed/tel-aviv-hero/1200/600",
+      "card": "https://picsum.photos/seed/tel-aviv-city/800/500",
+      "hotel": "https://picsum.photos/seed/tel-aviv-hotel/600/400"
+    },
+    "Jerusalem": {
+      "hero": "https://picsum.photos/seed/jerusalem-hero/1200/600",
+      "card": "https://picsum.photos/seed/jerusalem-city/800/500",
+      "hotel": "https://picsum.photos/seed/jerusalem-hotel/600/400"
+    },
+    "Beirut": {
+      "hero": "https://picsum.photos/seed/beirut-hero/1200/600",
+      "card": "https://picsum.photos/seed/beirut-city/800/500",
+      "hotel": "https://picsum.photos/seed/beirut-hotel/600/400"
+    },
+    "Istanbul": {
+      "hero": "https://picsum.photos/seed/istanbul-hero/1200/600",
+      "card": "https://picsum.photos/seed/istanbul-city/800/500",
+      "hotel": "https://picsum.photos/seed/istanbul-hotel/600/400"
+    },
+    "Cappadocia": {
+      "hero": "https://picsum.photos/seed/cappadocia-hero/1200/600",
+      "card": "https://picsum.photos/seed/cappadocia-city/800/500",
+      "hotel": "https://picsum.photos/seed/cappadocia-hotel/600/400"
+    },
+    "Antalya": {
+      "hero": "https://picsum.photos/seed/antalya-hero/1200/600",
+      "card": "https://picsum.photos/seed/antalya-city/800/500",
+      "hotel": "https://picsum.photos/seed/antalya-hotel/600/400"
+    },
+    "Tehran": {
+      "hero": "https://picsum.photos/seed/tehran-hero/1200/600",
+      "card": "https://picsum.photos/seed/tehran-city/800/500",
+      "hotel": "https://picsum.photos/seed/tehran-hotel/600/400"
+    },
+    "Isfahan": {
+      "hero": "https://picsum.photos/seed/isfahan-hero/1200/600",
+      "card": "https://picsum.photos/seed/isfahan-city/800/500",
+      "hotel": "https://picsum.photos/seed/isfahan-hotel/600/400"
+    },
+    "Shiraz": {
+      "hero": "https://picsum.photos/seed/shiraz-hero/1200/600",
+      "card": "https://picsum.photos/seed/shiraz-city/800/500",
+      "hotel": "https://picsum.photos/seed/shiraz-hotel/600/400"
+    },
+    "Paris": {
+      "hero": "https://picsum.photos/seed/paris-hero/1200/600",
+      "card": "https://picsum.photos/seed/paris-city/800/500",
+      "hotel": "https://picsum.photos/seed/paris-hotel/600/400"
+    },
+    "Nice": {
+      "hero": "https://picsum.photos/seed/nice-hero/1200/600",
+      "card": "https://picsum.photos/seed/nice-city/800/500",
+      "hotel": "https://picsum.photos/seed/nice-hotel/600/400"
+    },
+    "Lyon": {
+      "hero": "https://picsum.photos/seed/lyon-hero/1200/600",
+      "card": "https://picsum.photos/seed/lyon-city/800/500",
+      "hotel": "https://picsum.photos/seed/lyon-hotel/600/400"
+    },
+    "Bordeaux": {
+      "hero": "https://picsum.photos/seed/bordeaux-hero/1200/600",
+      "card": "https://picsum.photos/seed/bordeaux-city/800/500",
+      "hotel": "https://picsum.photos/seed/bordeaux-hotel/600/400"
+    },
+    "Marseille": {
+      "hero": "https://picsum.photos/seed/marseille-hero/1200/600",
+      "card": "https://picsum.photos/seed/marseille-city/800/500",
+      "hotel": "https://picsum.photos/seed/marseille-hotel/600/400"
+    },
+    "Strasbourg": {
+      "hero": "https://picsum.photos/seed/strasbourg-hero/1200/600",
+      "card": "https://picsum.photos/seed/strasbourg-city/800/500",
+      "hotel": "https://picsum.photos/seed/strasbourg-hotel/600/400"
+    },
+    "Rome": {
+      "hero": "https://picsum.photos/seed/rome-hero/1200/600",
+      "card": "https://picsum.photos/seed/rome-city/800/500",
+      "hotel": "https://picsum.photos/seed/rome-hotel/600/400"
+    },
+    "Florence": {
+      "hero": "https://picsum.photos/seed/florence-hero/1200/600",
+      "card": "https://picsum.photos/seed/florence-city/800/500",
+      "hotel": "https://picsum.photos/seed/florence-hotel/600/400"
+    },
+    "Venice": {
+      "hero": "https://picsum.photos/seed/venice-hero/1200/600",
+      "card": "https://picsum.photos/seed/venice-city/800/500",
+      "hotel": "https://picsum.photos/seed/venice-hotel/600/400"
+    },
+    "Milan": {
+      "hero": "https://picsum.photos/seed/milan-hero/1200/600",
+      "card": "https://picsum.photos/seed/milan-city/800/500",
+      "hotel": "https://picsum.photos/seed/milan-hotel/600/400"
+    },
+    "Naples": {
+      "hero": "https://picsum.photos/seed/naples-hero/1200/600",
+      "card": "https://picsum.photos/seed/naples-city/800/500",
+      "hotel": "https://picsum.photos/seed/naples-hotel/600/400"
+    },
+    "Sicily": {
+      "hero": "https://picsum.photos/seed/sicily-hero/1200/600",
+      "card": "https://picsum.photos/seed/sicily-city/800/500",
+      "hotel": "https://picsum.photos/seed/sicily-hotel/600/400"
+    },
+    "Madrid": {
+      "hero": "https://picsum.photos/seed/madrid-hero/1200/600",
+      "card": "https://picsum.photos/seed/madrid-city/800/500",
+      "hotel": "https://picsum.photos/seed/madrid-hotel/600/400"
+    },
+    "Barcelona": {
+      "hero": "https://picsum.photos/seed/barcelona-hero/1200/600",
+      "card": "https://picsum.photos/seed/barcelona-city/800/500",
+      "hotel": "https://picsum.photos/seed/barcelona-hotel/600/400"
+    },
+    "Seville": {
+      "hero": "https://picsum.photos/seed/seville-hero/1200/600",
+      "card": "https://picsum.photos/seed/seville-city/800/500",
+      "hotel": "https://picsum.photos/seed/seville-hotel/600/400"
+    },
+    "Valencia": {
+      "hero": "https://picsum.photos/seed/valencia-hero/1200/600",
+      "card": "https://picsum.photos/seed/valencia-city/800/500",
+      "hotel": "https://picsum.photos/seed/valencia-hotel/600/400"
+    },
+    "Athens": {
+      "hero": "https://picsum.photos/seed/athens-hero/1200/600",
+      "card": "https://picsum.photos/seed/athens-city/800/500",
+      "hotel": "https://picsum.photos/seed/athens-hotel/600/400"
+    },
+    "Santorini": {
+      "hero": "https://picsum.photos/seed/santorini-hero/1200/600",
+      "card": "https://picsum.photos/seed/santorini-city/800/500",
+      "hotel": "https://picsum.photos/seed/santorini-hotel/600/400"
+    },
+    "Mykonos": {
+      "hero": "https://picsum.photos/seed/mykonos-hero/1200/600",
+      "card": "https://picsum.photos/seed/mykonos-city/800/500",
+      "hotel": "https://picsum.photos/seed/mykonos-hotel/600/400"
+    },
+    "Crete": {
+      "hero": "https://picsum.photos/seed/crete-hero/1200/600",
+      "card": "https://picsum.photos/seed/crete-city/800/500",
+      "hotel": "https://picsum.photos/seed/crete-hotel/600/400"
+    },
+    "Lisbon": {
+      "hero": "https://picsum.photos/seed/lisbon-hero/1200/600",
+      "card": "https://picsum.photos/seed/lisbon-city/800/500",
+      "hotel": "https://picsum.photos/seed/lisbon-hotel/600/400"
+    },
+    "Porto": {
+      "hero": "https://picsum.photos/seed/porto-hero/1200/600",
+      "card": "https://picsum.photos/seed/porto-city/800/500",
+      "hotel": "https://picsum.photos/seed/porto-hotel/600/400"
+    },
+    "Algarve": {
+      "hero": "https://picsum.photos/seed/algarve-hero/1200/600",
+      "card": "https://picsum.photos/seed/algarve-city/800/500",
+      "hotel": "https://picsum.photos/seed/algarve-hotel/600/400"
+    },
+    "Amsterdam": {
+      "hero": "https://picsum.photos/seed/amsterdam-hero/1200/600",
+      "card": "https://picsum.photos/seed/amsterdam-city/800/500",
+      "hotel": "https://picsum.photos/seed/amsterdam-hotel/600/400"
+    },
+    "Rotterdam": {
+      "hero": "https://picsum.photos/seed/rotterdam-hero/1200/600",
+      "card": "https://picsum.photos/seed/rotterdam-city/800/500",
+      "hotel": "https://picsum.photos/seed/rotterdam-hotel/600/400"
+    },
+    "Utrecht": {
+      "hero": "https://picsum.photos/seed/utrecht-hero/1200/600",
+      "card": "https://picsum.photos/seed/utrecht-city/800/500",
+      "hotel": "https://picsum.photos/seed/utrecht-hotel/600/400"
+    },
+    "London": {
+      "hero": "https://picsum.photos/seed/london-hero/1200/600",
+      "card": "https://picsum.photos/seed/london-city/800/500",
+      "hotel": "https://picsum.photos/seed/london-hotel/600/400"
+    },
+    "Edinburgh": {
+      "hero": "https://picsum.photos/seed/edinburgh-hero/1200/600",
+      "card": "https://picsum.photos/seed/edinburgh-city/800/500",
+      "hotel": "https://picsum.photos/seed/edinburgh-hotel/600/400"
+    },
+    "Manchester": {
+      "hero": "https://picsum.photos/seed/manchester-hero/1200/600",
+      "card": "https://picsum.photos/seed/manchester-city/800/500",
+      "hotel": "https://picsum.photos/seed/manchester-hotel/600/400"
+    },
+    "Oxford": {
+      "hero": "https://picsum.photos/seed/oxford-hero/1200/600",
+      "card": "https://picsum.photos/seed/oxford-city/800/500",
+      "hotel": "https://picsum.photos/seed/oxford-hotel/600/400"
+    },
+    "Berlin": {
+      "hero": "https://picsum.photos/seed/berlin-hero/1200/600",
+      "card": "https://picsum.photos/seed/berlin-city/800/500",
+      "hotel": "https://picsum.photos/seed/berlin-hotel/600/400"
+    },
+    "Munich": {
+      "hero": "https://picsum.photos/seed/munich-hero/1200/600",
+      "card": "https://picsum.photos/seed/munich-city/800/500",
+      "hotel": "https://picsum.photos/seed/munich-hotel/600/400"
+    },
+    "Hamburg": {
+      "hero": "https://picsum.photos/seed/hamburg-hero/1200/600",
+      "card": "https://picsum.photos/seed/hamburg-city/800/500",
+      "hotel": "https://picsum.photos/seed/hamburg-hotel/600/400"
+    },
+    "Cologne": {
+      "hero": "https://picsum.photos/seed/cologne-hero/1200/600",
+      "card": "https://picsum.photos/seed/cologne-city/800/500",
+      "hotel": "https://picsum.photos/seed/cologne-hotel/600/400"
+    },
+    "Zurich": {
+      "hero": "https://picsum.photos/seed/zurich-hero/1200/600",
+      "card": "https://picsum.photos/seed/zurich-city/800/500",
+      "hotel": "https://picsum.photos/seed/zurich-hotel/600/400"
+    },
+    "Geneva": {
+      "hero": "https://picsum.photos/seed/geneva-hero/1200/600",
+      "card": "https://picsum.photos/seed/geneva-city/800/500",
+      "hotel": "https://picsum.photos/seed/geneva-hotel/600/400"
+    },
+    "Lucerne": {
+      "hero": "https://picsum.photos/seed/lucerne-hero/1200/600",
+      "card": "https://picsum.photos/seed/lucerne-city/800/500",
+      "hotel": "https://picsum.photos/seed/lucerne-hotel/600/400"
+    },
+    "Interlaken": {
+      "hero": "https://picsum.photos/seed/interlaken-hero/1200/600",
+      "card": "https://picsum.photos/seed/interlaken-city/800/500",
+      "hotel": "https://picsum.photos/seed/interlaken-hotel/600/400"
+    },
+    "Vienna": {
+      "hero": "https://picsum.photos/seed/vienna-hero/1200/600",
+      "card": "https://picsum.photos/seed/vienna-city/800/500",
+      "hotel": "https://picsum.photos/seed/vienna-hotel/600/400"
+    },
+    "Salzburg": {
+      "hero": "https://picsum.photos/seed/salzburg-hero/1200/600",
+      "card": "https://picsum.photos/seed/salzburg-city/800/500",
+      "hotel": "https://picsum.photos/seed/salzburg-hotel/600/400"
+    },
+    "Innsbruck": {
+      "hero": "https://picsum.photos/seed/innsbruck-hero/1200/600",
+      "card": "https://picsum.photos/seed/innsbruck-city/800/500",
+      "hotel": "https://picsum.photos/seed/innsbruck-hotel/600/400"
+    },
+    "Brussels": {
+      "hero": "https://picsum.photos/seed/brussels-hero/1200/600",
+      "card": "https://picsum.photos/seed/brussels-city/800/500",
+      "hotel": "https://picsum.photos/seed/brussels-hotel/600/400"
+    },
+    "Bruges": {
+      "hero": "https://picsum.photos/seed/bruges-hero/1200/600",
+      "card": "https://picsum.photos/seed/bruges-city/800/500",
+      "hotel": "https://picsum.photos/seed/bruges-hotel/600/400"
+    },
+    "Antwerp": {
+      "hero": "https://picsum.photos/seed/antwerp-hero/1200/600",
+      "card": "https://picsum.photos/seed/antwerp-city/800/500",
+      "hotel": "https://picsum.photos/seed/antwerp-hotel/600/400"
+    },
+    "Stockholm": {
+      "hero": "https://picsum.photos/seed/stockholm-hero/1200/600",
+      "card": "https://picsum.photos/seed/stockholm-city/800/500",
+      "hotel": "https://picsum.photos/seed/stockholm-hotel/600/400"
+    },
+    "Gothenburg": {
+      "hero": "https://picsum.photos/seed/gothenburg-hero/1200/600",
+      "card": "https://picsum.photos/seed/gothenburg-city/800/500",
+      "hotel": "https://picsum.photos/seed/gothenburg-hotel/600/400"
+    },
+    "Oslo": {
+      "hero": "https://picsum.photos/seed/oslo-hero/1200/600",
+      "card": "https://picsum.photos/seed/oslo-city/800/500",
+      "hotel": "https://picsum.photos/seed/oslo-hotel/600/400"
+    },
+    "Bergen": {
+      "hero": "https://picsum.photos/seed/bergen-hero/1200/600",
+      "card": "https://picsum.photos/seed/bergen-city/800/500",
+      "hotel": "https://picsum.photos/seed/bergen-hotel/600/400"
+    },
+    "Tromsø": {
+      "hero": "https://picsum.photos/seed/troms-hero/1200/600",
+      "card": "https://picsum.photos/seed/troms-city/800/500",
+      "hotel": "https://picsum.photos/seed/troms-hotel/600/400"
+    },
+    "Copenhagen": {
+      "hero": "https://picsum.photos/seed/copenhagen-hero/1200/600",
+      "card": "https://picsum.photos/seed/copenhagen-city/800/500",
+      "hotel": "https://picsum.photos/seed/copenhagen-hotel/600/400"
+    },
+    "Aarhus": {
+      "hero": "https://picsum.photos/seed/aarhus-hero/1200/600",
+      "card": "https://picsum.photos/seed/aarhus-city/800/500",
+      "hotel": "https://picsum.photos/seed/aarhus-hotel/600/400"
+    },
+    "Helsinki": {
+      "hero": "https://picsum.photos/seed/helsinki-hero/1200/600",
+      "card": "https://picsum.photos/seed/helsinki-city/800/500",
+      "hotel": "https://picsum.photos/seed/helsinki-hotel/600/400"
+    },
+    "Rovaniemi": {
+      "hero": "https://picsum.photos/seed/rovaniemi-hero/1200/600",
+      "card": "https://picsum.photos/seed/rovaniemi-city/800/500",
+      "hotel": "https://picsum.photos/seed/rovaniemi-hotel/600/400"
+    },
+    "Reykjavik": {
+      "hero": "https://picsum.photos/seed/reykjavik-hero/1200/600",
+      "card": "https://picsum.photos/seed/reykjavik-city/800/500",
+      "hotel": "https://picsum.photos/seed/reykjavik-hotel/600/400"
+    },
+    "Vik": {
+      "hero": "https://picsum.photos/seed/vik-hero/1200/600",
+      "card": "https://picsum.photos/seed/vik-city/800/500",
+      "hotel": "https://picsum.photos/seed/vik-hotel/600/400"
+    },
+    "Dublin": {
+      "hero": "https://picsum.photos/seed/dublin-hero/1200/600",
+      "card": "https://picsum.photos/seed/dublin-city/800/500",
+      "hotel": "https://picsum.photos/seed/dublin-hotel/600/400"
+    },
+    "Galway": {
+      "hero": "https://picsum.photos/seed/galway-hero/1200/600",
+      "card": "https://picsum.photos/seed/galway-city/800/500",
+      "hotel": "https://picsum.photos/seed/galway-hotel/600/400"
+    },
+    "Dubrovnik": {
+      "hero": "https://picsum.photos/seed/dubrovnik-hero/1200/600",
+      "card": "https://picsum.photos/seed/dubrovnik-city/800/500",
+      "hotel": "https://picsum.photos/seed/dubrovnik-hotel/600/400"
+    },
+    "Split": {
+      "hero": "https://picsum.photos/seed/split-hero/1200/600",
+      "card": "https://picsum.photos/seed/split-city/800/500",
+      "hotel": "https://picsum.photos/seed/split-hotel/600/400"
+    },
+    "Zagreb": {
+      "hero": "https://picsum.photos/seed/zagreb-hero/1200/600",
+      "card": "https://picsum.photos/seed/zagreb-city/800/500",
+      "hotel": "https://picsum.photos/seed/zagreb-hotel/600/400"
+    },
+    "Prague": {
+      "hero": "https://picsum.photos/seed/prague-hero/1200/600",
+      "card": "https://picsum.photos/seed/prague-city/800/500",
+      "hotel": "https://picsum.photos/seed/prague-hotel/600/400"
+    },
+    "Cesky Krumlov": {
+      "hero": "https://picsum.photos/seed/cesky-krumlov-hero/1200/600",
+      "card": "https://picsum.photos/seed/cesky-krumlov-city/800/500",
+      "hotel": "https://picsum.photos/seed/cesky-krumlov-hotel/600/400"
+    },
+    "Budapest": {
+      "hero": "https://picsum.photos/seed/budapest-hero/1200/600",
+      "card": "https://picsum.photos/seed/budapest-city/800/500",
+      "hotel": "https://picsum.photos/seed/budapest-hotel/600/400"
+    },
+    "Warsaw": {
+      "hero": "https://picsum.photos/seed/warsaw-hero/1200/600",
+      "card": "https://picsum.photos/seed/warsaw-city/800/500",
+      "hotel": "https://picsum.photos/seed/warsaw-hotel/600/400"
+    },
+    "Krakow": {
+      "hero": "https://picsum.photos/seed/krakow-hero/1200/600",
+      "card": "https://picsum.photos/seed/krakow-city/800/500",
+      "hotel": "https://picsum.photos/seed/krakow-hotel/600/400"
+    },
+    "Bucharest": {
+      "hero": "https://picsum.photos/seed/bucharest-hero/1200/600",
+      "card": "https://picsum.photos/seed/bucharest-city/800/500",
+      "hotel": "https://picsum.photos/seed/bucharest-hotel/600/400"
+    },
+    "Brasov": {
+      "hero": "https://picsum.photos/seed/brasov-hero/1200/600",
+      "card": "https://picsum.photos/seed/brasov-city/800/500",
+      "hotel": "https://picsum.photos/seed/brasov-hotel/600/400"
+    },
+    "Sofia": {
+      "hero": "https://picsum.photos/seed/sofia-hero/1200/600",
+      "card": "https://picsum.photos/seed/sofia-city/800/500",
+      "hotel": "https://picsum.photos/seed/sofia-hotel/600/400"
+    },
+    "Plovdiv": {
+      "hero": "https://picsum.photos/seed/plovdiv-hero/1200/600",
+      "card": "https://picsum.photos/seed/plovdiv-city/800/500",
+      "hotel": "https://picsum.photos/seed/plovdiv-hotel/600/400"
+    },
+    "Belgrade": {
+      "hero": "https://picsum.photos/seed/belgrade-hero/1200/600",
+      "card": "https://picsum.photos/seed/belgrade-city/800/500",
+      "hotel": "https://picsum.photos/seed/belgrade-hotel/600/400"
+    },
+    "Tirana": {
+      "hero": "https://picsum.photos/seed/tirana-hero/1200/600",
+      "card": "https://picsum.photos/seed/tirana-city/800/500",
+      "hotel": "https://picsum.photos/seed/tirana-hotel/600/400"
+    },
+    "Kotor": {
+      "hero": "https://picsum.photos/seed/kotor-hero/1200/600",
+      "card": "https://picsum.photos/seed/kotor-city/800/500",
+      "hotel": "https://picsum.photos/seed/kotor-hotel/600/400"
+    },
+    "Budva": {
+      "hero": "https://picsum.photos/seed/budva-hero/1200/600",
+      "card": "https://picsum.photos/seed/budva-city/800/500",
+      "hotel": "https://picsum.photos/seed/budva-hotel/600/400"
+    },
+    "Sarajevo": {
+      "hero": "https://picsum.photos/seed/sarajevo-hero/1200/600",
+      "card": "https://picsum.photos/seed/sarajevo-city/800/500",
+      "hotel": "https://picsum.photos/seed/sarajevo-hotel/600/400"
+    },
+    "Mostar": {
+      "hero": "https://picsum.photos/seed/mostar-hero/1200/600",
+      "card": "https://picsum.photos/seed/mostar-city/800/500",
+      "hotel": "https://picsum.photos/seed/mostar-hotel/600/400"
+    },
+    "Ljubljana": {
+      "hero": "https://picsum.photos/seed/ljubljana-hero/1200/600",
+      "card": "https://picsum.photos/seed/ljubljana-city/800/500",
+      "hotel": "https://picsum.photos/seed/ljubljana-hotel/600/400"
+    },
+    "Lake Bled": {
+      "hero": "https://picsum.photos/seed/lake-bled-hero/1200/600",
+      "card": "https://picsum.photos/seed/lake-bled-city/800/500",
+      "hotel": "https://picsum.photos/seed/lake-bled-hotel/600/400"
+    },
+    "Bratislava": {
+      "hero": "https://picsum.photos/seed/bratislava-hero/1200/600",
+      "card": "https://picsum.photos/seed/bratislava-city/800/500",
+      "hotel": "https://picsum.photos/seed/bratislava-hotel/600/400"
+    },
+    "Tallinn": {
+      "hero": "https://picsum.photos/seed/tallinn-hero/1200/600",
+      "card": "https://picsum.photos/seed/tallinn-city/800/500",
+      "hotel": "https://picsum.photos/seed/tallinn-hotel/600/400"
+    },
+    "Riga": {
+      "hero": "https://picsum.photos/seed/riga-hero/1200/600",
+      "card": "https://picsum.photos/seed/riga-city/800/500",
+      "hotel": "https://picsum.photos/seed/riga-hotel/600/400"
+    },
+    "Vilnius": {
+      "hero": "https://picsum.photos/seed/vilnius-hero/1200/600",
+      "card": "https://picsum.photos/seed/vilnius-city/800/500",
+      "hotel": "https://picsum.photos/seed/vilnius-hotel/600/400"
+    },
+    "Valletta": {
+      "hero": "https://picsum.photos/seed/valletta-hero/1200/600",
+      "card": "https://picsum.photos/seed/valletta-city/800/500",
+      "hotel": "https://picsum.photos/seed/valletta-hotel/600/400"
+    },
+    "Nicosia": {
+      "hero": "https://picsum.photos/seed/nicosia-hero/1200/600",
+      "card": "https://picsum.photos/seed/nicosia-city/800/500",
+      "hotel": "https://picsum.photos/seed/nicosia-hotel/600/400"
+    },
+    "Limassol": {
+      "hero": "https://picsum.photos/seed/limassol-hero/1200/600",
+      "card": "https://picsum.photos/seed/limassol-city/800/500",
+      "hotel": "https://picsum.photos/seed/limassol-hotel/600/400"
+    },
+    "Luxembourg City": {
+      "hero": "https://picsum.photos/seed/luxembourg-city-hero/1200/600",
+      "card": "https://picsum.photos/seed/luxembourg-city-city/800/500",
+      "hotel": "https://picsum.photos/seed/luxembourg-city-hotel/600/400"
+    },
+    "Monte Carlo": {
+      "hero": "https://picsum.photos/seed/monte-carlo-hero/1200/600",
+      "card": "https://picsum.photos/seed/monte-carlo-city/800/500",
+      "hotel": "https://picsum.photos/seed/monte-carlo-hotel/600/400"
+    },
+    "Andorra la Vella": {
+      "hero": "https://picsum.photos/seed/andorra-la-vella-hero/1200/600",
+      "card": "https://picsum.photos/seed/andorra-la-vella-city/800/500",
+      "hotel": "https://picsum.photos/seed/andorra-la-vella-hotel/600/400"
+    },
+    "New York": {
+      "hero": "https://picsum.photos/seed/new-york-hero/1200/600",
+      "card": "https://picsum.photos/seed/new-york-city/800/500",
+      "hotel": "https://picsum.photos/seed/new-york-hotel/600/400"
+    },
+    "Los Angeles": {
+      "hero": "https://picsum.photos/seed/los-angeles-hero/1200/600",
+      "card": "https://picsum.photos/seed/los-angeles-city/800/500",
+      "hotel": "https://picsum.photos/seed/los-angeles-hotel/600/400"
+    },
+    "Miami": {
+      "hero": "https://picsum.photos/seed/miami-hero/1200/600",
+      "card": "https://picsum.photos/seed/miami-city/800/500",
+      "hotel": "https://picsum.photos/seed/miami-hotel/600/400"
+    },
+    "Las Vegas": {
+      "hero": "https://picsum.photos/seed/las-vegas-hero/1200/600",
+      "card": "https://picsum.photos/seed/las-vegas-city/800/500",
+      "hotel": "https://picsum.photos/seed/las-vegas-hotel/600/400"
+    },
+    "Hawaii": {
+      "hero": "https://picsum.photos/seed/hawaii-hero/1200/600",
+      "card": "https://picsum.photos/seed/hawaii-city/800/500",
+      "hotel": "https://picsum.photos/seed/hawaii-hotel/600/400"
+    },
+    "Chicago": {
+      "hero": "https://picsum.photos/seed/chicago-hero/1200/600",
+      "card": "https://picsum.photos/seed/chicago-city/800/500",
+      "hotel": "https://picsum.photos/seed/chicago-hotel/600/400"
+    },
+    "San Francisco": {
+      "hero": "https://picsum.photos/seed/san-francisco-hero/1200/600",
+      "card": "https://picsum.photos/seed/san-francisco-city/800/500",
+      "hotel": "https://picsum.photos/seed/san-francisco-hotel/600/400"
+    },
+    "Toronto": {
+      "hero": "https://picsum.photos/seed/toronto-hero/1200/600",
+      "card": "https://picsum.photos/seed/toronto-city/800/500",
+      "hotel": "https://picsum.photos/seed/toronto-hotel/600/400"
+    },
+    "Vancouver": {
+      "hero": "https://picsum.photos/seed/vancouver-hero/1200/600",
+      "card": "https://picsum.photos/seed/vancouver-city/800/500",
+      "hotel": "https://picsum.photos/seed/vancouver-hotel/600/400"
+    },
+    "Montreal": {
+      "hero": "https://picsum.photos/seed/montreal-hero/1200/600",
+      "card": "https://picsum.photos/seed/montreal-city/800/500",
+      "hotel": "https://picsum.photos/seed/montreal-hotel/600/400"
+    },
+    "Banff": {
+      "hero": "https://picsum.photos/seed/banff-hero/1200/600",
+      "card": "https://picsum.photos/seed/banff-city/800/500",
+      "hotel": "https://picsum.photos/seed/banff-hotel/600/400"
+    },
+    "Mexico City": {
+      "hero": "https://picsum.photos/seed/mexico-city-hero/1200/600",
+      "card": "https://picsum.photos/seed/mexico-city-city/800/500",
+      "hotel": "https://picsum.photos/seed/mexico-city-hotel/600/400"
+    },
+    "Cancun": {
+      "hero": "https://picsum.photos/seed/cancun-hero/1200/600",
+      "card": "https://picsum.photos/seed/cancun-city/800/500",
+      "hotel": "https://picsum.photos/seed/cancun-hotel/600/400"
+    },
+    "Tulum": {
+      "hero": "https://picsum.photos/seed/tulum-hero/1200/600",
+      "card": "https://picsum.photos/seed/tulum-city/800/500",
+      "hotel": "https://picsum.photos/seed/tulum-hotel/600/400"
+    },
+    "Oaxaca": {
+      "hero": "https://picsum.photos/seed/oaxaca-hero/1200/600",
+      "card": "https://picsum.photos/seed/oaxaca-city/800/500",
+      "hotel": "https://picsum.photos/seed/oaxaca-hotel/600/400"
+    },
+    "Havana": {
+      "hero": "https://picsum.photos/seed/havana-hero/1200/600",
+      "card": "https://picsum.photos/seed/havana-city/800/500",
+      "hotel": "https://picsum.photos/seed/havana-hotel/600/400"
+    },
+    "Varadero": {
+      "hero": "https://picsum.photos/seed/varadero-hero/1200/600",
+      "card": "https://picsum.photos/seed/varadero-city/800/500",
+      "hotel": "https://picsum.photos/seed/varadero-hotel/600/400"
+    },
+    "Kingston": {
+      "hero": "https://picsum.photos/seed/kingston-hero/1200/600",
+      "card": "https://picsum.photos/seed/kingston-city/800/500",
+      "hotel": "https://picsum.photos/seed/kingston-hotel/600/400"
+    },
+    "Montego Bay": {
+      "hero": "https://picsum.photos/seed/montego-bay-hero/1200/600",
+      "card": "https://picsum.photos/seed/montego-bay-city/800/500",
+      "hotel": "https://picsum.photos/seed/montego-bay-hotel/600/400"
+    },
+    "San José": {
+      "hero": "https://picsum.photos/seed/san-jose-hero/1200/600",
+      "card": "https://picsum.photos/seed/san-jose-city/800/500",
+      "hotel": "https://picsum.photos/seed/san-jose-hotel/600/400"
+    },
+    "Tamarindo": {
+      "hero": "https://picsum.photos/seed/tamarindo-hero/1200/600",
+      "card": "https://picsum.photos/seed/tamarindo-city/800/500",
+      "hotel": "https://picsum.photos/seed/tamarindo-hotel/600/400"
+    },
+    "Monteverde": {
+      "hero": "https://picsum.photos/seed/monteverde-hero/1200/600",
+      "card": "https://picsum.photos/seed/monteverde-city/800/500",
+      "hotel": "https://picsum.photos/seed/monteverde-hotel/600/400"
+    },
+    "Panama City": {
+      "hero": "https://picsum.photos/seed/panama-city-hero/1200/600",
+      "card": "https://picsum.photos/seed/panama-city-city/800/500",
+      "hotel": "https://picsum.photos/seed/panama-city-hotel/600/400"
+    },
+    "Bocas del Toro": {
+      "hero": "https://picsum.photos/seed/bocas-del-toro-hero/1200/600",
+      "card": "https://picsum.photos/seed/bocas-del-toro-city/800/500",
+      "hotel": "https://picsum.photos/seed/bocas-del-toro-hotel/600/400"
+    },
+    "Bogotá": {
+      "hero": "https://picsum.photos/seed/bogota-hero/1200/600",
+      "card": "https://picsum.photos/seed/bogota-city/800/500",
+      "hotel": "https://picsum.photos/seed/bogota-hotel/600/400"
+    },
+    "Cartagena": {
+      "hero": "https://picsum.photos/seed/cartagena-hero/1200/600",
+      "card": "https://picsum.photos/seed/cartagena-city/800/500",
+      "hotel": "https://picsum.photos/seed/cartagena-hotel/600/400"
+    },
+    "Medellín": {
+      "hero": "https://picsum.photos/seed/medellin-hero/1200/600",
+      "card": "https://picsum.photos/seed/medellin-city/800/500",
+      "hotel": "https://picsum.photos/seed/medellin-hotel/600/400"
+    },
+    "Caracas": {
+      "hero": "https://picsum.photos/seed/caracas-hero/1200/600",
+      "card": "https://picsum.photos/seed/caracas-city/800/500",
+      "hotel": "https://picsum.photos/seed/caracas-hotel/600/400"
+    },
+    "Quito": {
+      "hero": "https://picsum.photos/seed/quito-hero/1200/600",
+      "card": "https://picsum.photos/seed/quito-city/800/500",
+      "hotel": "https://picsum.photos/seed/quito-hotel/600/400"
+    },
+    "Galápagos Islands": {
+      "hero": "https://picsum.photos/seed/galapagos-islands-hero/1200/600",
+      "card": "https://picsum.photos/seed/galapagos-islands-city/800/500",
+      "hotel": "https://picsum.photos/seed/galapagos-islands-hotel/600/400"
+    },
+    "Lima": {
+      "hero": "https://picsum.photos/seed/lima-hero/1200/600",
+      "card": "https://picsum.photos/seed/lima-city/800/500",
+      "hotel": "https://picsum.photos/seed/lima-hotel/600/400"
+    },
+    "Cusco": {
+      "hero": "https://picsum.photos/seed/cusco-hero/1200/600",
+      "card": "https://picsum.photos/seed/cusco-city/800/500",
+      "hotel": "https://picsum.photos/seed/cusco-hotel/600/400"
+    },
+    "Machu Picchu": {
+      "hero": "https://picsum.photos/seed/machu-picchu-hero/1200/600",
+      "card": "https://picsum.photos/seed/machu-picchu-city/800/500",
+      "hotel": "https://picsum.photos/seed/machu-picchu-hotel/600/400"
+    },
+    "Rio de Janeiro": {
+      "hero": "https://picsum.photos/seed/rio-de-janeiro-hero/1200/600",
+      "card": "https://picsum.photos/seed/rio-de-janeiro-city/800/500",
+      "hotel": "https://picsum.photos/seed/rio-de-janeiro-hotel/600/400"
+    },
+    "São Paulo": {
+      "hero": "https://picsum.photos/seed/sao-paulo-hero/1200/600",
+      "card": "https://picsum.photos/seed/sao-paulo-city/800/500",
+      "hotel": "https://picsum.photos/seed/sao-paulo-hotel/600/400"
+    },
+    "Salvador": {
+      "hero": "https://picsum.photos/seed/salvador-hero/1200/600",
+      "card": "https://picsum.photos/seed/salvador-city/800/500",
+      "hotel": "https://picsum.photos/seed/salvador-hotel/600/400"
+    },
+    "La Paz": {
+      "hero": "https://picsum.photos/seed/la-paz-hero/1200/600",
+      "card": "https://picsum.photos/seed/la-paz-city/800/500",
+      "hotel": "https://picsum.photos/seed/la-paz-hotel/600/400"
+    },
+    "Uyuni": {
+      "hero": "https://picsum.photos/seed/uyuni-hero/1200/600",
+      "card": "https://picsum.photos/seed/uyuni-city/800/500",
+      "hotel": "https://picsum.photos/seed/uyuni-hotel/600/400"
+    },
+    "Santiago": {
+      "hero": "https://picsum.photos/seed/santiago-hero/1200/600",
+      "card": "https://picsum.photos/seed/santiago-city/800/500",
+      "hotel": "https://picsum.photos/seed/santiago-hotel/600/400"
+    },
+    "Patagonia": {
+      "hero": "https://picsum.photos/seed/patagonia-hero/1200/600",
+      "card": "https://picsum.photos/seed/patagonia-city/800/500",
+      "hotel": "https://picsum.photos/seed/patagonia-hotel/600/400"
+    },
+    "Valparaíso": {
+      "hero": "https://picsum.photos/seed/valparaiso-hero/1200/600",
+      "card": "https://picsum.photos/seed/valparaiso-city/800/500",
+      "hotel": "https://picsum.photos/seed/valparaiso-hotel/600/400"
+    },
+    "Buenos Aires": {
+      "hero": "https://picsum.photos/seed/buenos-aires-hero/1200/600",
+      "card": "https://picsum.photos/seed/buenos-aires-city/800/500",
+      "hotel": "https://picsum.photos/seed/buenos-aires-hotel/600/400"
+    },
+    "Bariloche": {
+      "hero": "https://picsum.photos/seed/bariloche-hero/1200/600",
+      "card": "https://picsum.photos/seed/bariloche-city/800/500",
+      "hotel": "https://picsum.photos/seed/bariloche-hotel/600/400"
+    },
+    "Mendoza": {
+      "hero": "https://picsum.photos/seed/mendoza-hero/1200/600",
+      "card": "https://picsum.photos/seed/mendoza-city/800/500",
+      "hotel": "https://picsum.photos/seed/mendoza-hotel/600/400"
+    },
+    "Montevideo": {
+      "hero": "https://picsum.photos/seed/montevideo-hero/1200/600",
+      "card": "https://picsum.photos/seed/montevideo-city/800/500",
+      "hotel": "https://picsum.photos/seed/montevideo-hotel/600/400"
+    },
+    "Punta del Este": {
+      "hero": "https://picsum.photos/seed/punta-del-este-hero/1200/600",
+      "card": "https://picsum.photos/seed/punta-del-este-city/800/500",
+      "hotel": "https://picsum.photos/seed/punta-del-este-hotel/600/400"
+    },
+    "Asunción": {
+      "hero": "https://picsum.photos/seed/asuncion-hero/1200/600",
+      "card": "https://picsum.photos/seed/asuncion-city/800/500",
+      "hotel": "https://picsum.photos/seed/asuncion-hotel/600/400"
+    },
+    "Cape Town": {
+      "hero": "https://picsum.photos/seed/cape-town-hero/1200/600",
+      "card": "https://picsum.photos/seed/cape-town-city/800/500",
+      "hotel": "https://picsum.photos/seed/cape-town-hotel/600/400"
+    },
+    "Johannesburg": {
+      "hero": "https://picsum.photos/seed/johannesburg-hero/1200/600",
+      "card": "https://picsum.photos/seed/johannesburg-city/800/500",
+      "hotel": "https://picsum.photos/seed/johannesburg-hotel/600/400"
+    },
+    "Kruger National Park": {
+      "hero": "https://picsum.photos/seed/kruger-national-park-hero/1200/600",
+      "card": "https://picsum.photos/seed/kruger-national-park-city/800/500",
+      "hotel": "https://picsum.photos/seed/kruger-national-park-hotel/600/400"
+    },
+    "Marrakech": {
+      "hero": "https://picsum.photos/seed/marrakech-hero/1200/600",
+      "card": "https://picsum.photos/seed/marrakech-city/800/500",
+      "hotel": "https://picsum.photos/seed/marrakech-hotel/600/400"
+    },
+    "Fez": {
+      "hero": "https://picsum.photos/seed/fez-hero/1200/600",
+      "card": "https://picsum.photos/seed/fez-city/800/500",
+      "hotel": "https://picsum.photos/seed/fez-hotel/600/400"
+    },
+    "Casablanca": {
+      "hero": "https://picsum.photos/seed/casablanca-hero/1200/600",
+      "card": "https://picsum.photos/seed/casablanca-city/800/500",
+      "hotel": "https://picsum.photos/seed/casablanca-hotel/600/400"
+    },
+    "Chefchaouen": {
+      "hero": "https://picsum.photos/seed/chefchaouen-hero/1200/600",
+      "card": "https://picsum.photos/seed/chefchaouen-city/800/500",
+      "hotel": "https://picsum.photos/seed/chefchaouen-hotel/600/400"
+    },
+    "Cairo": {
+      "hero": "https://picsum.photos/seed/cairo-hero/1200/600",
+      "card": "https://picsum.photos/seed/cairo-city/800/500",
+      "hotel": "https://picsum.photos/seed/cairo-hotel/600/400"
+    },
+    "Luxor": {
+      "hero": "https://picsum.photos/seed/luxor-hero/1200/600",
+      "card": "https://picsum.photos/seed/luxor-city/800/500",
+      "hotel": "https://picsum.photos/seed/luxor-hotel/600/400"
+    },
+    "Sharm El Sheikh": {
+      "hero": "https://picsum.photos/seed/sharm-el-sheikh-hero/1200/600",
+      "card": "https://picsum.photos/seed/sharm-el-sheikh-city/800/500",
+      "hotel": "https://picsum.photos/seed/sharm-el-sheikh-hotel/600/400"
+    },
+    "Nairobi": {
+      "hero": "https://picsum.photos/seed/nairobi-hero/1200/600",
+      "card": "https://picsum.photos/seed/nairobi-city/800/500",
+      "hotel": "https://picsum.photos/seed/nairobi-hotel/600/400"
+    },
+    "Maasai Mara": {
+      "hero": "https://picsum.photos/seed/maasai-mara-hero/1200/600",
+      "card": "https://picsum.photos/seed/maasai-mara-city/800/500",
+      "hotel": "https://picsum.photos/seed/maasai-mara-hotel/600/400"
+    },
+    "Zanzibar": {
+      "hero": "https://picsum.photos/seed/zanzibar-hero/1200/600",
+      "card": "https://picsum.photos/seed/zanzibar-city/800/500",
+      "hotel": "https://picsum.photos/seed/zanzibar-hotel/600/400"
+    },
+    "Serengeti": {
+      "hero": "https://picsum.photos/seed/serengeti-hero/1200/600",
+      "card": "https://picsum.photos/seed/serengeti-city/800/500",
+      "hotel": "https://picsum.photos/seed/serengeti-hotel/600/400"
+    },
+    "Arusha": {
+      "hero": "https://picsum.photos/seed/arusha-hero/1200/600",
+      "card": "https://picsum.photos/seed/arusha-city/800/500",
+      "hotel": "https://picsum.photos/seed/arusha-hotel/600/400"
+    },
+    "Addis Ababa": {
+      "hero": "https://picsum.photos/seed/addis-ababa-hero/1200/600",
+      "card": "https://picsum.photos/seed/addis-ababa-city/800/500",
+      "hotel": "https://picsum.photos/seed/addis-ababa-hotel/600/400"
+    },
+    "Lalibela": {
+      "hero": "https://picsum.photos/seed/lalibela-hero/1200/600",
+      "card": "https://picsum.photos/seed/lalibela-city/800/500",
+      "hotel": "https://picsum.photos/seed/lalibela-hotel/600/400"
+    },
+    "Accra": {
+      "hero": "https://picsum.photos/seed/accra-hero/1200/600",
+      "card": "https://picsum.photos/seed/accra-city/800/500",
+      "hotel": "https://picsum.photos/seed/accra-hotel/600/400"
+    },
+    "Kumasi": {
+      "hero": "https://picsum.photos/seed/kumasi-hero/1200/600",
+      "card": "https://picsum.photos/seed/kumasi-city/800/500",
+      "hotel": "https://picsum.photos/seed/kumasi-hotel/600/400"
+    },
+    "Dakar": {
+      "hero": "https://picsum.photos/seed/dakar-hero/1200/600",
+      "card": "https://picsum.photos/seed/dakar-city/800/500",
+      "hotel": "https://picsum.photos/seed/dakar-hotel/600/400"
+    },
+    "Tunis": {
+      "hero": "https://picsum.photos/seed/tunis-hero/1200/600",
+      "card": "https://picsum.photos/seed/tunis-city/800/500",
+      "hotel": "https://picsum.photos/seed/tunis-hotel/600/400"
+    },
+    "Sousse": {
+      "hero": "https://picsum.photos/seed/sousse-hero/1200/600",
+      "card": "https://picsum.photos/seed/sousse-city/800/500",
+      "hotel": "https://picsum.photos/seed/sousse-hotel/600/400"
+    },
+    "Port Louis": {
+      "hero": "https://picsum.photos/seed/port-louis-hero/1200/600",
+      "card": "https://picsum.photos/seed/port-louis-city/800/500",
+      "hotel": "https://picsum.photos/seed/port-louis-hotel/600/400"
+    },
+    "Grand Baie": {
+      "hero": "https://picsum.photos/seed/grand-baie-hero/1200/600",
+      "card": "https://picsum.photos/seed/grand-baie-city/800/500",
+      "hotel": "https://picsum.photos/seed/grand-baie-hotel/600/400"
+    },
+    "Mahé": {
+      "hero": "https://picsum.photos/seed/mahe-hero/1200/600",
+      "card": "https://picsum.photos/seed/mahe-city/800/500",
+      "hotel": "https://picsum.photos/seed/mahe-hotel/600/400"
+    },
+    "Praslin": {
+      "hero": "https://picsum.photos/seed/praslin-hero/1200/600",
+      "card": "https://picsum.photos/seed/praslin-city/800/500",
+      "hotel": "https://picsum.photos/seed/praslin-hotel/600/400"
+    },
+    "Antananarivo": {
+      "hero": "https://picsum.photos/seed/antananarivo-hero/1200/600",
+      "card": "https://picsum.photos/seed/antananarivo-city/800/500",
+      "hotel": "https://picsum.photos/seed/antananarivo-hotel/600/400"
+    },
+    "Windhoek": {
+      "hero": "https://picsum.photos/seed/windhoek-hero/1200/600",
+      "card": "https://picsum.photos/seed/windhoek-city/800/500",
+      "hotel": "https://picsum.photos/seed/windhoek-hotel/600/400"
+    },
+    "Sossusvlei": {
+      "hero": "https://picsum.photos/seed/sossusvlei-hero/1200/600",
+      "card": "https://picsum.photos/seed/sossusvlei-city/800/500",
+      "hotel": "https://picsum.photos/seed/sossusvlei-hotel/600/400"
+    },
+    "Gaborone": {
+      "hero": "https://picsum.photos/seed/gaborone-hero/1200/600",
+      "card": "https://picsum.photos/seed/gaborone-city/800/500",
+      "hotel": "https://picsum.photos/seed/gaborone-hotel/600/400"
+    },
+    "Okavango Delta": {
+      "hero": "https://picsum.photos/seed/okavango-delta-hero/1200/600",
+      "card": "https://picsum.photos/seed/okavango-delta-city/800/500",
+      "hotel": "https://picsum.photos/seed/okavango-delta-hotel/600/400"
+    },
+    "Kigali": {
+      "hero": "https://picsum.photos/seed/kigali-hero/1200/600",
+      "card": "https://picsum.photos/seed/kigali-city/800/500",
+      "hotel": "https://picsum.photos/seed/kigali-hotel/600/400"
+    },
+    "Kampala": {
+      "hero": "https://picsum.photos/seed/kampala-hero/1200/600",
+      "card": "https://picsum.photos/seed/kampala-city/800/500",
+      "hotel": "https://picsum.photos/seed/kampala-hotel/600/400"
+    },
+    "Victoria Falls": {
+      "hero": "https://picsum.photos/seed/victoria-falls-hero/1200/600",
+      "card": "https://picsum.photos/seed/victoria-falls-city/800/500",
+      "hotel": "https://picsum.photos/seed/victoria-falls-hotel/600/400"
+    },
+    "Harare": {
+      "hero": "https://picsum.photos/seed/harare-hero/1200/600",
+      "card": "https://picsum.photos/seed/harare-city/800/500",
+      "hotel": "https://picsum.photos/seed/harare-hotel/600/400"
+    },
+    "Sydney": {
+      "hero": "https://picsum.photos/seed/sydney-hero/1200/600",
+      "card": "https://picsum.photos/seed/sydney-city/800/500",
+      "hotel": "https://picsum.photos/seed/sydney-hotel/600/400"
+    },
+    "Melbourne": {
+      "hero": "https://picsum.photos/seed/melbourne-hero/1200/600",
+      "card": "https://picsum.photos/seed/melbourne-city/800/500",
+      "hotel": "https://picsum.photos/seed/melbourne-hotel/600/400"
+    },
+    "Brisbane": {
+      "hero": "https://picsum.photos/seed/brisbane-hero/1200/600",
+      "card": "https://picsum.photos/seed/brisbane-city/800/500",
+      "hotel": "https://picsum.photos/seed/brisbane-hotel/600/400"
+    },
+    "Cairns": {
+      "hero": "https://picsum.photos/seed/cairns-hero/1200/600",
+      "card": "https://picsum.photos/seed/cairns-city/800/500",
+      "hotel": "https://picsum.photos/seed/cairns-hotel/600/400"
+    },
+    "Perth": {
+      "hero": "https://picsum.photos/seed/perth-hero/1200/600",
+      "card": "https://picsum.photos/seed/perth-city/800/500",
+      "hotel": "https://picsum.photos/seed/perth-hotel/600/400"
+    },
+    "Auckland": {
+      "hero": "https://picsum.photos/seed/auckland-hero/1200/600",
+      "card": "https://picsum.photos/seed/auckland-city/800/500",
+      "hotel": "https://picsum.photos/seed/auckland-hotel/600/400"
+    },
+    "Queenstown": {
+      "hero": "https://picsum.photos/seed/queenstown-hero/1200/600",
+      "card": "https://picsum.photos/seed/queenstown-city/800/500",
+      "hotel": "https://picsum.photos/seed/queenstown-hotel/600/400"
+    },
+    "Wellington": {
+      "hero": "https://picsum.photos/seed/wellington-hero/1200/600",
+      "card": "https://picsum.photos/seed/wellington-city/800/500",
+      "hotel": "https://picsum.photos/seed/wellington-hotel/600/400"
+    },
+    "Nadi": {
+      "hero": "https://picsum.photos/seed/nadi-hero/1200/600",
+      "card": "https://picsum.photos/seed/nadi-city/800/500",
+      "hotel": "https://picsum.photos/seed/nadi-hotel/600/400"
+    },
+    "Denarau Island": {
+      "hero": "https://picsum.photos/seed/denarau-island-hero/1200/600",
+      "card": "https://picsum.photos/seed/denarau-island-city/800/500",
+      "hotel": "https://picsum.photos/seed/denarau-island-hotel/600/400"
+    },
+    "Papeete": {
+      "hero": "https://picsum.photos/seed/papeete-hero/1200/600",
+      "card": "https://picsum.photos/seed/papeete-city/800/500",
+      "hotel": "https://picsum.photos/seed/papeete-hotel/600/400"
+    },
+    "Bora Bora": {
+      "hero": "https://picsum.photos/seed/bora-bora-hero/1200/600",
+      "card": "https://picsum.photos/seed/bora-bora-city/800/500",
+      "hotel": "https://picsum.photos/seed/bora-bora-hotel/600/400"
+    },
+    "Port Moresby": {
+      "hero": "https://picsum.photos/seed/port-moresby-hero/1200/600",
+      "card": "https://picsum.photos/seed/port-moresby-city/800/500",
+      "hotel": "https://picsum.photos/seed/port-moresby-hotel/600/400"
+    },
+    "Port Vila": {
+      "hero": "https://picsum.photos/seed/port-vila-hero/1200/600",
+      "card": "https://picsum.photos/seed/port-vila-city/800/500",
+      "hotel": "https://picsum.photos/seed/port-vila-hotel/600/400"
+    },
+    "Apia": {
+      "hero": "https://picsum.photos/seed/apia-hero/1200/600",
+      "card": "https://picsum.photos/seed/apia-city/800/500",
+      "hotel": "https://picsum.photos/seed/apia-hotel/600/400"
+    },
+    "Nuku'alofa": {
+      "hero": "https://picsum.photos/seed/nuku-alofa-hero/1200/600",
+      "card": "https://picsum.photos/seed/nuku-alofa-city/800/500",
+      "hotel": "https://picsum.photos/seed/nuku-alofa-hotel/600/400"
+    },
+    "Jakarta": {
+      "hero": "https://picsum.photos/seed/jakarta-hero/1200/600",
+      "card": "https://picsum.photos/seed/jakarta-city/800/500",
+      "hotel": "https://picsum.photos/seed/jakarta-hotel/600/400"
+    },
+    "Bali": {
+      "hero": "https://picsum.photos/seed/bali-hero/1200/600",
+      "card": "https://picsum.photos/seed/bali-city/800/500",
+      "hotel": "https://picsum.photos/seed/bali-hotel/600/400"
+    },
+    "Yogyakarta": {
+      "hero": "https://picsum.photos/seed/yogyakarta-hero/1200/600",
+      "card": "https://picsum.photos/seed/yogyakarta-city/800/500",
+      "hotel": "https://picsum.photos/seed/yogyakarta-hotel/600/400"
+    },
+    "Bandung": {
+      "hero": "https://picsum.photos/seed/bandung-hero/1200/600",
+      "card": "https://picsum.photos/seed/bandung-city/800/500",
+      "hotel": "https://picsum.photos/seed/bandung-hotel/600/400"
+    },
+    "Lombok": {
+      "hero": "https://picsum.photos/seed/lombok-hero/1200/600",
+      "card": "https://picsum.photos/seed/lombok-city/800/500",
+      "hotel": "https://picsum.photos/seed/lombok-hotel/600/400"
+    },
+    "Surabaya": {
+      "hero": "https://picsum.photos/seed/surabaya-hero/1200/600",
+      "card": "https://picsum.photos/seed/surabaya-city/800/500",
+      "hotel": "https://picsum.photos/seed/surabaya-hotel/600/400"
+    },
+    "Labuan Bajo": {
+      "hero": "https://picsum.photos/seed/labuan-bajo-hero/1200/600",
+      "card": "https://picsum.photos/seed/labuan-bajo-city/800/500",
+      "hotel": "https://picsum.photos/seed/labuan-bajo-hotel/600/400"
+    },
+    "Malang": {
+      "hero": "https://picsum.photos/seed/malang-hero/1200/600",
+      "card": "https://picsum.photos/seed/malang-city/800/500",
+      "hotel": "https://picsum.photos/seed/malang-hotel/600/400"
+    }
+  },
+  "activities": {
+    "temple-visit": "https://picsum.photos/seed/activity-temple-visit/400/300",
+    "beach-walk": "https://picsum.photos/seed/activity-beach-walk/400/300",
+    "snorkeling": "https://picsum.photos/seed/activity-snorkeling/400/300",
+    "surfing": "https://picsum.photos/seed/activity-surfing/400/300",
+    "hiking": "https://picsum.photos/seed/activity-hiking/400/300",
+    "cooking-class": "https://picsum.photos/seed/activity-cooking-class/400/300",
+    "local-market": "https://picsum.photos/seed/activity-local-market/400/300",
+    "museum-visit": "https://picsum.photos/seed/activity-museum-visit/400/300",
+    "city-tour": "https://picsum.photos/seed/activity-city-tour/400/300",
+    "sunset-view": "https://picsum.photos/seed/activity-sunset-view/400/300",
+    "waterfall": "https://picsum.photos/seed/activity-waterfall/400/300",
+    "shopping": "https://picsum.photos/seed/activity-shopping/400/300",
+    "spa-wellness": "https://picsum.photos/seed/activity-spa-wellness/400/300",
+    "food-tour": "https://picsum.photos/seed/activity-food-tour/400/300",
+    "breakfast": "https://picsum.photos/seed/activity-breakfast/400/300",
+    "lunch": "https://picsum.photos/seed/activity-lunch/400/300",
+    "dinner": "https://picsum.photos/seed/activity-dinner/400/300",
+    "beach": "https://picsum.photos/seed/activity-beach-walk/400/300",
+    "temple": "https://picsum.photos/seed/activity-temple-visit/400/300",
+    "market": "https://picsum.photos/seed/activity-local-market/400/300",
+    "food": "https://picsum.photos/seed/activity-food-tour/400/300",
+    "museum": "https://picsum.photos/seed/activity-museum-visit/400/300",
+    "spa": "https://picsum.photos/seed/activity-spa-wellness/400/300",
+    "sunset": "https://picsum.photos/seed/activity-sunset-view/400/300",
+    "snorkel": "https://picsum.photos/seed/activity-snorkeling/400/300",
+    "surf": "https://picsum.photos/seed/activity-surfing/400/300",
+    "cook": "https://picsum.photos/seed/activity-cooking-class/400/300",
+    "shop": "https://picsum.photos/seed/activity-shopping/400/300",
+    "tour": "https://picsum.photos/seed/activity-city-tour/400/300",
+    "default": "https://picsum.photos/seed/travel-activity/400/300"
+  },
+  "transport": {
+    "flight": "https://picsum.photos/seed/transport-flight/400/250",
+    "domestic-flight": "https://picsum.photos/seed/transport-domestic-flight/400/250",
+    "train": "https://picsum.photos/seed/transport-train/400/250",
+    "high-speed-train": "https://picsum.photos/seed/transport-high-speed-train/400/250",
+    "bus": "https://picsum.photos/seed/transport-bus/400/250",
+    "ferry": "https://picsum.photos/seed/transport-ferry/400/250",
+    "car": "https://picsum.photos/seed/transport-car/400/250",
+    "car-rental": "https://picsum.photos/seed/transport-car-rental/400/250",
+    "private-car": "https://picsum.photos/seed/transport-car-rental/400/250",
+    "taxi": "https://picsum.photos/seed/transport-taxi/400/250",
+    "grab": "https://picsum.photos/seed/transport-grab-taxi/400/250",
+    "grab-gojek": "https://picsum.photos/seed/transport-grab-taxi/400/250",
+    "grab-local-taxi": "https://picsum.photos/seed/transport-grab-taxi/400/250",
+    "motorbike": "https://picsum.photos/seed/transport-motorbike/400/250",
+    "motorbike-rental": "https://picsum.photos/seed/transport-motorbike/400/250",
+    "mrt-subway": "https://picsum.photos/seed/transport-mrt-subway/400/250",
+    "subway-metro": "https://picsum.photos/seed/transport-mrt-subway/400/250",
+    "metro-subway": "https://picsum.photos/seed/transport-mrt-subway/400/250",
+    "dubai-metro": "https://picsum.photos/seed/transport-mrt-subway/400/250",
+    "london-underground": "https://picsum.photos/seed/transport-mrt-subway/400/250",
+    "ic-card-suica": "https://picsum.photos/seed/transport-mrt-subway/400/250",
+    "tuk-tuk": "https://picsum.photos/seed/transport-tuk-tuk/400/250",
+    "bicycle": "https://picsum.photos/seed/transport-bicycle/400/250",
+    "bicycle-rental": "https://picsum.photos/seed/transport-bicycle/400/250",
+    "becak-rickshaw": "https://picsum.photos/seed/transport-becak/400/250",
+    "walk": "https://picsum.photos/seed/transport-walk/400/250",
+    "uber-lyft": "https://picsum.photos/seed/transport-taxi/400/250",
+    "black-cab": "https://picsum.photos/seed/transport-taxi/400/250",
+    "default": "https://picsum.photos/seed/travel-transport/400/250"
+  },
+  "hotels": {
+    "budget": "https://picsum.photos/seed/hotel-budget-guesthouse/600/400",
+    "standard": "https://picsum.photos/seed/hotel-boutique-standard/600/400",
+    "luxury": "https://picsum.photos/seed/hotel-luxury-resort/600/400"
+  },
+  "fallback": {
+    "city": "https://picsum.photos/seed/travel-city/800/500",
+    "activity": "https://picsum.photos/seed/travel-activity/400/300",
+    "transport": "https://picsum.photos/seed/travel-transport/400/250",
+    "hotel": "https://picsum.photos/seed/travel-hotel/600/400",
+    "hero": "https://picsum.photos/seed/travel-hero/1200/600"
+  }
+}

@@ -117,8 +117,8 @@ export default function Questionnaire() {
     }
     updatePreferences(draft);
     setIsMatching(true);
-    setTimeout(() => {
-      const pkg = matchTrip(draft, subscription.currentTier);
+    setTimeout(async () => {
+      const pkg = await matchTrip(draft, subscription.currentTier);
       recordRegeneration();
       setCurrentTrip(pkg, draft);
       navigate(`/trip/${pkg.id}`);

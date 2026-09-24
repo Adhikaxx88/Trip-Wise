@@ -89,6 +89,26 @@ export interface CostBreakdown {
   flight: BookableItem;
 }
 
+export type HotelTier = 'budget' | 'standard' | 'luxury';
+
+export interface HotelOption {
+  tier: HotelTier;
+  name: string;
+  pricePerNight: number;
+  rating: number;
+  image: string;
+  mapsLink: string;
+}
+
+export interface FlightOption {
+  id: string;
+  airline: string;
+  logo: string;
+  pricePerPerson: number;
+  duration: string;
+  bookingUrl: string;
+}
+
 export interface TripPackage {
   id: string;
   destination: string;
@@ -103,6 +123,10 @@ export interface TripPackage {
   tier: SubscriptionTierId;
   hotelDiscountPercent: number;
   cities?: string[];
+  hotelOptions?: HotelOption[];
+  flightOptions?: FlightOption[];
+  selectedHotelTier?: HotelTier;
+  selectedFlightId?: string;
 }
 
 export interface SavedTrip {

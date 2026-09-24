@@ -1,20 +1,72 @@
 import type { TransportOption } from '../types';
 
 function unsplash(keywords: string): string {
-  return `https://source.unsplash.com/400x300/?${encodeURIComponent(keywords).replace(/%20/g, '+')}`;
+  const seed = keywords
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/400/300`;
 }
 
 export function transportMapsLink(place: string): string {
   return `https://maps.google.com/?q=${encodeURIComponent(place)}`;
 }
 
+export function routeMapsLink(fromCity: string, toCity: string): string {
+  return `https://maps.google.com/?q=${encodeURIComponent(`${fromCity} to ${toCity}`)}`;
+}
+
 function key(a: string, b: string): string {
   return `${a}-${b}`;
 }
 
+const INDONESIA_CITY_NAMES = new Set([
+  'Jakarta',
+  'Bandung',
+  'Yogyakarta',
+  'Bali',
+  'Lombok',
+  'Surabaya',
+  'Labuan Bajo',
+  'Malang',
+]);
+
+function isDomesticIndonesia(a: string, b: string): boolean {
+  return INDONESIA_CITY_NAMES.has(a) && INDONESIA_CITY_NAMES.has(b);
+}
+
+const BOOKING_URL = {
+  train: 'https://kai.id',
+  bus: 'https://damri.co.id',
+  flightDomesticId: 'https://www.lionair.co.id',
+  ferry: 'https://www.pelni.co.id',
+  fallback: 'https://www.traveloka.com',
+};
+
+/** Resolves the booking URL for a transport option per the domestic-Indonesia / international / ferry / fallback rules. */
+function resolveBookingUrl(type: TransportOption['type'], fromCity: string, toCity: string): string {
+  if (isDomesticIndonesia(fromCity, toCity)) {
+    if (type === 'train') return BOOKING_URL.train;
+    if (type === 'bus') return BOOKING_URL.bus;
+    if (type === 'flight') return BOOKING_URL.flightDomesticId;
+  }
+  if (type === 'ferry') return BOOKING_URL.ferry;
+  return BOOKING_URL.fallback;
+}
+
+/** Builds a transport option, filling in bookingUrl automatically unless one is explicitly provided. */
+function option(
+  fromCity: string,
+  toCity: string,
+  opt: Omit<TransportOption, 'bookingUrl'> & { bookingUrl?: string },
+): TransportOption {
+  return { ...opt, bookingUrl: opt.bookingUrl ?? resolveBookingUrl(opt.type, fromCity, toCity) };
+}
+
 export const intercityTransport: Record<string, TransportOption[]> = {
   [key('Jakarta', 'Bandung')]: [
-    {
+    option('Jakarta', 'Bandung', {
       type: 'train',
       name: 'Whoosh High Speed Train',
       duration: '46 min',
@@ -22,9 +74,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 300.000',
       image: unsplash('indonesia high speed train'),
       badge: 'Fastest',
-      bookingUrl: 'https://kai.id',
-    },
-    {
+    }),
+    option('Jakarta', 'Bandung', {
       type: 'bus',
       name: 'Damri Executive',
       duration: '3 hours',
@@ -32,11 +83,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 100.000',
       image: unsplash('indonesia bus terminal'),
       badge: 'Best value',
-      bookingUrl: 'https://damri.co.id',
-    },
+    }),
   ],
   [key('Jakarta', 'Yogyakarta')]: [
-    {
+    option('Jakarta', 'Yogyakarta', {
       type: 'train',
       name: 'KAI Argo Lawu',
       duration: '7.5 hours',
@@ -44,9 +94,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 370.000',
       image: unsplash('kereta api indonesia station'),
       badge: 'Best value',
-      bookingUrl: 'https://kai.id',
-    },
-    {
+    }),
+    option('Jakarta', 'Yogyakarta', {
       type: 'flight',
       name: 'Garuda Indonesia',
       duration: '1 hour 15 min',
@@ -54,11 +103,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 850.000',
       image: unsplash('small airplane domestic flight'),
       badge: 'Fastest',
-      bookingUrl: 'https://www.garuda-indonesia.com',
-    },
+    }),
   ],
   [key('Bali', 'Lombok')]: [
-    {
+    option('Bali', 'Lombok', {
       type: 'ferry',
       name: 'Gili Fast Boat',
       duration: '4-6 hours',
@@ -66,8 +114,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 250.000',
       image: unsplash('fast boat bali lombok ocean'),
       badge: 'Best value',
-    },
-    {
+    }),
+    option('Bali', 'Lombok', {
       type: 'flight',
       name: 'Wings Air',
       duration: '30 min',
@@ -75,10 +123,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 500.000',
       image: unsplash('small airplane domestic flight'),
       badge: 'Fastest',
-    },
+    }),
   ],
   [key('Jakarta', 'Bali')]: [
-    {
+    option('Jakarta', 'Bali', {
       type: 'flight',
       name: 'Garuda Indonesia / Lion Air',
       duration: '1 hour 50 min',
@@ -86,10 +134,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 1.000.000',
       image: unsplash('airplane airport departure'),
       badge: 'Fastest',
-    },
+    }),
   ],
   [key('Yogyakarta', 'Bali')]: [
-    {
+    option('Yogyakarta', 'Bali', {
       type: 'flight',
       name: 'Citilink',
       duration: '1 hour 40 min',
@@ -97,10 +145,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'Rp 900.000',
       image: unsplash('airplane airport departure'),
       badge: 'Fastest',
-    },
+    }),
   ],
   [key('Tokyo', 'Osaka')]: [
-    {
+    option('Tokyo', 'Osaka', {
       type: 'train',
       name: 'Tokaido Shinkansen',
       duration: '2 hours 30 min',
@@ -109,8 +157,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       image: unsplash('shinkansen bullet train japan'),
       badge: 'Fastest',
       bookingUrl: 'https://www.jrpass.com',
-    },
-    {
+    }),
+    option('Tokyo', 'Osaka', {
       type: 'bus',
       name: 'Willer Express overnight bus',
       duration: '8 hours',
@@ -118,10 +166,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '¥4,500',
       image: unsplash('bus terminal night'),
       badge: 'Best value',
-    },
+    }),
   ],
   [key('Tokyo', 'Kyoto')]: [
-    {
+    option('Tokyo', 'Kyoto', {
       type: 'train',
       name: 'Tokaido Shinkansen',
       duration: '2 hours 15 min',
@@ -129,10 +177,11 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '¥13,500',
       image: unsplash('shinkansen bullet train japan'),
       badge: 'Fastest',
-    },
+      bookingUrl: 'https://www.jrpass.com',
+    }),
   ],
   [key('Osaka', 'Kyoto')]: [
-    {
+    option('Osaka', 'Kyoto', {
       type: 'train',
       name: 'JR Kyoto Line rapid',
       duration: '30 min',
@@ -140,10 +189,11 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '¥560',
       image: unsplash('japan local train'),
       badge: 'Best value',
-    },
+      bookingUrl: 'https://www.jrpass.com',
+    }),
   ],
   [key('Dubai', 'Abu Dhabi')]: [
-    {
+    option('Dubai', 'Abu Dhabi', {
       type: 'bus',
       name: 'E100 Intercity Bus',
       duration: '2 hours',
@@ -151,8 +201,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'AED 25',
       image: unsplash('intercity bus dubai'),
       badge: 'Best value',
-    },
-    {
+    }),
+    option('Dubai', 'Abu Dhabi', {
       type: 'car',
       name: 'Private car / rental',
       duration: '1 hour 20 min',
@@ -160,10 +210,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: 'AED 90',
       image: unsplash('private car driver travel'),
       badge: 'Fastest',
-    },
+    }),
   ],
   [key('Bangkok', 'Chiang Mai')]: [
-    {
+    option('Bangkok', 'Chiang Mai', {
       type: 'flight',
       name: 'Thai AirAsia',
       duration: '1 hour 20 min',
@@ -171,8 +221,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '฿1,500',
       image: unsplash('small airplane domestic flight'),
       badge: 'Fastest',
-    },
-    {
+    }),
+    option('Bangkok', 'Chiang Mai', {
       type: 'train',
       name: 'State Railway overnight sleeper',
       duration: '12 hours',
@@ -180,10 +230,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '฿800',
       image: unsplash('thailand overnight train'),
       badge: 'Best value',
-    },
+    }),
   ],
   [key('Bangkok', 'Phuket')]: [
-    {
+    option('Bangkok', 'Phuket', {
       type: 'flight',
       name: 'Bangkok Airways',
       duration: '1 hour 25 min',
@@ -191,10 +241,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '฿1,900',
       image: unsplash('small airplane domestic flight'),
       badge: 'Fastest',
-    },
+    }),
   ],
   [key('Rome', 'Florence')]: [
-    {
+    option('Rome', 'Florence', {
       type: 'train',
       name: 'Frecciarossa High Speed',
       duration: '1 hour 30 min',
@@ -203,10 +253,10 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       image: unsplash('italy high speed train'),
       badge: 'Fastest',
       bookingUrl: 'https://www.trenitalia.com',
-    },
+    }),
   ],
   [key('Florence', 'Venice')]: [
-    {
+    option('Florence', 'Venice', {
       type: 'train',
       name: 'Italo High Speed',
       duration: '2 hours',
@@ -214,10 +264,11 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '€45',
       image: unsplash('italy high speed train'),
       badge: 'Fastest',
-    },
+      bookingUrl: 'https://www.trenitalia.com',
+    }),
   ],
   [key('Paris', 'Nice')]: [
-    {
+    option('Paris', 'Nice', {
       type: 'flight',
       name: 'Air France',
       duration: '1 hour 30 min',
@@ -225,8 +276,8 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '€85',
       image: unsplash('airplane airport departure'),
       badge: 'Fastest',
-    },
-    {
+    }),
+    option('Paris', 'Nice', {
       type: 'train',
       name: 'TGV High Speed',
       duration: '5 hours 30 min',
@@ -234,7 +285,7 @@ export const intercityTransport: Record<string, TransportOption[]> = {
       costLabel: '€70',
       image: unsplash('france tgv train'),
       badge: 'Best value',
-    },
+    }),
   ],
 };
 
@@ -265,30 +316,33 @@ export function getIntercityOptions(
   const options: TransportOption[] = [];
 
   if (differentCountries) {
-    options.push({
-      type: 'flight',
-      name: `International flight, ${fromCity} → ${toCity}`,
-      duration: nearby ? '2-4 hours' : '6-12 hours',
-      costPerPerson: nearby ? 180 : 550,
-      costLabel: nearby ? '$180' : '$550',
-      image: unsplash('airplane airport departure'),
-      badge: 'Fastest',
-      bookingUrl: `https://www.google.com/travel/flights?q=Flights%20to%20${encodeURIComponent(toCity)}`,
-    });
+    options.push(
+      option(fromCity, toCity, {
+        type: 'flight',
+        name: `International flight, ${fromCity} → ${toCity}`,
+        duration: nearby ? '2-4 hours' : '6-12 hours',
+        costPerPerson: nearby ? 180 : 550,
+        costLabel: nearby ? '$180' : '$550',
+        image: unsplash('airplane airport departure'),
+        badge: 'Fastest',
+      }),
+    );
     if (nearby) {
-      options.push({
-        type: 'bus',
-        name: `Cross-border coach, ${fromCity} → ${toCity}`,
-        duration: '6-10 hours',
-        costPerPerson: 45,
-        costLabel: '$45',
-        image: unsplash('bus terminal'),
-        badge: 'Best value',
-      });
+      options.push(
+        option(fromCity, toCity, {
+          type: 'bus',
+          name: `Cross-border coach, ${fromCity} → ${toCity}`,
+          duration: '6-10 hours',
+          costPerPerson: 45,
+          costLabel: '$45',
+          image: unsplash('bus terminal'),
+          badge: 'Best value',
+        }),
+      );
     }
   } else {
     options.push(
-      {
+      option(fromCity, toCity, {
         type: 'flight',
         name: `Domestic flight, ${fromCity} → ${toCity}`,
         duration: '1-2 hours',
@@ -296,16 +350,16 @@ export function getIntercityOptions(
         costLabel: '$70',
         image: unsplash('small airplane domestic flight'),
         badge: 'Fastest',
-      },
-      {
+      }),
+      option(fromCity, toCity, {
         type: 'train',
         name: `Intercity rail, ${fromCity} → ${toCity}`,
         duration: '3-6 hours',
         costPerPerson: 35,
         costLabel: '$35',
         image: unsplash('intercity train'),
-      },
-      {
+      }),
+      option(fromCity, toCity, {
         type: 'bus',
         name: `Intercity coach, ${fromCity} → ${toCity}`,
         duration: '5-8 hours',
@@ -313,18 +367,20 @@ export function getIntercityOptions(
         costLabel: '$18',
         image: unsplash('bus terminal'),
         badge: 'Best value',
-      },
+      }),
     );
   }
 
-  options.push({
-    type: 'car',
-    name: 'Private car rental',
-    duration: 'Varies',
-    costPerPerson: 40,
-    costLabel: '$40/day',
-    image: unsplash('private car driver travel'),
-  });
+  options.push(
+    option(fromCity, toCity, {
+      type: 'car',
+      name: 'Private car rental',
+      duration: 'Varies',
+      costPerPerson: 40,
+      costLabel: '$40/day',
+      image: unsplash('private car driver travel'),
+    }),
+  );
 
   return options;
 }
