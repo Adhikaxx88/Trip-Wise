@@ -1,7 +1,7 @@
 import { destinations, type DayTemplate, type DestinationTemplate } from '../data/destinations';
 import { COUNTRIES, findCity } from '../data/geography';
 import { HOTEL_DISCOUNT_BY_TIER } from '../data/subscriptionTiers';
-import { getIntercityOptions, getIntracityOptions } from '../data/transport';
+import { getIntercityRoute as getIntercityOptions, getIntracityOptions } from '../data/tripwiseMaster';
 import type {
   CostBreakdown,
   ItineraryActivity,
@@ -256,8 +256,8 @@ function distributeDays(totalDays: number, cityCount: number): number[] {
   return Array.from({ length: cityCount }, (_, i) => base + (i < remainder ? 1 : 0));
 }
 
-function buildIntracityActivity(cityName: string, name: string, price: number): ItineraryActivity {
-  const intracity = getIntracityOptions(cityName);
+async function buildIntracityActivity(cityName: string, name: string, price: number): Promise<ItineraryActivity> {
+  const intracity = await getIntracityOptions(cityName);
   const primary = intracity.options[0];
   return {
     name,
@@ -273,14 +273,14 @@ function buildIntracityActivity(cityName: string, name: string, price: number): 
   };
 }
 
-function buildCityDays(
+async function buildCityDays(
   selected: SelectedCity,
   startDay: number,
   numDays: number,
   vibe: string | null,
   isFirstCity: boolean,
   isLastCity: boolean,
-): ItineraryDay[] {
+): Promise<ItineraryDay[]> {
   const cityName = selected.city;
   const template = VIBE_ACTIVITY_TEMPLATES[vibe ?? 'relaxing'] ?? VIBE_ACTIVITY_TEMPLATES.relaxing;
   const dailyCost = dailyCostForCountry(selected.country);
@@ -298,16 +298,16 @@ function buildCityDays(
     } else if (isDeparture) {
       activities.push({ time: '8:00 AM', name: 'Farewell breakfast', price: Math.round(dailyCost * 0.15) });
       activities.push(
-        buildIntracityActivity(cityName, 'Last-minute exploring & souvenirs', Math.round(dailyCost * 0.2)),
+        await buildIntracityActivity(cityName, 'Last-minute exploring & souvenirs', Math.round(dailyCost * 0.2)),
       );
       activities.push({ time: '2:00 PM', name: `Transfer for departure from ${cityName}`, price: 0 });
     } else {
       const pick1 = template[(dayNumber - 1) % template.length].replace('{city}', cityName);
       const pick2 = template[(dayNumber + 2) % template.length].replace('{city}', cityName);
       activities.push({ time: '8:00 AM', name: 'Breakfast', price: Math.round(dailyCost * 0.1) });
-      activities.push(buildIntracityActivity(cityName, pick1, Math.round(dailyCost * 0.35)));
+      activities.push(await buildIntracityActivity(cityName, pick1, Math.round(dailyCost * 0.35)));
       activities.push({ time: '1:00 PM', name: 'Lunch', price: Math.round(dailyCost * 0.15) });
-      activities.push(buildIntracityActivity(cityName, pick2, Math.round(dailyCost * 0.3)));
+      activities.push(await buildIntracityActivity(cityName, pick2, Math.round(dailyCost * 0.3)));
       activities.push({ time: '7:30 PM', name: 'Dinner', price: Math.round(dailyCost * 0.2) });
     }
 
@@ -327,8 +327,8 @@ function buildCityDays(
   return days;
 }
 
-function buildTransitionDay(dayNumber: number, from: SelectedCity, to: SelectedCity): ItineraryDay {
-  const options = getIntercityOptions(from.city, to.city, from.country, to.country);
+async function buildTransitionDay(dayNumber: number, from: SelectedCity, to: SelectedCity): Promise<ItineraryDay> {
+  const options = await getIntercityOptions(from.city, to.city, from.country, to.country);
   const best = options[0];
   return {
     day: dayNumber,
@@ -348,17 +348,18 @@ export function activitiesCostPerPersonWithTransition(itinerary: ItineraryDay[])
   return activitiesCostPerPerson(itinerary);
 }
 
-function buildMultiCityItinerary(
+async function buildMultiCityItinerary(
   cities: SelectedCity[],
   totalDays: number,
   vibe: string | null,
-): ItineraryDay[] {
+): Promise<ItineraryDay[]> {
   const perCity = distributeDays(Math.max(1, totalDays), cities.length);
   const itinerary: ItineraryDay[] = [];
   let dayCounter = 1;
 
-  cities.forEach((city, index) => {
-    const cityDays = buildCityDays(
+  for (let index = 0; index < cities.length; index++) {
+    const city = cities[index];
+    const cityDays = await buildCityDays(
       city,
       dayCounter,
       perCity[index],
@@ -370,10 +371,10 @@ function buildMultiCityItinerary(
     dayCounter += perCity[index];
 
     if (index < cities.length - 1) {
-      itinerary.push(buildTransitionDay(dayCounter, city, cities[index + 1]));
+      itinerary.push(await buildTransitionDay(dayCounter, city, cities[index + 1]));
       dayCounter += 1;
     }
-  });
+  }
 
   return itinerary.map((day, i) => ({ ...day, day: i + 1 }));
 }
@@ -408,13 +409,13 @@ function buildMultiCityCostBreakdown(
   };
 }
 
-function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTierId): TripPackage {
+async function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTierId): Promise<TripPackage> {
   const cities = prefs.selectedCities ?? [];
   const duration = prefs.durationDays ?? Math.max(cities.length * 2, 4);
   const groupSize = prefs.groupSize ?? 1;
   const primaryVibe = prefs.vibe && prefs.vibe.length > 0 ? prefs.vibe[0] : null;
 
-  const itinerary = buildMultiCityItinerary(cities, duration, primaryVibe);
+  const itinerary = await buildMultiCityItinerary(cities, duration, primaryVibe);
   const costBreakdown = buildMultiCityCostBreakdown(cities, itinerary.length, groupSize, currentTier);
   const estimatedCost =
     costBreakdown.hotel.cost +
@@ -450,7 +451,10 @@ function matchMultiCityTrip(prefs: TripPreferences, currentTier: SubscriptionTie
   };
 }
 
-export function matchTrip(prefs: TripPreferences, currentTier: SubscriptionTierId = 'free'): TripPackage {
+export async function matchTrip(
+  prefs: TripPreferences,
+  currentTier: SubscriptionTierId = 'free',
+): Promise<TripPackage> {
   if (prefs.selectedCities && prefs.selectedCities.length > 0) {
     return matchMultiCityTrip(prefs, currentTier);
   }
