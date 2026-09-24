@@ -437,7 +437,12 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
   }
 
   // Meta line: dates · duration · travellers
-  const dateRangeLabel = formatDateRange(preferences.startDate, preferences.endDate);
+  // Derive the end date from the itinerary length so the cover matches the per-day dates
+  // (multi-city trips can add travel days beyond the originally picked range).
+  const tripEndDate = preferences.startDate
+    ? addDaysIso(preferences.startDate, pkg.itinerary.length - 1)
+    : preferences.endDate;
+  const dateRangeLabel = formatDateRange(preferences.startDate, tripEndDate);
   const durationLabel = `${pluralize(pkg.itinerary.length, 'day')} · ${pluralize(nights, 'night')}`;
   const travellersLabel = pluralize(groupSize, 'traveller');
   const metaLine = sanitizePdfText([dateRangeLabel, durationLabel, travellersLabel].filter(Boolean).join('   ·   '));
@@ -623,9 +628,20 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
     const city = day.city ?? (day.type === 'transition' ? day.toCity : undefined);
     const thumb = city ? cardImageByCity.get(city) ?? null : null;
 
-    y = ensureSpace(doc, y, 100);
+    const dateLabel = preferences.startDate
+      ? new Date(`${addDaysIso(preferences.startDate, day.day - 1)}T00:00:00`).toLocaleDateString('en-US', {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
+        })
+      : null;
+    const barH = thumb ? 62 : dateLabel ? 50 : 40;
 
-    const barH = thumb ? 62 : 40;
+    // Keep a day's header, transport box, table and note on one page when they fit.
+    const rowCount = Math.max(day.activities.length, 1);
+    const dayBlockH = barH + 10 + (travelDay ? 36 : 0) + 24 + rowCount * 22 + 32;
+    y = ensureSpace(doc, y, Math.min(dayBlockH, CONTENT_BOTTOM - MARGIN));
+
     setFill(doc, travelDay ? COLOR.goldDeep : COLOR.oceanMid);
     doc.roundedRect(MARGIN, y, CONTENT_W, barH, 8, 8, 'F');
 
@@ -644,26 +660,18 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
       );
     }
 
-    const dateLabel = preferences.startDate
-      ? new Date(`${addDaysIso(preferences.startDate, day.day - 1)}T00:00:00`).toLocaleDateString('en-US', {
-          weekday: 'short',
-          month: 'short',
-          day: 'numeric',
-        })
-      : null;
-
     const headerMaxW = CONTENT_W - 24 - (thumb ? thumbW + 10 : 0);
     const dayLabel = sanitizePdfText(`DAY ${day.day} · ${day.title}`);
     setText(doc, travelDay ? COLOR.oceanDeepest : COLOR.white);
     doc.setFont('helvetica', 'bold');
     const fitted = fitSingleLine(doc, dayLabel, headerMaxW, 12);
-    doc.text(fitted, MARGIN + 14, dateLabel ? y + 24 : y + barH / 2 + 4);
+    doc.text(fitted, MARGIN + 14, dateLabel ? y + 22 : y + barH / 2 + 4);
 
     if (dateLabel) {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(9);
       setText(doc, travelDay ? COLOR.oceanDeepest : COLOR.paleTint);
-      doc.text(sanitizePdfText(dateLabel), MARGIN + 14, y + 40);
+      doc.text(sanitizePdfText(dateLabel), MARGIN + 14, y + 38);
     }
 
     y += barH + 10;
