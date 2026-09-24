@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TimePicker from './TimePicker';
+import { getMapsLink } from '../data/tripwiseMaster';
 import { activityImageUrl } from '../logic/tripMedia';
 import type { ItineraryActivity } from '../types';
 
@@ -21,7 +22,7 @@ export default function PlaceCard({
   onRemove,
 }: PlaceCardProps) {
   const [imgFailed, setImgFailed] = useState(false);
-  const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(`${activity.name} ${destination}`)}`;
+  const mapsUrl = getMapsLink(activity.name, destination);
 
   return (
     <li className="overflow-hidden rounded-xl border border-ink/10 bg-white shadow-sm">

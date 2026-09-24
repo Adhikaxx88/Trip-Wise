@@ -108,8 +108,8 @@ export default function Chatbot() {
     updatePreferences(finalPrefs);
     setIsMatching(true);
     pushMessage('bot', 'Perfect, matching you a trip now…');
-    setTimeout(() => {
-      const pkg = matchTrip(finalPrefs, subscription.currentTier);
+    setTimeout(async () => {
+      const pkg = await matchTrip(finalPrefs, subscription.currentTier);
       recordRegeneration();
       setCurrentTrip(pkg, finalPrefs);
       navigate(`/trip/${pkg.id}`);
