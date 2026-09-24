@@ -201,7 +201,7 @@ export default function Landing() {
           </Reveal>
           <Reveal variant="up" delay={150}>
             <h1 className="font-display max-w-3xl text-3xl font-medium leading-tight sm:text-5xl md:text-6xl">
-              A complete trip, planned for you before you finish your coffee.
+              A complete trip, planned for you before finish your coffee.
             </h1>
           </Reveal>
           <Reveal variant="up" delay={400}>

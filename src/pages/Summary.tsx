@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { Hotel, MapPin, Pencil, Plane } from 'lucide-react';
+import { Hotel, MapPin, Plane } from 'lucide-react';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
 import CityStayStrip from '../components/CityStayStrip';
 import DayCard from '../components/DayCard';
-import FlightPicker from '../components/FlightPicker';
 import GradientBackdrop from '../components/GradientBackdrop';
-import HotelPicker from '../components/HotelPicker';
 import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import Toast from '../components/Toast';
@@ -19,13 +17,13 @@ import {
   isFallbackImage,
   trustedImage,
 } from '../data/getImage';
-import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
+import { getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { formatDateRange } from '../logic/dates';
 import { airportMapsLink, hotelAreaMapsLink } from '../logic/tripMedia';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
-import type { BookableItem, HotelTier, TripPackage } from '../types';
+import type { BookableItem, TripPackage } from '../types';
 
 export default function Summary() {
   const { id } = useParams<{ id: string }>();
@@ -34,8 +32,6 @@ export default function Summary() {
   const { currentTrip, updateCurrentTripPackage } = useCurrentTrip();
   const [justSaved, setJustSaved] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [editingHotel, setEditingHotel] = useState(false);
-  const [editingFlight, setEditingFlight] = useState(false);
 
   useEffect(() => {
     if (!showToast) return;
@@ -79,43 +75,6 @@ export default function Summary() {
             : day.activities,
         };
       }),
-    });
-  };
-
-  const nights = Math.max(1, pkg.itinerary.length - 1);
-  const rooms = Math.max(1, Math.ceil(groupSizeOf(preferences) / 2));
-
-  const handleSelectHotel = (tier: HotelTier) => {
-    if (!pkg.hotelOptions) return;
-    const option = getHotelOption(pkg.hotelOptions, tier);
-    const hotelDiscount = pkg.hotelDiscountPercent / 100;
-    const hotel: BookableItem = {
-      name: option.name,
-      cost: Math.round(option.pricePerNight * nights * rooms * (1 - hotelDiscount)),
-      bookingUrl: pkg.costBreakdown.hotel.bookingUrl,
-    };
-    persistPackage({
-      ...pkg,
-      selectedHotelTier: tier,
-      costBreakdown: { ...pkg.costBreakdown, hotel },
-      estimatedCost: pkg.estimatedCost - pkg.costBreakdown.hotel.cost + hotel.cost,
-    });
-  };
-
-  const handleSelectFlight = (flightId: string) => {
-    if (!pkg.flightOptions) return;
-    const option = getFlightOption(pkg.flightOptions, flightId);
-    const groupSize = groupSizeOf(preferences);
-    const flight: BookableItem = {
-      name: `${option.airline} round-trip to ${pkg.cities?.[0] ?? pkg.destination}`,
-      cost: Math.round(option.pricePerPerson * groupSize),
-      bookingUrl: option.bookingUrl,
-    };
-    persistPackage({
-      ...pkg,
-      selectedFlightId: flightId,
-      costBreakdown: { ...pkg.costBreakdown, flight },
-      estimatedCost: pkg.estimatedCost - pkg.costBreakdown.flight.cost + flight.cost,
     });
   };
 
@@ -279,89 +238,15 @@ export default function Summary() {
                         ${Math.round(row.item.cost / groupSize).toLocaleString()} / person
                       </p>
                     </div>
-                    {row.icon === 'hotel' && pkg.hotelOptions ? (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditingHotel((v) => !v);
-                          setEditingFlight(false);
-                        }}
-                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
-                      >
-                        Edit hotel
-                        <Pencil className="h-3.5 w-3.5" aria-hidden />
-                      </button>
-                    ) : row.icon === 'flight' && pkg.flightOptions ? (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditingFlight((v) => !v);
-                          setEditingHotel(false);
-                        }}
-                        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
-                      >
-                        Edit flight
-                        <Pencil className="h-3.5 w-3.5" aria-hidden />
-                      </button>
-                    ) : (
-                      <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
-                        <Button variant="accent" className="px-4 py-2 text-sm">
-                          Book ↗
-                        </Button>
-                      </a>
-                    )}
+                    <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
+                      <Button variant="accent" className="px-4 py-2 text-sm">
+                        {row.icon === 'hotel' ? 'Book hotel' : 'Book flight'} ↗
+                      </Button>
+                    </a>
                   </div>
                 </div>
 
                 {row.icon === 'hotel' && isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />}
-
-                <div
-                  className="overflow-hidden transition-all duration-300 ease-in-out"
-                  style={{
-                    // Tall enough for the hotel tiers stacked one per row on phones (~1000px).
-                    maxHeight:
-                      (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
-                        ? 1200
-                        : 0,
-                    opacity:
-                      (row.icon === 'hotel' && editingHotel) || (row.icon === 'flight' && editingFlight)
-                        ? 1
-                        : 0,
-                  }}
-                >
-                  {row.icon === 'hotel' && pkg.hotelOptions && (
-                    <div className="mt-4 border-t border-ink/10 pt-4">
-                      <HotelPicker
-                        options={pkg.hotelOptions}
-                        selectedTier={selectedHotelTier}
-                        onSelect={handleSelectHotel}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setEditingHotel(false)}
-                        className="mt-3 cursor-pointer rounded-full bg-gold-accent px-4 py-2 text-xs font-semibold text-ink hover:opacity-90"
-                      >
-                        Confirm
-                      </button>
-                    </div>
-                  )}
-                  {row.icon === 'flight' && pkg.flightOptions && (
-                    <div className="mt-4 border-t border-ink/10 pt-4">
-                      <FlightPicker
-                        options={pkg.flightOptions}
-                        selectedId={pkg.selectedFlightId ?? pkg.flightOptions[0].id}
-                        onSelect={handleSelectFlight}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setEditingFlight(false)}
-                        className="mt-3 cursor-pointer rounded-full bg-gold-accent px-4 py-2 text-xs font-semibold text-ink hover:opacity-90"
-                      >
-                        Confirm
-                      </button>
-                    </div>
-                  )}
-                </div>
               </div>
             ))}
           </div>
