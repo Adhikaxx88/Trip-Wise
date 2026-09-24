@@ -1,4 +1,4 @@
-import { useState, type DragEvent } from 'react';
+import { useEffect, useState, type DragEvent } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Pencil } from 'lucide-react';
 import Button from '../components/Button';
@@ -9,6 +9,7 @@ import GradientBackdrop from '../components/GradientBackdrop';
 import HotelPicker from '../components/HotelPicker';
 import ItineraryAssistant from '../components/ItineraryAssistant';
 import Logo from '../components/Logo';
+import Toast from '../components/Toast';
 import { getCityImage, getHotelImage, getTransportImage, handleImageError, trustedImage } from '../data/getImage';
 import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
@@ -38,6 +39,14 @@ export default function Edit() {
   const [editingFlight, setEditingFlight] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [pdfExporting, setPdfExporting] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!pdfError) return;
+    const timer = setTimeout(() => setPdfError(null), 4000);
+    return () => clearTimeout(timer);
+  }, [pdfError]);
 
   if (!resolved || !itinerary || !costBreakdown) {
     return <Navigate to="/questionnaire" replace />;
@@ -203,8 +212,17 @@ export default function Edit() {
     }, 1500);
   };
 
-  const handleExportPdf = () => {
-    exportItineraryToPdf(buildUpdatedPackage(), preferences);
+  const handleExportPdf = async () => {
+    setPdfError(null);
+    setPdfExporting(true);
+    try {
+      await exportItineraryToPdf(buildUpdatedPackage(), preferences);
+    } catch (err) {
+      console.error('Failed to export itinerary PDF', err);
+      setPdfError('Could not generate the PDF. Please try again.');
+    } finally {
+      setPdfExporting(false);
+    }
   };
 
   const makeHotelCheaper = () => handleSelectHotel('budget');
@@ -462,14 +480,15 @@ export default function Edit() {
           <Button variant="primary" onClick={handleSave}>
             Save changes
           </Button>
-          <Button variant="ghost" onClick={handleExportPdf}>
-            Export to PDF ↓
+          <Button variant="ghost" onClick={handleExportPdf} disabled={pdfExporting}>
+            {pdfExporting ? 'Preparing PDF…' : 'Export to PDF ↓'}
           </Button>
           {savedNotice && <span className="text-sm font-medium text-ocean-mid">Changes saved ✓</span>}
         </div>
       </div>
 
       <ItineraryAssistant onCheaperHotel={makeHotelCheaper} onAddActivity={addGenericActivity} />
+      <Toast message={pdfError ?? ''} show={!!pdfError} variant="error" />
     </div>
   );
 }
