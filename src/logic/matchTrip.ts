@@ -18,7 +18,7 @@ function isUnlockedForTier(destTier: SubscriptionTierId, currentTier: Subscripti
 function scoreDestination(dest: DestinationTemplate, prefs: TripPreferences): number {
   let score = 0;
 
-  if (prefs.vibe && dest.vibe === prefs.vibe) score += 10;
+  if (prefs.vibe && prefs.vibe.length > 0 && prefs.vibe.includes(dest.vibe)) score += 10;
 
   if (prefs.budget && prefs.durationDays) {
     const estimated = dest.costPerPersonPerDay * prefs.durationDays * (prefs.groupSize ?? 1);
