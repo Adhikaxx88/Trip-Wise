@@ -18,6 +18,38 @@ export const VIBE_IDK_OPTION = {
   description: "We'll surprise you with our top picks",
 };
 
+/**
+ * Landing-page "Pick a starting point" presets, passed as `/questionnaire?preset=<id>`.
+ * Mapped onto the vibe / trip-type ids the quiz actually knows:
+ * - beaches: beach + relaxation -> 'relaxing' ("Slow mornings, beaches, spas"), local (Indonesia)
+ * - adventure: adventure + nature -> 'adventurous' ("Hikes, adrenaline, wild places"), international
+ * - hidden-gems: offbeat / local discoveries -> 'cultural' ("History, food, local traditions"), trip type left open
+ */
+export type QuizPresetId = 'beaches' | 'adventure' | 'hidden-gems';
+
+export const QUIZ_PRESETS: Record<QuizPresetId, { vibe: Vibe[]; tripType?: TripType }> = {
+  beaches: { vibe: ['relaxing'], tripType: 'local' },
+  adventure: { vibe: ['adventurous'], tripType: 'international' },
+  'hidden-gems': { vibe: ['cultural'] },
+};
+
+function isQuizPresetId(id: string): id is QuizPresetId {
+  return Object.prototype.hasOwnProperty.call(QUIZ_PRESETS, id);
+}
+
+/** Pre-fill quiz answers from a preset id; unknown / missing ids return prefs unchanged. */
+export function applyQuizPreset(prefs: TripPreferences, presetId: string | null): TripPreferences {
+  if (!presetId || !isQuizPresetId(presetId)) return prefs;
+  const preset = QUIZ_PRESETS[presetId];
+  const next: TripPreferences = { ...prefs, vibe: [...preset.vibe] };
+  if (preset.tripType && preset.tripType !== prefs.tripType) {
+    next.tripType = preset.tripType;
+    next.selectedCountries = [];
+    next.selectedCities = [];
+  }
+  return next;
+}
+
 export const DATE_RANGE_PRESETS: { label: string; days: number }[] = [
   { label: 'Long weekend', days: 3 },
   { label: '1 week', days: 7 },

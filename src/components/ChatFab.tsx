@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Plane, X } from 'lucide-react';
 import { getFaqAnswer, SUGGESTED_QUESTIONS } from '../data/chatbotFaq';
 
 interface Message {
@@ -81,7 +82,8 @@ export default function ChatFab() {
             }}
           >
             <p className="flex items-center gap-2 text-sm font-semibold" style={{ color: '#FFD233' }}>
-              <span aria-hidden style={{ color: '#FFD233' }}>✈</span> Itinerary Assistant
+              <Plane className="h-4 w-4" aria-hidden style={{ color: '#FFD233' }} />
+              Itinerary Assistant
             </p>
             <button
               type="button"
@@ -89,7 +91,7 @@ export default function ChatFab() {
               aria-label="Close chat"
               className="flex h-7 w-7 items-center justify-center rounded-full text-white/70 hover:bg-white/10 hover:text-white cursor-pointer"
             >
-              ✕
+              <X className="h-4 w-4" aria-hidden />
             </button>
           </div>
 

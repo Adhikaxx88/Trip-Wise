@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import ChatFab from '../components/ChatFab';
 import CityCard from '../components/CityCard';
 import DateRangePicker from '../components/DateRangePicker';
@@ -10,6 +10,7 @@ import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSubscription } from '../context/SubscriptionContext';
 import { useTripPreferences } from '../context/TripPreferencesContext';
 import {
+  applyQuizPreset,
   BUDGET_OPTIONS,
   DATE_RANGE_PRESETS,
   datesFromPresetDays,
@@ -24,15 +25,18 @@ import {
 import { COUNTRIES, INDONESIA_CITIES, MAX_CITIES, MAX_COUNTRIES, REGION_ORDER } from '../data/geography';
 import { daysBetweenInclusive, formatDateRange, formatFullDate } from '../logic/dates';
 import { matchTrip } from '../logic/matchTrip';
-import type { SelectedCity, TripPreferences, Vibe } from '../types';
+import type { SelectedCity, TripPreferences } from '../types';
 
 export default function Questionnaire() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { preferences, updatePreferences } = useTripPreferences();
   const { setCurrentTrip } = useCurrentTrip();
   const { subscription, canRegenerate, regenerationsRemaining, recordRegeneration } = useSubscription();
-  const [draft, setDraft] = useState<TripPreferences>(preferences);
+  // A landing-page starting point (`?preset=beaches`) pre-selects answers; every step is still shown.
+  const [draft, setDraft] = useState<TripPreferences>(() =>
+    applyQuizPreset(preferences, searchParams.get('preset')),
+  );
   const [stepIndex, setStepIndex] = useState(0);
   const [isMatching, setIsMatching] = useState(false);
   const [limitReached, setLimitReached] = useState(false);
@@ -40,14 +44,6 @@ export default function Questionnaire() {
   const [useCustomBudget, setUseCustomBudget] = useState(false);
   const [customMin, setCustomMin] = useState('');
   const [customMax, setCustomMax] = useState('');
-
-  useEffect(() => {
-    const presetVibe = (location.state as { presetVibe?: Vibe } | null)?.presetVibe;
-    if (presetVibe && draft.vibe === null) {
-      setDraft((prev) => ({ ...prev, vibe: [presetVibe] }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const steps = useMemo(() => getVisibleSteps(draft), [draft]);
   const currentStep = steps[Math.min(stepIndex, steps.length - 1)];

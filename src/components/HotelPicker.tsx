@@ -1,3 +1,5 @@
+import { Hotel, MapPin } from 'lucide-react';
+import { getHotelImage, handleImageError } from '../data/getImage';
 import type { HotelOption, HotelTier } from '../types';
 
 interface HotelPickerProps {
@@ -15,7 +17,10 @@ const TIER_LABEL: Record<HotelTier, string> = {
 export default function HotelPicker({ options, selectedTier, onSelect }: HotelPickerProps) {
   return (
     <div>
-      <p className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-ink">🏨 Choose your hotel</p>
+      <p className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-ink">
+        <Hotel className="h-4 w-4 text-ocean-mid" aria-hidden />
+        Choose your hotel
+      </p>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {options.map((option) => {
           const selected = option.tier === selectedTier;
@@ -27,13 +32,10 @@ export default function HotelPicker({ options, selectedTier, onSelect }: HotelPi
               }`}
             >
               <img
-                src={option.image}
+                src={option.image || getHotelImage(option.tier)}
                 alt={option.name}
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-                }}
+                onError={handleImageError}
                 className="h-28 w-full object-cover"
               />
               <div className="p-3">
@@ -50,9 +52,10 @@ export default function HotelPicker({ options, selectedTier, onSelect }: HotelPi
                   href={option.mapsLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-1 inline-block text-[11px] font-medium text-ocean-mid hover:text-ocean-deep"
+                  className="mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-ocean-mid hover:text-ocean-deep"
                 >
-                  📍 Maps
+                  <MapPin className="h-3.5 w-3.5" aria-hidden />
+                  Maps
                 </a>
                 <button
                   type="button"

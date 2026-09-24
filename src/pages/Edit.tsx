@@ -1,17 +1,20 @@
 import { useState, type DragEvent } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Pencil } from 'lucide-react';
 import Button from '../components/Button';
+import CityStayStrip from '../components/CityStayStrip';
 import DayCard from '../components/DayCard';
 import FlightPicker from '../components/FlightPicker';
+import GradientBackdrop from '../components/GradientBackdrop';
 import HotelPicker from '../components/HotelPicker';
 import ItineraryAssistant from '../components/ItineraryAssistant';
 import Logo from '../components/Logo';
+import { getCityImage, getHotelImage, getTransportImage, handleImageError } from '../data/getImage';
 import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { exportItineraryToPdf } from '../logic/exportItineraryPdf';
 import { dayCostPerPerson } from '../logic/matchTrip';
-import { getHeroImages } from '../logic/tripMedia';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
 import type { BookableItem, CostBreakdown, HotelTier, ItineraryActivity, ItineraryDay } from '../types';
 
@@ -42,7 +45,12 @@ export default function Edit() {
 
   const { package: pkg, preferences, savedId } = resolved;
   const groupSize = preferences.groupSize ?? 1;
-  const heroImages = getHeroImages(pkg);
+  const tripCities = pkg.cities ?? [];
+  const isMultiCity = tripCities.length > 1;
+  const destinationLabel = tripCities.length > 0 ? tripCities.join(' · ') : pkg.destination;
+  const heroImage = tripCities[0] ? getCityImage(tripCities[0], 'hero') : pkg.coverImageUrl;
+  const selectedHotel = pkg.hotelOptions?.length ? getHotelOption(pkg.hotelOptions, selectedHotelTier) : undefined;
+  const hotelThumb = selectedHotel?.image || getHotelImage(selectedHotelTier);
   const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
   const primaryCountry = pkg.cities?.[0] ? preferences.selectedCities?.[0]?.country : undefined;
   const nights = Math.max(1, itinerary.length - 1);
@@ -211,41 +219,86 @@ export default function Edit() {
 
   return (
     <div className="min-h-dvh bg-surface pb-24 text-ink">
-      <header className="flex flex-wrap items-center justify-between gap-3 bg-ocean-deepest px-4 py-5 text-white sm:px-12 sm:py-6">
-        <Logo />
-        <Button
-          variant="secondary"
-          className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base"
-          onClick={() => navigate(`/trip/${pkg.id}`)}
-        >
-          Back to summary
-        </Button>
-      </header>
+      <div className="relative overflow-hidden bg-ocean-deepest pb-10 pt-6 text-white sm:pb-14">
+        <GradientBackdrop vibe={pkg.vibe} />
+        <img
+          src={heroImage}
+          alt=""
+          aria-hidden
+          onError={handleImageError}
+          className="absolute inset-0 h-full w-full object-cover opacity-60"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(0,23,42,0.35) 0%, rgba(0,23,42,0.85) 75%, #00172A 100%)',
+          }}
+        />
 
-      <div className="flex gap-3 overflow-x-auto px-4 py-4 sm:px-12" style={{ scrollbarWidth: 'thin' }}>
-        {heroImages.map((src, i) => (
-          <img
-            key={src + i}
-            src={src}
-            alt={`${pkg.destination} preview ${i + 1}`}
-            className="h-32 w-48 shrink-0 rounded-xl object-cover shadow-sm sm:h-40 sm:w-64"
-            loading="lazy"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-            }}
-          />
-        ))}
+        <header
+          className="relative flex flex-wrap items-center justify-between gap-3 px-4 sm:px-12"
+          style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        >
+          <Logo />
+          <Button
+            variant="secondary"
+            className="px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base"
+            onClick={() => navigate(`/trip/${pkg.id}`)}
+          >
+            Back to summary
+          </Button>
+        </header>
+
+        <div className="relative mx-auto mt-10 max-w-3xl px-4 text-center animate-fade-in sm:mt-16 sm:px-6">
+          <p className="text-xs font-medium uppercase tracking-wide text-gold-accent sm:text-sm">
+            Edit your itinerary
+          </p>
+          <h1 className="font-display mt-3 text-3xl font-medium sm:text-4xl md:text-5xl">{destinationLabel}</h1>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div>
+              <p className="text-white/50">Duration</p>
+              <p className="font-display text-xl">{itinerary.length} days</p>
+            </div>
+            <div>
+              <p className="text-white/50">Estimated total</p>
+              <p className="font-display text-xl text-gold-accent">${grandTotal.toLocaleString()}</p>
+              <p className="text-xs text-white/50">
+                ${Math.round(grandTotal / groupSize).toLocaleString()} / person
+              </p>
+            </div>
+          </div>
+
+          {isMultiCity && (
+            <ul className="mt-8 flex flex-wrap justify-center gap-3" aria-label="Cities on this trip">
+              {tripCities.map((city) => (
+                <li
+                  key={city}
+                  className="relative h-20 w-28 overflow-hidden rounded-xl ring-1 ring-white/20 sm:h-24 sm:w-36"
+                >
+                  <img
+                    src={getCityImage(city, 'card')}
+                    alt={city}
+                    loading="lazy"
+                    onError={handleImageError}
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  <span className="absolute inset-x-2 bottom-1.5 truncate text-left text-xs font-semibold text-white">
+                    {city}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
 
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
-        <h1 className="font-display text-2xl text-ink sm:text-3xl">Edit your itinerary</h1>
-        <p className="mt-2 text-sm text-ink/60 sm:text-base">
-          {pkg.destination} · {itinerary.length} days
-        </p>
-        <p className="mt-1 text-xs text-ink/40">Drag a day by its handle to reorder your trip.</p>
+        <p className="text-xs text-ink/40">Drag a day by its handle to reorder your trip.</p>
 
-        <div className="mt-6 grid grid-cols-2 gap-3 rounded-2xl border border-ink/10 bg-white p-4 text-sm sm:grid-cols-4 sm:p-6">
+        <div className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-ink/10 bg-white p-4 text-sm sm:grid-cols-4 sm:p-6">
           <div>
             <p className="text-ink/50">Hotel</p>
             <p className="font-display text-ocean-mid">${costBreakdown.hotel.cost.toLocaleString()}</p>
@@ -268,19 +321,16 @@ export default function Edit() {
           <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-wrap items-center gap-3">
               <img
-                src={getHotelOption(pkg.hotelOptions ?? [], selectedHotelTier).image}
+                src={hotelThumb}
                 alt="Hotel"
                 className="h-16 w-16 shrink-0 rounded-xl object-cover"
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-                }}
+                onError={handleImageError}
               />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-ink">{costBreakdown.hotel.name}</p>
                 <p className="text-xs text-ink/50">
-                  ★{getHotelOption(pkg.hotelOptions ?? [], selectedHotelTier).rating.toFixed(1)} ·{' '}
+                  {selectedHotel && <>★{selectedHotel.rating.toFixed(1)} · </>}
                   {selectedHotelTier}
                 </p>
                 <p className="font-display text-sm text-ocean-mid">
@@ -294,12 +344,14 @@ export default function Edit() {
                     setEditingHotel((v) => !v);
                     setEditingFlight(false);
                   }}
-                  className="shrink-0 cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
                 >
-                  Edit hotel ✏
+                  Edit hotel
+                  <Pencil className="h-3.5 w-3.5" aria-hidden />
                 </button>
               )}
             </div>
+            {isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />}
             <div
               className="overflow-hidden transition-all duration-300 ease-in-out"
               style={{ maxHeight: editingHotel ? 400 : 0, opacity: editingHotel ? 1 : 0 }}
@@ -326,14 +378,11 @@ export default function Edit() {
           <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-wrap items-center gap-3">
               <img
-                src={getFlightOption(pkg.flightOptions ?? [], selectedFlightId).logo}
-                alt="Airline"
-                className="h-16 w-16 shrink-0 rounded-full object-cover"
+                src={getTransportImage('flight')}
+                alt="Flight"
+                className="h-16 w-16 shrink-0 rounded-xl object-cover"
                 loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://picsum.photos/seed/travel-default/80/80';
-                }}
+                onError={handleImageError}
               />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-ink">{costBreakdown.flight.name}</p>
@@ -349,9 +398,10 @@ export default function Edit() {
                     setEditingFlight((v) => !v);
                     setEditingHotel(false);
                   }}
-                  className="shrink-0 cursor-pointer rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
+                  className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-ocean-mid/30 px-3 py-2 text-xs font-semibold text-ocean-mid hover:bg-ocean-mid/10"
                 >
-                  Edit flight ✏
+                  Edit flight
+                  <Pencil className="h-3.5 w-3.5" aria-hidden />
                 </button>
               )}
             </div>

@@ -6,15 +6,16 @@ import Logo from '../components/Logo';
 import ProfileAvatarLink from '../components/ProfileAvatarLink';
 import Reveal from '../components/Reveal';
 import { StaggerGroup, StaggerItem } from '../components/Stagger';
-import type { Vibe } from '../types';
+import { handleImageError } from '../data/getImage';
+import type { QuizPresetId } from '../data/questionOptions';
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80';
 
-const differentiators: { label: string; vibe: Vibe; image: string; old: string; fresh: string }[] = [
+const differentiators: { label: string; preset: QuizPresetId; image: string; old: string; fresh: string }[] = [
   {
     label: 'Beaches & Vibes',
-    vibe: 'relaxing',
+    preset: 'beaches',
     image:
       'https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&w=900&q=80',
     old: 'You search manually',
@@ -22,7 +23,7 @@ const differentiators: { label: string; vibe: Vibe; image: string; old: string; 
   },
   {
     label: 'Adventure & Wild',
-    vibe: 'adventurous',
+    preset: 'adventure',
     image:
       'https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=900&q=80',
     old: 'Generic recommendations',
@@ -30,7 +31,7 @@ const differentiators: { label: string; vibe: Vibe; image: string; old: string; 
   },
   {
     label: 'Hidden Gems',
-    vibe: 'cultural',
+    preset: 'hidden-gems',
     image:
       'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80',
     old: 'Manual trip planning',
@@ -283,10 +284,7 @@ export default function Landing() {
                       loading="lazy"
                       style={{ height: '300px' }}
                       className="w-full rounded-[12px] object-cover"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-                      }}
+                      onError={handleImageError}
                     />
                   </div>
                 </Reveal>
@@ -298,8 +296,8 @@ export default function Landing() {
 
       <section
         id="destinations"
-        className="snap-section relative z-20 px-4 pt-2 sm:px-12"
-        style={{ paddingBottom: 'max(320px, calc(2.5rem + env(safe-area-inset-bottom)))' }}
+        className="snap-section relative z-20 px-4 pb-6 pt-2 sm:px-12"
+        style={{ minHeight: 'auto' }}
       >
         <div className="mx-auto max-w-4xl">
           <Reveal variant="up">
@@ -312,19 +310,16 @@ export default function Landing() {
             {differentiators.map((d) => (
               <StaggerItem key={d.label}>
                 <Link
-                  to="/questionnaire"
-                  state={{ presetVibe: d.vibe }}
-                  className="group relative isolate block min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:scale-105 hover:border-gold-accent hover:shadow-[0_0_24px_0_var(--color-gold-accent)] sm:min-h-[380px]"
+                  to={`/questionnaire?preset=${d.preset}`}
+                  aria-label={`Start planning: ${d.label}`}
+                  className="group relative isolate block min-h-[320px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:scale-105 hover:border-gold-accent hover:shadow-[0_0_24px_0_var(--color-gold-accent)] focus-visible:scale-105 focus-visible:border-gold-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent sm:min-h-[380px]"
                 >
                   <img
                     src={d.image}
                     alt={d.label}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-                    }}
+                    onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ocean-deepest via-ocean-deepest/50 to-ocean-deepest/10" />
                   <div className="relative flex h-full flex-col justify-between p-5 text-left">
@@ -345,7 +340,7 @@ export default function Landing() {
 
       <section
         id="testimonials"
-        className="snap-section px-4 pb-20 pt-20 text-white sm:px-12"
+        className="snap-section px-4 pb-20 pt-6 text-white sm:px-12"
       >
         <div className="relative z-10 mx-auto max-w-5xl">
           <Reveal variant="up">
@@ -369,10 +364,7 @@ export default function Landing() {
                     alt={t.name}
                     loading="lazy"
                     className="h-16 w-16 rounded-full border-2 border-[#FFD233] object-cover"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = 'https://picsum.photos/seed/travel-default/800/500';
-                    }}
+                    onError={handleImageError}
                   />
                   <div className="mt-3 flex gap-0.5 text-[#FFD233]" aria-label="5 out of 5 stars">
                     {Array.from({ length: 5 }).map((_, starIndex) => (
