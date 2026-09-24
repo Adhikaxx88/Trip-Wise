@@ -1,14 +1,23 @@
 import { useState, type DragEvent } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
-import ChatFab from '../components/ChatFab';
+import ItineraryAssistant from '../components/ItineraryAssistant';
 import Logo from '../components/Logo';
-import TimePicker from '../components/TimePicker';
+import PlaceCard from '../components/PlaceCard';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
+import { exportItineraryToPdf } from '../logic/exportItineraryPdf';
 import { dayCostPerPerson, getSuggestedActivities } from '../logic/matchTrip';
+import {
+  dailyTransportCostIDR,
+  FLIGHT_PLACEHOLDER_IMAGE,
+  formatIDR,
+  getHeroImages,
+  hotelRating,
+  HOTEL_PLACEHOLDER_IMAGE,
+} from '../logic/tripMedia';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
-import type { ItineraryActivity, ItineraryDay } from '../types';
+import type { ItineraryActivity, ItineraryDay, TripPackage } from '../types';
 
 export default function Edit() {
   const { id } = useParams<{ id: string }>();
@@ -18,16 +27,19 @@ export default function Edit() {
   const { updateSavedTrip } = useSavedTrips();
 
   const [itinerary, setItinerary] = useState<ItineraryDay[] | null>(resolved?.package.itinerary ?? null);
+  const [costBreakdown, setCostBreakdown] = useState(resolved?.package.costBreakdown ?? null);
   const [savedNotice, setSavedNotice] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
-  if (!resolved || !itinerary) {
+  if (!resolved || !itinerary || !costBreakdown) {
     return <Navigate to="/questionnaire" replace />;
   }
 
   const { package: pkg, preferences, savedId } = resolved;
   const groupSize = preferences.groupSize ?? 1;
+  const heroImages = getHeroImages(pkg);
 
   const updateActivity = (dayIndex: number, activityIndex: number, field: keyof ItineraryActivity, value: string) => {
     setItinerary((prev) => {
@@ -128,8 +140,10 @@ export default function Edit() {
     setDragOverIndex(null);
   };
 
+  const buildUpdatedPackage = (): TripPackage => ({ ...pkg, itinerary, costBreakdown });
+
   const handleSave = () => {
-    const updatedPkg = { ...pkg, itinerary };
+    const updatedPkg = buildUpdatedPackage();
     if (currentTrip && currentTrip.package.id === pkg.id) {
       updateCurrentTripPackage(updatedPkg);
     }
@@ -137,7 +151,29 @@ export default function Edit() {
       updateSavedTrip(savedId, updatedPkg);
     }
     setSavedNotice(true);
+    setShowSummary(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleExportPdf = () => {
+    exportItineraryToPdf(buildUpdatedPackage(), preferences);
+  };
+
+  const makeHotelCheaper = () => {
+    setCostBreakdown((prev) => {
+      if (!prev) return prev;
+      return { ...prev, hotel: { ...prev.hotel, cost: Math.round(prev.hotel.cost * 0.8) } };
+    });
+    setSavedNotice(false);
+  };
+
+  const addGenericActivity = () => {
+    if (itinerary.length === 0) return;
+    addActivity(0);
+  };
+
+  const activitiesTotalPerPerson = itinerary.reduce((sum, day) => sum + dayCostPerPerson(day), 0);
+  const grandTotal = activitiesTotalPerPerson * groupSize + costBreakdown.hotel.cost + costBreakdown.flight.cost;
 
   return (
     <div className="min-h-dvh bg-surface pb-24 text-ink">
@@ -152,12 +188,99 @@ export default function Edit() {
         </Button>
       </header>
 
+      {/* Hero preview strip */}
+      <div className="flex gap-3 overflow-x-auto px-4 py-4 sm:px-12" style={{ scrollbarWidth: 'thin' }}>
+        {heroImages.map((src, i) => (
+          <img
+            key={src + i}
+            src={src}
+            alt={`${pkg.destination} preview ${i + 1}`}
+            className="h-32 w-48 shrink-0 rounded-xl object-cover shadow-sm sm:h-40 sm:w-64"
+            loading="lazy"
+          />
+        ))}
+      </div>
+
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
         <h1 className="font-display text-2xl text-ink sm:text-3xl">Edit your itinerary</h1>
         <p className="mt-2 text-sm text-ink/60 sm:text-base">
           {pkg.destination} · {itinerary.length} days
         </p>
         <p className="mt-1 text-xs text-ink/40">Drag a day by its handle to reorder your trip.</p>
+
+        {showSummary && (
+          <div className="mt-6 rounded-2xl border border-gold-accent/40 bg-gold-accent/10 p-4 sm:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold text-ink">Trip summary</p>
+                <p className="text-xs text-ink/60">
+                  {pkg.destination} · {itinerary.length} days · {groupSize} traveler{groupSize > 1 ? 's' : ''}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSummary(false)}
+                className="cursor-pointer rounded-full px-2 py-1 text-ink/40 hover:text-ink"
+                aria-label="Dismiss summary"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+              <div>
+                <p className="text-ink/50">Hotel</p>
+                <p className="font-display text-ocean-mid">${costBreakdown.hotel.cost.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-ink/50">Flight</p>
+                <p className="font-display text-ocean-mid">${costBreakdown.flight.cost.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-ink/50">Activities / person</p>
+                <p className="font-display text-ocean-mid">${activitiesTotalPerPerson.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-ink/50">Grand total</p>
+                <p className="font-display text-ocean-mid">${grandTotal.toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Hotel & flight booking sections */}
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm">
+            <img src={HOTEL_PLACEHOLDER_IMAGE} alt="Hotel" className="h-32 w-full object-cover" loading="lazy" />
+            <div className="p-4">
+              <p className="text-sm font-semibold text-ink">{costBreakdown.hotel.name}</p>
+              <p className="mt-1 text-xs text-ink/50">{hotelRating(costBreakdown.hotel.name)}★ · Hotel</p>
+              <p className="mt-2 font-display text-lg text-ocean-mid">
+                ${costBreakdown.hotel.cost.toLocaleString()}
+              </p>
+              <a href={costBreakdown.hotel.bookingUrl} target="_blank" rel="noopener noreferrer">
+                <Button variant="accent" className="mt-3 w-full px-4 py-2 text-sm">
+                  Book on Traveloka
+                </Button>
+              </a>
+            </div>
+          </div>
+
+          <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm">
+            <img src={FLIGHT_PLACEHOLDER_IMAGE} alt="Flight" className="h-32 w-full object-cover" loading="lazy" />
+            <div className="p-4">
+              <p className="text-sm font-semibold text-ink">✈️ {costBreakdown.flight.name}</p>
+              <p className="mt-1 text-xs text-ink/50">Your city → {pkg.destination}</p>
+              <p className="mt-2 font-display text-lg text-ocean-mid">
+                ${costBreakdown.flight.cost.toLocaleString()}
+              </p>
+              <a href={costBreakdown.flight.bookingUrl} target="_blank" rel="noopener noreferrer">
+                <Button variant="accent" className="mt-3 w-full px-4 py-2 text-sm">
+                  Book on Traveloka
+                </Button>
+              </a>
+            </div>
+          </div>
+        </div>
 
         <div className="mt-8 space-y-6">
           {itinerary.map((day, dayIndex) => {
@@ -168,6 +291,7 @@ export default function Edit() {
             );
             const dayTotalPerPerson = dayCostPerPerson(day);
             const dayTotal = dayTotalPerPerson * groupSize;
+            const transportCost = dailyTransportCostIDR(pkg.id, day.day);
             return (
               <div
                 key={day.day}
@@ -202,38 +326,22 @@ export default function Edit() {
                   )}
                 </div>
 
+                <div className="mt-3 flex items-center gap-2 rounded-lg bg-ocean-mid/5 px-3 py-2 text-xs text-ocean-deep">
+                  <span>🚌</span>
+                  <span>Estimated local transport (car/bus/MRT): {formatIDR(transportCost)}</span>
+                </div>
+
                 <ul className="mt-4 space-y-2">
                   {day.activities.map((activity, activityIndex) => (
-                    <li key={activityIndex} className="flex items-center gap-1.5 sm:gap-2">
-                      <TimePicker
-                        value={activity.time ?? '9:00 AM'}
-                        onChange={(v) => updateActivity(dayIndex, activityIndex, 'time', v)}
-                      />
-                      <input
-                        value={activity.name}
-                        onChange={(e) => updateActivity(dayIndex, activityIndex, 'name', e.target.value)}
-                        className="min-w-0 flex-1 rounded-lg border border-ink/10 px-2 py-1.5 text-sm focus:border-ocean-mid focus:outline-none sm:px-3"
-                      />
-                      <div className="flex shrink-0 items-center gap-0.5">
-                        <span className="text-xs text-ink/40">$</span>
-                        <input
-                          type="number"
-                          min={0}
-                          value={activity.price ?? ''}
-                          onChange={(e) => updateActivityPrice(dayIndex, activityIndex, e.target.value)}
-                          placeholder="0"
-                          className="w-14 rounded-lg border border-ink/10 px-1.5 py-1.5 text-xs focus:border-ocean-mid focus:outline-none"
-                        />
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => removeActivity(dayIndex, activityIndex)}
-                        className="shrink-0 rounded-full px-2 py-1 text-ink/40 hover:text-red-500 cursor-pointer"
-                        aria-label="Remove activity"
-                      >
-                        ✕
-                      </button>
-                    </li>
+                    <PlaceCard
+                      key={activityIndex}
+                      activity={activity}
+                      destination={pkg.destination}
+                      onChangeName={(v) => updateActivity(dayIndex, activityIndex, 'name', v)}
+                      onChangeTime={(v) => updateActivity(dayIndex, activityIndex, 'time', v)}
+                      onChangePrice={(v) => updateActivityPrice(dayIndex, activityIndex, v)}
+                      onRemove={() => removeActivity(dayIndex, activityIndex)}
+                    />
                   ))}
                 </ul>
 
@@ -268,15 +376,18 @@ export default function Edit() {
           })}
         </div>
 
-        <div className="mt-10 flex items-center gap-4">
+        <div className="mt-10 flex flex-wrap items-center gap-4">
           <Button variant="primary" onClick={handleSave}>
             Save changes
+          </Button>
+          <Button variant="ghost" onClick={handleExportPdf}>
+            Export to PDF ↓
           </Button>
           {savedNotice && <span className="text-sm font-medium text-ocean-mid">Changes saved ✓</span>}
         </div>
       </div>
 
-      <ChatFab />
+      <ItineraryAssistant onCheaperHotel={makeHotelCheaper} onAddActivity={addGenericActivity} />
     </div>
   );
 }

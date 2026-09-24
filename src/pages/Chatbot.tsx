@@ -11,6 +11,8 @@ import {
   GROUP_TYPE_OPTIONS,
   INTENSITY_OPTIONS,
   matchFreeTextToStep,
+  TRANSPORT_OPTIONS,
+  VIBE_IDK_OPTION,
   VIBE_OPTIONS,
   type StepDef,
 } from '../data/questionOptions';
@@ -26,6 +28,8 @@ const PROMPTS: Record<StepDef['id'], string> = {
   vibe: "Hi! I'm the TripWise assistant. What's the vibe you're going for on this trip?",
   dates: 'Nice choice. When are you thinking of going?',
   budget: "Got it. What's your total budget for the trip?",
+  destination: 'Any destinations in mind, or should I surprise you?',
+  transport: 'How do you plan on getting there?',
   groupSize: 'How many people are coming along?',
   intensity: 'Since you want adventure, how intense should the activities be?',
   groupType: "Last thing, who's coming with you?",
@@ -196,7 +200,42 @@ export default function Chatbot() {
                 {VIBE_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => advance(opt.label, { vibe: opt.value })}
+                    onClick={() => advance(opt.label, { vibe: [opt.value] })}
+                    className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+                <button
+                  onClick={() => advance(VIBE_IDK_OPTION.label, { vibe: [] })}
+                  className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
+                >
+                  {VIBE_IDK_OPTION.label}
+                </button>
+              </div>
+            )}
+
+            {currentStep.id === 'destination' && (
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => advance('Surprise me', { destinationPreference: { type: 'surprise' } })}
+                  className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
+                >
+                  Surprise me
+                </button>
+                <p className="basis-full text-xs text-ink/50">
+                  Want a specific country or city? Type it below, or head to the full questionnaire for a
+                  dropdown picker.
+                </p>
+              </div>
+            )}
+
+            {currentStep.id === 'transport' && (
+              <div className="flex flex-wrap gap-2">
+                {TRANSPORT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => advance(opt.label, { transportModes: [opt.value] })}
                     className="rounded-full border-2 border-ocean-mid/30 bg-white px-4 py-2 text-sm font-semibold text-ocean-deep hover:bg-ocean-mid/10 cursor-pointer"
                   >
                     {opt.label}
