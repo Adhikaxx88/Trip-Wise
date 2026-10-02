@@ -1,0 +1,8 @@
+# Normalize line endings so Windows/WSL checkouts don't show every file as modified
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
