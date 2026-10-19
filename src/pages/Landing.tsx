@@ -120,7 +120,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
         <Logo />
         <Link
           to="/saved"
-          className="hidden text-sm font-medium text-white/80 transition-colors hover:text-gold-accent sm:inline-block"
+          className="hidden items-center rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:inline-flex"
         >
           Saved Trips
         </Link>
@@ -190,8 +190,7 @@ export default function Landing() {
         className="snap-section relative flex min-h-dvh w-full flex-col justify-between"
       >
         <main
-          className="flex flex-1 flex-col items-center justify-end px-4 pb-6 text-center sm:px-6 sm:pb-10"
-          style={{ paddingTop: 'max(5rem, calc(4.5rem + env(safe-area-inset-top)))' }}
+          className="flex flex-1 flex-col items-center justify-end px-4 pb-6 pt-[max(7.5rem,calc(7rem+env(safe-area-inset-top)))] text-center sm:px-6 sm:pb-10 sm:pt-[max(12.5rem,calc(12rem+env(safe-area-inset-top)))]"
         >
           <Reveal variant="up">
             <p className="mb-4 text-sm tracking-wide text-white/80 sm:text-base">
