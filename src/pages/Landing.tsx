@@ -121,9 +121,9 @@ function Navbar() {
       <div className="flex items-center gap-4">
         <Link
           to="/saved"
-          className="text-xs font-medium text-white/80 transition-colors hover:text-gold-accent sm:hidden"
+          className="shrink-0 whitespace-nowrap text-xs font-medium text-white/80 transition-colors hover:text-gold-accent sm:hidden"
         >
-          Saved
+          Saved Trips
         </Link>
         <ProfileAvatarLink />
       </div>
@@ -174,7 +174,7 @@ export default function Landing() {
         id="hero"
         className="snap-section relative flex min-h-dvh w-full flex-col justify-between"
       >
-        <main className="flex flex-1 flex-col items-center justify-end px-4 pb-6 text-center sm:px-6 sm:pb-10">
+        <main className="flex flex-1 flex-col items-center justify-center px-4 pb-6 text-center sm:px-6 sm:pb-10">
           <Reveal variant="up">
             <p className="mb-4 text-sm tracking-wide text-white/80 sm:text-base">
               <span className="font-serif-accent italic">Your Journey</span>{' '}
