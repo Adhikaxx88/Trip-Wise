@@ -103,18 +103,11 @@ function Star() {
 
 const SNAP_SECTION_IDS = ['hero', 'how-it-works', 'destinations', 'testimonials'];
 
-function Navbar({ scrolled }: { scrolled: boolean }) {
+function Navbar() {
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-5 transition-colors duration-300 sm:px-12 sm:py-6"
-      style={{
-        paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))',
-        backgroundColor: scrolled
-          ? 'color-mix(in srgb, var(--color-ocean-deepest) 60%, transparent)'
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
-      }}
+      className="relative z-50 flex items-center justify-between px-4 py-5 sm:px-12 sm:py-6"
+      style={{ paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))' }}
     >
       <div className="flex items-center gap-4 sm:gap-6">
         <Logo />
@@ -139,15 +132,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
 }
 
 export default function Landing() {
-  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return;
@@ -171,7 +156,7 @@ export default function Landing() {
 
   return (
     <div className="min-h-dvh w-full text-white">
-      <Navbar scrolled={scrolled} />
+      <Navbar />
 
       {/* Single fixed background image, locked in place for the entire page */}
       <div
@@ -189,9 +174,7 @@ export default function Landing() {
         id="hero"
         className="snap-section relative flex min-h-dvh w-full flex-col justify-between"
       >
-        <main
-          className="flex flex-1 flex-col items-center justify-end px-4 pb-6 pt-[max(7.5rem,calc(7rem+env(safe-area-inset-top)))] text-center sm:px-6 sm:pb-10 sm:pt-[max(12.5rem,calc(12rem+env(safe-area-inset-top)))]"
-        >
+        <main className="flex flex-1 flex-col items-center justify-end px-4 pb-6 text-center sm:px-6 sm:pb-10">
           <Reveal variant="up">
             <p className="mb-4 text-sm tracking-wide text-white/80 sm:text-base">
               <span className="font-serif-accent italic">Your Journey</span>{' '}
