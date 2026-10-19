@@ -23,6 +23,8 @@ export interface TripPreferences {
   activityIntensity?: ActivityIntensity;
   groupType?: GroupType;
   tripType?: TripType | null;
+  /** Home departure city — where every flight leg starts and ends. */
+  departureCity?: string | null;
   selectedCountries?: string[];
   selectedCities?: SelectedCity[];
 }
@@ -35,6 +37,7 @@ export const createEmptyPreferences = (): TripPreferences => ({
   budget: null,
   groupSize: null,
   tripType: null,
+  departureCity: null,
   selectedCountries: [],
   selectedCities: [],
 });

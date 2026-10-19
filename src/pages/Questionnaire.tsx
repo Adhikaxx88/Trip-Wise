@@ -200,6 +200,30 @@ export default function Questionnaire() {
         </QuestionShell>
       )}
 
+      {currentStep.id === 'departure' && (
+        <QuestionShell
+          stepKey="departure"
+          eyebrow={currentStep.eyebrow}
+          question="Which city are you flying from?"
+          onBack={goBack}
+          onNext={goNext}
+          nextLabel={nextLabel}
+          nextDisabled={!draft.departureCity}
+        >
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {INDONESIA_CITIES.map((city) => (
+              <CityCard
+                key={city.name}
+                name={city.name}
+                imageUrl={city.imageUrl}
+                selected={draft.departureCity === city.name}
+                onClick={() => setDraft((prev) => ({ ...prev, departureCity: city.name }))}
+              />
+            ))}
+          </div>
+        </QuestionShell>
+      )}
+
       {currentStep.id === 'countries' && (
         <QuestionShell
           stepKey="countries"
@@ -257,7 +281,7 @@ export default function Questionnaire() {
         <QuestionShell
           stepKey="cities"
           eyebrow={currentStep.eyebrow}
-          question="Pick your cities (up to 4)"
+          question="Where to? Pick your cities (up to 4)"
           onBack={goBack}
           onNext={goNext}
           nextLabel={nextLabel}

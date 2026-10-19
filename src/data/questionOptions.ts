@@ -85,15 +85,28 @@ export const GROUP_TYPE_OPTIONS: { value: GroupType; label: string }[] = [
 ];
 
 export interface StepDef {
-  id: 'tripType' | 'countries' | 'cities' | 'vibe' | 'dates' | 'budget' | 'groupSize' | 'intensity' | 'groupType';
+  id:
+    | 'tripType'
+    | 'departure'
+    | 'countries'
+    | 'cities'
+    | 'vibe'
+    | 'dates'
+    | 'budget'
+    | 'groupSize'
+    | 'intensity'
+    | 'groupType';
   eyebrow: string;
 }
 
 export function getVisibleSteps(prefs: TripPreferences, includeGeography = true): StepDef[] {
   const steps: StepDef[] = includeGeography ? [{ id: 'tripType', eyebrow: 'Step 1' }] : [];
 
+  if (includeGeography && prefs.tripType) {
+    steps.push({ id: 'departure', eyebrow: `Step ${steps.length + 1}` });
+  }
   if (includeGeography && prefs.tripType === 'international') {
-    steps.push({ id: 'countries', eyebrow: 'Step 2' });
+    steps.push({ id: 'countries', eyebrow: `Step ${steps.length + 1}` });
   }
   if (includeGeography && prefs.tripType) {
     steps.push({ id: 'cities', eyebrow: `Step ${steps.length + 1}` });

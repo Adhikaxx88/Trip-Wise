@@ -396,10 +396,19 @@ async function buildMultiCityItinerary(
   cities: SelectedCity[],
   totalDays: number,
   vibe: string | null,
+  departure: SelectedCity | null,
 ): Promise<ItineraryDay[]> {
   const perCity = distributeDays(Math.max(1, totalDays), cities.length);
   const itinerary: ItineraryDay[] = [];
   let dayCounter = 1;
+
+  const departsFromHome = !!departure && departure.city !== cities[0].city;
+  const returnsHome = !!departure && departure.city !== cities[cities.length - 1].city;
+
+  if (departsFromHome && departure) {
+    itinerary.push(await buildTransitionDay(dayCounter, departure, cities[0]));
+    dayCounter += 1;
+  }
 
   for (let index = 0; index < cities.length; index++) {
     const city = cities[index];
@@ -420,6 +429,11 @@ async function buildMultiCityItinerary(
     }
   }
 
+  if (returnsHome && departure) {
+    itinerary.push(await buildTransitionDay(dayCounter, cities[cities.length - 1], departure));
+    dayCounter += 1;
+  }
+
   return itinerary.map((day, i) => ({ ...day, day: i + 1 }));
 }
 
@@ -432,8 +446,11 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
   const duration = prefs.durationDays ?? Math.max(cities.length * 2, 4);
   const groupSize = prefs.groupSize ?? 1;
   const primaryVibe = prefs.vibe && prefs.vibe.length > 0 ? prefs.vibe[0] : null;
+  const departure: SelectedCity | null = prefs.departureCity
+    ? { country: 'Indonesia', city: prefs.departureCity }
+    : null;
 
-  const itinerary = await buildMultiCityItinerary(cities, duration, primaryVibe);
+  const itinerary = await buildMultiCityItinerary(cities, duration, primaryVibe, departure);
 
   const nights = Math.max(1, itinerary.length - 1);
   const rooms = Math.max(1, Math.ceil(groupSize / 2));
@@ -449,6 +466,12 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
     hotelDiscount,
   );
   const costBreakdown: CostBreakdown = { hotel: selection.hotel, flight: selection.flight };
+  if (departure) {
+    costBreakdown.flight = {
+      ...costBreakdown.flight,
+      name: costBreakdown.flight.name.replace(' round-trip ', ` round-trip from ${departure.city} `),
+    };
+  }
   const estimatedCost =
     costBreakdown.hotel.cost +
     costBreakdown.flight.cost +
