@@ -44,16 +44,8 @@ function seededFraction(seed: string): number {
   return (Math.abs(hash) % 1000) / 1000;
 }
 
-/** Formats a number of Indonesian Rupiah as "Rp 150.000" (dot thousands separator, no decimals). */
-export function formatIDR(amount: number): string {
-  return `Rp ${new Intl.NumberFormat('id-ID').format(Math.round(amount))}`;
-}
-
-/** Deterministic per-day estimated local transport cost (rental car / bus / MRT) in IDR. */
-export function dailyTransportCostIDR(destinationId: string, dayNumber: number): number {
+/** Deterministic per-day estimated local transport cost (rental car / bus / MRT) in USD. */
+export function dailyTransportCostUSD(destinationId: string, dayNumber: number): number {
   const fraction = seededFraction(`${destinationId}-transport-${dayNumber}`);
-  const min = 50000;
-  const max = 300000;
-  const raw = min + fraction * (max - min);
-  return Math.round(raw / 5000) * 5000;
+  return Math.round(4 + fraction * 16);
 }

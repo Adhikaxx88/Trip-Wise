@@ -18,7 +18,7 @@ import TimePicker from './TimePicker';
 import { getActivitySuggestions, suggestionImage } from '../data/activitySuggestions';
 import { routeMapsLink } from '../data/transport';
 import { getMapsLink } from '../data/tripwiseMaster';
-import { dailyTransportCostIDR, formatIDR } from '../logic/tripMedia';
+import { dailyTransportCostUSD } from '../logic/tripMedia';
 import { getActivityImage, getTransportImage, handleImageError, trustedImage } from '../data/getImage';
 import type { ItineraryActivity, ItineraryDay, TransportOption } from '../types';
 
@@ -102,7 +102,7 @@ export default function DayCard({
           {selected && (
             <div className="text-right text-xs text-ink/50">
               <p className="font-display text-sm text-gold-accent-deep sm:text-base">
-                {selected.costLabel ?? `$${selected.costPerPerson}`}
+                ${selected.costPerPerson}
               </p>
               <p>per person</p>
             </div>
@@ -146,7 +146,7 @@ export default function DayCard({
                   </div>
                   <p className="mt-1 inline-flex items-center gap-1 text-xs text-ink/50">
                     <Clock className="h-3.5 w-3.5" aria-hidden />
-                    {selected.duration} · {selected.costLabel ?? `$${selected.costPerPerson}`} / person
+                    {selected.duration} · ${selected.costPerPerson} / person
                   </p>
                 </div>
                 <div className="mt-3 flex items-center justify-between gap-3">
@@ -189,7 +189,7 @@ export default function DayCard({
                       {opt.name}
                     </span>
                     <span className="shrink-0 text-ink/50">
-                      {opt.costLabel ?? `$${opt.costPerPerson}`} · {opt.duration}
+                      ${opt.costPerPerson} · {opt.duration}
                     </span>
                   </button>
                 ))}
@@ -201,7 +201,7 @@ export default function DayCard({
     );
   }
 
-  const transportCost = dailyTransportCostIDR(packageId, day.day);
+  const transportCost = dailyTransportCostUSD(packageId, day.day);
   const suggestions = getActivitySuggestions(day.city ?? destination, country);
   const existingNames = new Set(day.activities.map((a) => a.name.toLowerCase()));
   const freshSuggestions = suggestions.filter((s) => !existingNames.has(s.name.toLowerCase()));
@@ -253,7 +253,7 @@ export default function DayCard({
 
       <div className="mt-3 flex items-center gap-2 rounded-lg bg-ocean-mid/5 px-3 py-2 text-xs text-ocean-deep">
         <Bus className="h-4 w-4 shrink-0" aria-hidden />
-        <span>Estimated local transport (car/bus/MRT): {formatIDR(transportCost)}</span>
+        <span>Estimated local transport (car/bus/MRT): ${transportCost}</span>
       </div>
 
       <ul className="mt-4 space-y-3">

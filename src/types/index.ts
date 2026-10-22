@@ -47,7 +47,6 @@ export interface TransportOption {
   name: string;
   duration: string;
   costPerPerson: number;
-  costLabel?: string;
   image: string;
   badge?: 'Fastest' | 'Best value';
   bookingUrl?: string;

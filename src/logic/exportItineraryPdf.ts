@@ -1,7 +1,7 @@
 import { jsPDF, GState } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import type { ItineraryActivity, ItineraryDay, TransportOption, TripPackage, TripPreferences } from '../types';
-import { formatIDR, dailyTransportCostIDR } from './tripMedia';
+import { dailyTransportCostUSD } from './tripMedia';
 import { formatDateRange, addDaysIso } from './dates';
 import { getCityImage, isFallbackImage } from '../data/getImage';
 
@@ -463,8 +463,8 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
   );
   const activitiesTotal = grandTotalActivitiesPerPerson * groupSize;
   const grandTotal = activitiesTotal + pkg.costBreakdown.hotel.cost + pkg.costBreakdown.flight.cost;
-  const localTransportTotalIDR = sortedItinerary.reduce(
-    (sum, day) => sum + dailyTransportCostIDR(pkg.id, day.day),
+  const localTransportTotal = sortedItinerary.reduce(
+    (sum, day) => sum + dailyTransportCostUSD(pkg.id, day.day),
     0,
   );
 
@@ -531,7 +531,7 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
       [
         'Local transport (est.)',
         sanitizePdfText(`Daily estimate × ${pluralize(pkg.itinerary.length, 'day')} — not included in total`),
-        formatIDR(localTransportTotalIDR),
+        money(localTransportTotal),
       ],
     ],
     foot: [
@@ -732,12 +732,12 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
     y = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 6;
 
     // Local transport note.
-    const transportCost = dailyTransportCostIDR(pkg.id, day.day);
+    const transportCost = dailyTransportCostUSD(pkg.id, day.day);
     y = ensureSpace(doc, y, 16);
     doc.setFont('helvetica', 'italic');
     doc.setFontSize(8.5);
     setText(doc, COLOR.grey);
-    doc.text(sanitizePdfText(`Estimated local transport: ${formatIDR(transportCost)}`), MARGIN, y + 10);
+    doc.text(sanitizePdfText(`Estimated local transport: ${money(transportCost)}`), MARGIN, y + 10);
     y += 26;
   }
 
