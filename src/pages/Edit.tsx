@@ -3,6 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Pencil } from 'lucide-react';
 import Button from '../components/Button';
 import CityStayStrip from '../components/CityStayStrip';
+import HotelStayList from '../components/HotelStayList';
 import DayCard from '../components/DayCard';
 import FlightPicker from '../components/FlightPicker';
 import GradientBackdrop from '../components/GradientBackdrop';
@@ -15,7 +16,7 @@ import { getFlightOption, getHotelOption } from '../data/hotelFlightOptions';
 import { useCurrentTrip } from '../context/CurrentTripContext';
 import { useSavedTrips } from '../context/SavedTripsContext';
 import { exportItineraryToPdf } from '../logic/exportItineraryPdf';
-import { dayCostPerPerson } from '../logic/matchTrip';
+import { buildHotelStays, combineHotelStays, dayCostPerPerson } from '../logic/matchTrip';
 import { useResolvedTrip } from '../logic/useResolvedTrip';
 import type { BookableItem, CostBreakdown, HotelTier, ItineraryActivity, ItineraryDay } from '../types';
 
@@ -168,6 +169,12 @@ export default function Edit() {
     setSelectedHotelTier(tier);
     const option = getHotelOption(pkg.hotelOptions, tier);
     const hotelDiscount = pkg.hotelDiscountPercent / 100;
+    if (costBreakdown.hotelStays?.length) {
+      const hotelStays = buildHotelStays(costBreakdown.hotelStays, tier, rooms, hotelDiscount);
+      setCostBreakdown((prev) => (prev ? { ...prev, hotel: combineHotelStays(hotelStays), hotelStays } : prev));
+      setSavedNotice(false);
+      return;
+    }
     const hotel: BookableItem = {
       name: option.name,
       cost: Math.round(option.pricePerNight * nights * rooms * (1 - hotelDiscount)),
@@ -323,7 +330,9 @@ export default function Edit() {
           </div>
           <div>
             <p className="text-ink/50">Flight</p>
-            <p className="font-display text-ocean-mid">${costBreakdown.flight.cost.toLocaleString()}</p>
+            <p className="font-display text-ocean-mid">
+              {costBreakdown.flightInItinerary ? 'In travel days' : `$${costBreakdown.flight.cost.toLocaleString()}`}
+            </p>
           </div>
           <div>
             <p className="text-ink/50">Activities / person</p>
@@ -369,7 +378,11 @@ export default function Edit() {
                 </button>
               )}
             </div>
-            {isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />}
+            {costBreakdown.hotelStays && costBreakdown.hotelStays.length > 1 ? (
+              <HotelStayList stays={costBreakdown.hotelStays} groupSize={groupSize} showBook={false} />
+            ) : (
+              isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />
+            )}
             <div
               className="overflow-hidden transition-all duration-300 ease-in-out"
               style={{ maxHeight: editingHotel ? 1200 : 0, opacity: editingHotel ? 1 : 0 }}
@@ -393,6 +406,7 @@ export default function Edit() {
             </div>
           </div>
 
+          {!costBreakdown.flightInItinerary && (
           <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-wrap items-center gap-3">
               <img
@@ -445,6 +459,7 @@ export default function Edit() {
               )}
             </div>
           </div>
+          )}
         </div>
 
         <div className="mt-8 space-y-6">

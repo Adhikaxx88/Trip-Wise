@@ -520,7 +520,9 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
         sanitizePdfText(`${pkg.costBreakdown.hotel.name} · ${pluralize(nights, 'night')}`),
         money(pkg.costBreakdown.hotel.cost),
       ],
-      ['Flight', sanitizePdfText(pkg.costBreakdown.flight.name), money(pkg.costBreakdown.flight.cost)],
+      ...(pkg.costBreakdown.flightInItinerary
+        ? []
+        : [['Flight', sanitizePdfText(pkg.costBreakdown.flight.name), money(pkg.costBreakdown.flight.cost)]]),
       [
         'Activities',
         sanitizePdfText(`${pluralize(activityCount, 'activity').replace('activitys', 'activities')} across ${pluralize(pkg.itinerary.length, 'day')}`),
@@ -603,13 +605,15 @@ export async function exportItineraryToPdf(pkg: TripPackage, preferences: TripPr
     pkg.costBreakdown.hotel.cost,
     pkg.costBreakdown.hotel.bookingUrl,
   );
-  drawBookableCard(
-    MARGIN + cardW + cardGap,
-    pkg.costBreakdown.flight.name,
-    'Flight',
-    pkg.costBreakdown.flight.cost,
-    pkg.costBreakdown.flight.bookingUrl,
-  );
+  if (!pkg.costBreakdown.flightInItinerary) {
+    drawBookableCard(
+      MARGIN + cardW + cardGap,
+      pkg.costBreakdown.flight.name,
+      'Flight',
+      pkg.costBreakdown.flight.cost,
+      pkg.costBreakdown.flight.bookingUrl,
+    );
+  }
   y += cardH + 28;
 
   // ===========================================================================

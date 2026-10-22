@@ -4,6 +4,7 @@ import { Hotel, MapPin, Plane } from 'lucide-react';
 import Button from '../components/Button';
 import ChatFab from '../components/ChatFab';
 import CityStayStrip from '../components/CityStayStrip';
+import HotelStayList from '../components/HotelStayList';
 import DayCard from '../components/DayCard';
 import GradientBackdrop from '../components/GradientBackdrop';
 import Logo from '../components/Logo';
@@ -83,8 +84,12 @@ export default function Summary() {
 
   const costRows: { label: string; icon: 'hotel' | 'flight'; item: BookableItem }[] = [
     { label: 'Hotel', icon: 'hotel', item: pkg.costBreakdown.hotel },
-    { label: 'Flights', icon: 'flight', item: pkg.costBreakdown.flight },
+    ...(pkg.costBreakdown.flightInItinerary
+      ? []
+      : [{ label: 'Flights', icon: 'flight' as const, item: pkg.costBreakdown.flight }]),
   ];
+  const hotelStays = pkg.costBreakdown.hotelStays ?? [];
+  const showStayList = hotelStays.length > 1;
   const primaryCity = pkg.cities?.[0] ?? pkg.destination.split(',')[0].trim();
   const primaryCountry = pkg.cities?.[0] ? preferences.selectedCities?.[0]?.country : undefined;
   const tripCities = pkg.cities ?? [];
@@ -238,15 +243,20 @@ export default function Summary() {
                         ${Math.round(row.item.cost / groupSize).toLocaleString()} / person
                       </p>
                     </div>
-                    <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
-                      <Button variant="accent" className="px-4 py-2 text-sm">
-                        {row.icon === 'hotel' ? 'Book hotel' : 'Book flight'} ↗
-                      </Button>
-                    </a>
+                    {!(row.icon === 'hotel' && showStayList) && (
+                      <a href={row.item.bookingUrl} target="_blank" rel="noreferrer">
+                        <Button variant="accent" className="px-4 py-2 text-sm">
+                          {row.icon === 'hotel' ? 'Book hotel' : 'Book flight'} ↗
+                        </Button>
+                      </a>
+                    )}
                   </div>
                 </div>
 
-                {row.icon === 'hotel' && isMultiCity && <CityStayStrip cities={tripCities} className="mt-4" />}
+                {row.icon === 'hotel' && showStayList && <HotelStayList stays={hotelStays} groupSize={groupSize} />}
+                {row.icon === 'hotel' && isMultiCity && !showStayList && (
+                  <CityStayStrip cities={tripCities} className="mt-4" />
+                )}
               </div>
             ))}
           </div>

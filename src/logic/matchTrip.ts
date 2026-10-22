@@ -8,6 +8,8 @@ import type {
   CostBreakdown,
   FlightOption,
   HotelOption,
+  HotelStay,
+  HotelTier,
   ItineraryActivity,
   ItineraryDay,
   SelectedCity,
@@ -437,6 +439,42 @@ async function buildMultiCityItinerary(
   return itinerary.map((day, i) => ({ ...day, day: i + 1 }));
 }
 
+/** Nights spent in each city: its city-days, minus the checkout day for the final stop. */
+function nightsPerCity(cities: SelectedCity[], itinerary: ItineraryDay[]): number[] {
+  return cities.map((c, i) => {
+    const days = itinerary.filter((d) => d.type === 'city' && d.city === c.city).length;
+    const isLast = i === cities.length - 1;
+    return Math.max(1, isLast ? days - 1 : days);
+  });
+}
+
+export function buildHotelStays(
+  cities: { city: string; nights: number }[],
+  tier: HotelTier,
+  rooms: number,
+  hotelDiscount: number,
+): HotelStay[] {
+  return cities.map(({ city, nights }) => {
+    const option = getHotelOption(buildHotelOptions(city), tier);
+    return {
+      city,
+      nights,
+      name: option.name,
+      cost: Math.round(option.pricePerNight * nights * rooms * (1 - hotelDiscount)),
+      bookingUrl: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city)}`,
+    };
+  });
+}
+
+export function combineHotelStays(stays: HotelStay[]): CostBreakdown['hotel'] {
+  const names = stays.map((s) => s.city);
+  return {
+    name: stays.length > 1 ? `Hotels in ${names.join(', ')}` : stays[0].name,
+    cost: stays.reduce((sum, s) => sum + s.cost, 0),
+    bookingUrl: stays[0].bookingUrl,
+  };
+}
+
 function isDomesticIndonesiaTrip(cities: SelectedCity[]): boolean {
   return cities.every((c) => c.country === 'Indonesia');
 }
@@ -465,12 +503,22 @@ async function matchMultiCityTrip(prefs: TripPreferences, currentTier: Subscript
     groupSize,
     hotelDiscount,
   );
-  const costBreakdown: CostBreakdown = { hotel: selection.hotel, flight: selection.flight };
+  const nightsByCity = nightsPerCity(cities, itinerary);
+  const hotelStays = buildHotelStays(
+    cities.map((c, i) => ({ city: c.city, nights: nightsByCity[i] })),
+    selection.selectedHotelTier,
+    rooms,
+    hotelDiscount,
+  );
+  const costBreakdown: CostBreakdown = {
+    hotel: combineHotelStays(hotelStays),
+    flight: selection.flight,
+    hotelStays,
+  };
   if (departure) {
-    costBreakdown.flight = {
-      ...costBreakdown.flight,
-      name: costBreakdown.flight.name.replace(' round-trip ', ` round-trip from ${departure.city} `),
-    };
+    // Home -> first city and last city -> home are already travel days in the itinerary.
+    costBreakdown.flight = { name: 'Included in your travel days', cost: 0, bookingUrl: '' };
+    costBreakdown.flightInItinerary = true;
   }
   const estimatedCost =
     costBreakdown.hotel.cost +

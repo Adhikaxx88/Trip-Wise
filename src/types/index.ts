@@ -87,9 +87,21 @@ export interface BookableItem {
   details?: { label: string; value: string }[];
 }
 
+export interface HotelStay {
+  city: string;
+  nights: number;
+  name: string;
+  cost: number;
+  bookingUrl: string;
+}
+
 export interface CostBreakdown {
   hotel: BookableItem;
   flight: BookableItem;
+  /** One entry per city on multi-city trips; `hotel` holds the combined total. */
+  hotelStays?: HotelStay[];
+  /** True when every flight/train leg is already itemised as a travel day, so `flight` is 0 and hidden. */
+  flightInItinerary?: boolean;
 }
 
 export type HotelTier = 'budget' | 'standard' | 'luxury';
