@@ -68,13 +68,13 @@ export default function ItineraryAssistant(props: ItineraryAssistantProps) {
             maxWidth: 'calc(100vw - 2rem)',
           }}
         >
-          <div className="flex shrink-0 items-center justify-between bg-ocean-deepest px-4 py-3 text-white">
+          <div className="flex shrink-0 items-center justify-between bg-gold-accent/25 px-4 py-3 text-ocean-deep">
             <p className="text-sm font-semibold">Itinerary Assistant</p>
             <button
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close assistant"
-              className="inline-flex cursor-pointer items-center rounded-full px-1.5 text-white/70 hover:text-white"
+              className="inline-flex cursor-pointer items-center rounded-full px-1.5 text-ink/60 hover:text-ink"
             >
               <X className="h-4 w-4" aria-hidden />
             </button>

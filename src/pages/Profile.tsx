@@ -35,9 +35,9 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-dvh bg-ocean-deepest pb-24 text-white">
+    <div className="min-h-dvh bg-surface pb-24 text-ink">
       <header
-        className="flex items-center justify-between px-4 sm:px-12"
+        className="flex items-center justify-between bg-ocean-deepest px-4 pb-2 text-white sm:px-12"
         style={{ paddingTop: 'max(1.25rem, calc(0.75rem + env(safe-area-inset-top)))' }}
       >
         <Logo />
@@ -53,7 +53,7 @@ export default function Profile() {
             {initials}
           </div>
           <div className="min-w-0 flex-1">
-            <label className="block text-xs font-medium uppercase tracking-wide text-white/50">
+            <label className="block text-xs font-medium uppercase tracking-wide text-ink/50">
               Your name
             </label>
             <input
@@ -61,7 +61,7 @@ export default function Profile() {
               onChange={(e) => setNameDraft(e.target.value)}
               onBlur={() => setDisplayName(nameDraft)}
               placeholder="Traveler"
-              className="mt-1 w-full max-w-xs rounded-xl border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-gold-accent focus:outline-none"
+              className="mt-1 w-full max-w-xs rounded-xl border border-ink/15 bg-white px-3 py-2 text-ink placeholder:text-ink/30 focus:border-gold-accent focus:outline-none"
             />
           </div>
           {subscription.currentTier === 'yearly' && (
@@ -73,18 +73,18 @@ export default function Profile() {
 
         {/* Current plan card */}
         {isPaid ? (
-          <div className="mt-8 rounded-3xl border-2 border-gold-accent/60 bg-white/5 p-6 backdrop-blur-sm sm:p-8">
+          <div className="mt-8 rounded-3xl border-2 border-gold-accent bg-white p-6 shadow-sm sm:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-gold-accent">
+                <p className="text-xs font-medium uppercase tracking-wide text-ocean-mid">
                   Current plan
                 </p>
                 <h1 className="font-display mt-1 text-3xl">{currentTier.name}</h1>
               </div>
               <div className="text-right">
-                <p className="font-display text-2xl text-gold-accent">
+                <p className="font-display text-2xl text-ocean-mid">
                   ${currentTier.price.amount}
-                  <span className="text-sm text-white/60">
+                  <span className="text-sm text-ink/60">
                     {currentTier.price.billingPeriod === 'month' ? ' / mo' : ' / yr'}
                   </span>
                 </p>
@@ -92,28 +92,28 @@ export default function Profile() {
             </div>
 
             {subscription.cancelAtPeriodEnd ? (
-              <div className="mt-4 rounded-2xl bg-white/10 p-4">
-                <p className="text-sm text-white/85">
+              <div className="mt-4 rounded-2xl bg-ocean-mid/5 p-4">
+                <p className="text-sm text-ink/85">
                   Cancels on{' '}
-                  <span className="font-semibold text-gold-accent">
+                  <span className="font-semibold text-ocean-mid">
                     {formatFullDate(subscription.renewsOn)}
                   </span>
                   . Your benefits stay active until then.
                 </p>
-                <Button variant="secondary" className="mt-3 px-4 py-2 text-sm" onClick={resumeSubscription}>
+                <Button variant="outline" className="mt-3 px-4 py-2 text-sm" onClick={resumeSubscription}>
                   Resume subscription
                 </Button>
               </div>
             ) : (
-              <p className="mt-2 text-sm text-white/60">
+              <p className="mt-2 text-sm text-ink/60">
                 Renews on {formatFullDate(subscription.renewsOn)}
               </p>
             )}
 
             <ul className="mt-5 space-y-2">
               {currentTier.benefits.map((b) => (
-                <li key={b.id} className="flex items-start gap-2 text-sm text-white/85">
-                  <span className="mt-0.5 text-gold-accent">✓</span>
+                <li key={b.id} className="flex items-start gap-2 text-sm text-ink/85">
+                  <span className="mt-0.5 text-ocean-mid">✓</span>
                   <span>{b.label}</span>
                 </li>
               ))}
@@ -123,17 +123,17 @@ export default function Profile() {
               <button
                 type="button"
                 onClick={() => setShowCancel(true)}
-                className="mt-6 text-sm font-medium text-white/50 underline underline-offset-4 hover:text-white/80 cursor-pointer"
+                className="mt-6 text-sm font-medium text-ink/50 underline underline-offset-4 hover:text-ink/80 cursor-pointer"
               >
                 Cancel subscription
               </button>
             )}
           </div>
         ) : (
-          <div className="glass-panel mt-8 rounded-3xl p-6 sm:p-8">
-            <p className="text-xs font-medium uppercase tracking-wide text-white/60">Current plan</p>
+          <div className="border border-ink/10 bg-white shadow-sm mt-8 rounded-3xl p-6 sm:p-8">
+            <p className="text-xs font-medium uppercase tracking-wide text-ink/60">Current plan</p>
             <h1 className="font-display mt-1 text-3xl">Free</h1>
-            <p className="mt-2 text-sm text-white/70">
+            <p className="mt-2 text-sm text-ink/70">
               You get full access to planning and editing trips. Upgrade for unlimited trip matches,
               hotel discounts, and hidden-gem destinations.
             </p>
@@ -144,9 +144,9 @@ export default function Profile() {
         )}
 
         {subscription.payAsYouGoMatchesRemaining > 0 && (
-          <div className="mt-4 rounded-2xl border border-gold-accent/40 bg-white/5 px-4 py-3 text-sm text-white/80">
+          <div className="mt-4 rounded-2xl border border-gold-accent bg-white px-4 py-3 text-sm text-ink/80">
             You have{' '}
-            <span className="font-semibold text-gold-accent">
+            <span className="font-semibold text-ocean-mid">
               {subscription.payAsYouGoMatchesRemaining} pay-as-you-go match
               {subscription.payAsYouGoMatchesRemaining === 1 ? '' : 'es'}
             </span>{' '}
@@ -158,12 +158,12 @@ export default function Profile() {
         <div id="plans" className="mt-12 scroll-mt-6">
           <h2 className="font-display text-2xl">Compare plans</h2>
 
-          <div className="mt-4 inline-flex rounded-full bg-white/5 p-1">
+          <div className="mt-4 inline-flex rounded-full bg-ink/5 p-1">
             <button
               type="button"
               onClick={() => setPlansTab('subscribe')}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
-                plansTab === 'subscribe' ? 'bg-gold-accent text-ink' : 'text-white/70 hover:text-white'
+                plansTab === 'subscribe' ? 'bg-gold-accent text-ink' : 'text-ink/70 hover:text-ink'
               }`}
             >
               Subscribe
@@ -172,7 +172,7 @@ export default function Profile() {
               type="button"
               onClick={() => setPlansTab('payg')}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
-                plansTab === 'payg' ? 'bg-gold-accent text-ink' : 'text-white/70 hover:text-white'
+                plansTab === 'payg' ? 'bg-gold-accent text-ink' : 'text-ink/70 hover:text-ink'
               }`}
             >
               Pay as you go
@@ -181,16 +181,16 @@ export default function Profile() {
 
           {plansTab === 'payg' ? (
             <div className="mt-6 max-w-sm">
-              <div className="glass-panel flex flex-col rounded-3xl p-5">
+              <div className="border border-ink/10 bg-white shadow-sm flex flex-col rounded-3xl p-5">
                 <h3 className="font-display text-xl">{PAY_AS_YOU_GO_BUNDLE_SIZE} trip matches</h3>
-                <p className="mt-1 text-2xl font-semibold text-gold-accent">
+                <p className="mt-1 text-2xl font-semibold text-ocean-mid">
                   ${PAY_AS_YOU_GO_PRICE.amount}
-                  <span className="text-sm font-normal text-white/60"> one-time</span>
+                  <span className="text-sm font-normal text-ink/60"> one-time</span>
                 </p>
                 <ul className="mt-4 flex-1 space-y-2">
                   {PAY_AS_YOU_GO_BENEFITS.map((b) => (
-                    <li key={b.id} className="flex items-start gap-2 text-xs text-white/80 sm:text-sm">
-                      <span className="mt-0.5 text-gold-accent">✓</span>
+                    <li key={b.id} className="flex items-start gap-2 text-xs text-ink/80 sm:text-sm">
+                      <span className="mt-0.5 text-ocean-mid">✓</span>
                       <span>{b.label}</span>
                     </li>
                   ))}
@@ -214,10 +214,10 @@ export default function Profile() {
                   key={tier.id}
                   className={`flex flex-col rounded-3xl p-5 ${
                     isYearly
-                      ? 'border-2 border-gold-accent bg-white/10'
+                      ? 'border-2 border-gold-accent bg-white shadow-sm'
                       : isCurrent
-                        ? 'border-2 border-white/40 bg-white/10'
-                        : 'glass-panel'
+                        ? 'border-2 border-ocean-mid/40 bg-ocean-mid/5'
+                        : 'border border-ink/10 bg-white shadow-sm'
                   }`}
                 >
                   {isYearly && tier.savingsNote && (
@@ -226,10 +226,10 @@ export default function Profile() {
                     </span>
                   )}
                   <h3 className="font-display text-xl">{tier.name}</h3>
-                  <p className="mt-1 text-2xl font-semibold text-gold-accent">
+                  <p className="mt-1 text-2xl font-semibold text-ocean-mid">
                     ${tier.price.amount}
                     {tier.price.billingPeriod && (
-                      <span className="text-sm font-normal text-white/60">
+                      <span className="text-sm font-normal text-ink/60">
                         {' '}
                         / {tier.price.billingPeriod === 'month' ? 'mo' : 'yr'}
                       </span>
@@ -237,19 +237,19 @@ export default function Profile() {
                   </p>
                   <ul className="mt-4 flex-1 space-y-2">
                     {tier.benefits.map((b) => (
-                      <li key={b.id} className="flex items-start gap-2 text-xs text-white/80 sm:text-sm">
-                        <span className="mt-0.5 text-gold-accent">✓</span>
+                      <li key={b.id} className="flex items-start gap-2 text-xs text-ink/80 sm:text-sm">
+                        <span className="mt-0.5 text-ocean-mid">✓</span>
                         <span>{b.label}</span>
                       </li>
                     ))}
                   </ul>
                   <div className="mt-5">
                     {isCurrent ? (
-                      <Button variant="secondary" className="w-full" disabled>
+                      <Button variant="outline" className="w-full" disabled>
                         Current plan
                       </Button>
                     ) : tier.id === 'free' ? (
-                      <p className="text-center text-xs text-white/40">Included with every plan</p>
+                      <p className="text-center text-xs text-ink/40">Included with every plan</p>
                     ) : (
                       <Button
                         variant={isYearly ? 'primary' : 'accent'}
@@ -268,7 +268,7 @@ export default function Profile() {
         </div>
 
         <div className="mt-10">
-          <Link to="/saved" className="text-sm font-medium text-white/70 underline underline-offset-4 hover:text-white">
+          <Link to="/saved" className="text-sm font-medium text-ink/70 underline underline-offset-4 hover:text-ink">
             View your saved trips →
           </Link>
         </div>

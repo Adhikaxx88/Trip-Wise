@@ -63,7 +63,7 @@ export default function ChatFab() {
     <>
       {chatOpen && (
         <div
-          className="fixed z-[9999] flex flex-col overflow-hidden rounded-2xl border border-white/10 text-white shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
+          className="fixed z-[9999] flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white text-ink shadow-[0_8px_40px_rgba(13,27,30,0.18)]"
           style={{
             bottom: 'calc(90px + env(safe-area-inset-bottom))',
             right: 'calc(24px + env(safe-area-inset-right))',
@@ -71,25 +71,24 @@ export default function ChatFab() {
             height: 520,
             maxWidth: 'calc(100vw - 24px)',
             maxHeight: '70vh',
-            background: 'linear-gradient(145deg, #1a2f4a, #0f1f35)',
           }}
         >
           <div
             className="flex shrink-0 items-center justify-between px-4 py-3"
             style={{
-              background: 'rgba(255, 210, 51, 0.12)',
-              borderBottom: '1px solid rgba(255, 210, 51, 0.2)',
+              background: 'rgba(255, 210, 51, 0.22)',
+              borderBottom: '1px solid rgba(13, 27, 30, 0.08)',
             }}
           >
-            <p className="flex items-center gap-2 text-sm font-semibold" style={{ color: '#FFD233' }}>
-              <Plane className="h-4 w-4" aria-hidden style={{ color: '#FFD233' }} />
+            <p className="flex items-center gap-2 text-sm font-semibold" style={{ color: '#0a466b' }}>
+              <Plane className="h-4 w-4" aria-hidden style={{ color: '#0a466b' }} />
               Itinerary Assistant
             </p>
             <button
               type="button"
               onClick={() => setChatOpen(false)}
               aria-label="Close chat"
-              className="flex h-7 w-7 items-center justify-center rounded-full text-white/70 hover:bg-white/10 hover:text-white cursor-pointer"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-ink/60 hover:bg-ink/10 hover:text-ink cursor-pointer"
             >
               <X className="h-4 w-4" aria-hidden />
             </button>
@@ -108,10 +107,10 @@ export default function ChatFab() {
                           borderRadius: '16px 16px 4px 16px',
                         }
                       : {
-                          background: 'rgba(255,255,255,0.08)',
-                          color: 'rgba(255,255,255,0.9)',
+                          background: '#eef3f6',
+                          color: '#0d1b1e',
                           borderRadius: '16px 16px 16px 4px',
-                          border: '1px solid rgba(255,255,255,0.1)',
+                          border: '1px solid rgba(13,27,30,0.08)',
                         }
                   }
                 >
@@ -125,7 +124,7 @@ export default function ChatFab() {
                 <button
                   key={sq.question}
                   onClick={() => handleSuggestedQuestion(sq.question, sq.answer)}
-                  className="shrink-0 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-white/80 hover:bg-white/15 cursor-pointer"
+                  className="shrink-0 rounded-full border border-ink/15 bg-ink/5 px-2.5 py-1 text-[11px] font-medium text-ink/70 hover:bg-ink/10 cursor-pointer"
                 >
                   {sq.question}
                 </button>
@@ -144,17 +143,17 @@ export default function ChatFab() {
             <div ref={bottomRef} />
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 border-t border-white/10 px-3 py-2.5">
+          <div className="flex shrink-0 items-center gap-2 border-t border-ink/10 px-3 py-2.5">
             <input
               type="text"
               value={freeformInput}
               onChange={(e) => setFreeformInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleFreeformSubmit()}
               placeholder="Type a request..."
-              className="min-w-0 flex-1 text-sm text-white placeholder:text-white/40 focus:outline-none"
+              className="min-w-0 flex-1 text-sm text-ink placeholder:text-ink/40 focus:border-ocean-mid focus:outline-none"
               style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.15)',
+                background: '#ffffff',
+                border: '1px solid rgba(13,27,30,0.15)',
                 borderRadius: 24,
                 padding: '12px 16px',
               }}
@@ -181,7 +180,7 @@ export default function ChatFab() {
         type="button"
         onClick={() => setChatOpen((prev) => !prev)}
         aria-label={chatOpen ? 'Close chat' : 'Need to adjust? Chat with us'}
-        className={`group fixed z-[9999] flex h-12 w-12 items-center justify-center rounded-full bg-gold-accent text-ink shadow-lg shadow-ocean-deepest/40 transition-transform duration-200 hover:scale-110 hover:shadow-xl cursor-pointer sm:h-14 sm:w-14 ${
+        className={`group fixed z-[9999] flex h-12 w-12 items-center justify-center rounded-full bg-gold-accent text-ink shadow-lg shadow-ink/20 transition-transform duration-200 hover:scale-110 hover:shadow-xl cursor-pointer sm:h-14 sm:w-14 ${
           chatOpen ? '' : 'chat-fab'
         }`}
         style={{
@@ -217,7 +216,7 @@ export default function ChatFab() {
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
             <span
-              className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-ocean-deepest px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100"
+              className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-lg border border-ink/10 bg-white px-3 py-1.5 text-xs font-medium text-ink opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100"
               role="tooltip"
             >
               Need to adjust? Chat with us
